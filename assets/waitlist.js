@@ -6,7 +6,7 @@ if (!customElements.get('ol1-waitlist')) {
       this.onSubmit = this.onSubmit.bind(this);
       this.onReasonChange = this.onReasonChange.bind(this);
       this.onEmailInput = this.onEmailInput.bind(this);
-      this.onTransportLoad = this.onTransportLoad.bind(this);
+      this.onFormFocus = this.onFormFocus.bind(this);
     }
 
     connectedCallback() {
@@ -23,14 +23,13 @@ if (!customElements.get('ol1-waitlist')) {
       this.reasonNoteInput = this.querySelector('[data-waitlist-reason-note-input]');
       this.reasonInputs = Array.from(this.querySelectorAll('input[name="waitlist_reason"]'));
       this.emailInput = this.querySelector('input[name="contact[email]"]');
-      this.transport = this.querySelector('[data-waitlist-transport]');
 
       if (!this.form || this.dataset.bound === 'true') return;
 
       this.form.addEventListener('submit', this.onSubmit);
+      this.form.addEventListener('focusin', this.onFormFocus);
       this.reasonInputs.forEach((input) => input.addEventListener('change', this.onReasonChange));
       this.emailInput?.addEventListener('input', this.onEmailInput);
-      this.transport?.addEventListener('load', this.onTransportLoad);
       this.dataset.bound = 'true';
     }
 
@@ -38,10 +37,17 @@ if (!customElements.get('ol1-waitlist')) {
       if (!this.form) return;
 
       this.form.removeEventListener('submit', this.onSubmit);
+      this.form.removeEventListener('focusin', this.onFormFocus);
       this.reasonInputs?.forEach((input) => input.removeEventListener('change', this.onReasonChange));
       this.emailInput?.removeEventListener('input', this.onEmailInput);
-      this.transport?.removeEventListener('load', this.onTransportLoad);
       this.dataset.bound = 'false';
+    }
+
+    onFormFocus() {
+      if (!this.form) return;
+
+      this.form.removeEventListener('focusin', this.onFormFocus);
+      void this.ensureCaptchaReady().catch(() => {});
     }
 
     onReasonChange() {
@@ -86,18 +92,17 @@ if (!customElements.get('ol1-waitlist')) {
       return true;
     }
 
-    onSubmit(event) {
+    async onSubmit(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
       if (!this.form || this.isSubmitting) return;
 
       this.syncReasonMetadata();
 
-      if (!this.validate()) {
-        event.preventDefault();
-        return;
-      }
+      if (!this.validate()) return;
 
       if (this.isKnownDuplicate()) {
-        event.preventDefault();
         this.showStatus('duplicate', this.dataset.duplicateMessage);
         if (this.formPanel) this.formPanel.hidden = true;
         return;
@@ -105,26 +110,20 @@ if (!customElements.get('ol1-waitlist')) {
 
       this.isSubmitting = true;
       this.setLoadingState(true);
-    }
-
-    onTransportLoad() {
-      if (!this.isSubmitting || !this.transport) return;
 
       try {
-        const transportDocument = this.transport.contentDocument;
-        const responseRoot = transportDocument?.querySelector(`ol1-waitlist[data-section-id="${this.dataset.sectionId}"]`);
-        const responseStatus = responseRoot?.querySelector('[data-waitlist-state]');
+        const captchaToken = await this.requestCaptchaToken();
+        const response = await this.submitForm(captchaToken);
+        const parsedResponse = this.parseResponse(response.html);
 
-        if (!responseStatus) {
-          this.showStatus('error', this.dataset.networkErrorMessage);
-          if (this.formPanel) this.formPanel.hidden = false;
-          return;
+        if (!parsedResponse.state && !response.ok) {
+          throw new Error(`Waitlist request failed with status ${response.status}`);
         }
 
-        const nextState = responseStatus.dataset.waitlistState || 'error';
-        const nextMessage = responseRoot.querySelector('[data-waitlist-status-message]')?.textContent?.trim();
+        const nextState = parsedResponse.state || 'error';
+        const nextMessage = parsedResponse.message || this.dataset.networkErrorMessage;
 
-        this.showStatus(nextState, nextMessage || this.dataset.networkErrorMessage);
+        this.showStatus(nextState, nextMessage);
 
         if (nextState === 'success' || nextState === 'duplicate') {
           if (this.formPanel) this.formPanel.hidden = true;
@@ -138,12 +137,152 @@ if (!customElements.get('ol1-waitlist')) {
           this.formPanel.hidden = false;
         }
       } catch (error) {
-        this.showStatus('error', this.dataset.networkErrorMessage);
+        console.error('Waitlist submission failed', error);
+        this.showStatus('error', this.dataset.captchaErrorMessage || this.dataset.networkErrorMessage);
         if (this.formPanel) this.formPanel.hidden = false;
       } finally {
+        this.resetCaptcha();
         this.isSubmitting = false;
         this.setLoadingState(false);
       }
+    }
+
+    async ensureCaptchaReady() {
+      if (this.captchaPromise) return this.captchaPromise;
+
+      const protect = window.Shopify?.captcha?.protect;
+
+      if (typeof protect !== 'function' || !this.form) {
+        throw new Error('Shopify captcha is unavailable');
+      }
+
+      this.captchaPromise = (async () => {
+        protect(this.form);
+        const widgetId = await this.waitForCaptchaWidget();
+        this.captchaWidgetId = widgetId;
+        return widgetId;
+      })();
+
+      try {
+        return await this.captchaPromise;
+      } catch (error) {
+        this.captchaPromise = null;
+        throw error;
+      }
+    }
+
+    waitForCaptchaWidget() {
+      return new Promise((resolve, reject) => {
+        const startedAt = Date.now();
+
+        const poll = () => {
+          const widgetId = this.form?.querySelector('.h-captcha iframe')?.dataset.hcaptchaWidgetId;
+
+          if (window.hcaptcha && widgetId) {
+            resolve(widgetId);
+            return;
+          }
+
+          if (Date.now() - startedAt > 15000) {
+            reject(new Error('Timed out waiting for hCaptcha'));
+            return;
+          }
+
+          window.setTimeout(poll, 100);
+        };
+
+        poll();
+      });
+    }
+
+    async requestCaptchaToken() {
+      const widgetId = this.captchaWidgetId || (await this.ensureCaptchaReady());
+      const captcha = window.hcaptcha;
+
+      if (!captcha || !widgetId) {
+        throw new Error('hCaptcha is unavailable');
+      }
+
+      const result = await captcha.execute(widgetId, { async: true });
+      const token =
+        result?.response ||
+        captcha.getResponse(widgetId) ||
+        this.form?.querySelector('textarea[name="h-captcha-response"]')?.value ||
+        '';
+
+      if (!token) {
+        throw new Error('Missing hCaptcha token');
+      }
+
+      this.setCaptchaToken(token);
+      return token;
+    }
+
+    setCaptchaToken(token) {
+      if (!this.form) return;
+
+      const textarea = this.form.querySelector('textarea[name="h-captcha-response"]');
+
+      if (textarea) {
+        textarea.value = token;
+        return;
+      }
+
+      let input = this.form.querySelector('input[name="h-captcha-response"]');
+
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'h-captcha-response';
+        this.form.appendChild(input);
+      }
+
+      input.value = token;
+    }
+
+    resetCaptcha() {
+      if (window.hcaptcha && this.captchaWidgetId) {
+        try {
+          window.hcaptcha.reset(this.captchaWidgetId);
+        } catch (error) {
+          console.error('Failed to reset hCaptcha', error);
+        }
+      }
+
+      this.setCaptchaToken('');
+    }
+
+    async submitForm(captchaToken) {
+      const formData = new FormData(this.form);
+      formData.set('h-captcha-response', captchaToken);
+
+      const response = await fetch(this.form.action, {
+        method: 'POST',
+        headers: {
+          Accept: 'text/html',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+        credentials: 'same-origin',
+      });
+
+      return {
+        html: await response.text(),
+        ok: response.ok,
+        status: response.status,
+      };
+    }
+
+    parseResponse(html) {
+      const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
+      const responseRoot = parsedDocument.querySelector(`ol1-waitlist[data-section-id="${this.dataset.sectionId}"]`);
+      const responseStatus = responseRoot?.querySelector('[data-waitlist-state]');
+      const responseMessage = responseRoot?.querySelector('[data-waitlist-status-message]');
+
+      return {
+        message: responseMessage?.textContent?.trim() || '',
+        state: responseStatus?.dataset.waitlistState || '',
+      };
     }
 
     setLoadingState(isLoading) {
