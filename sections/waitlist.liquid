@@ -353,7 +353,11 @@
           {{ section.settings.description }}
         </div>
 
-        {%- form 'customer', id: 'Ol1WaitlistForm-' | append: section.id, class: 'ol1-waitlist__form' -%}
+        {%- liquid
+          assign ol1_waitlist_form_id = 'Ol1WaitlistForm-' | append: section.id
+        -%}
+
+        {%- form 'customer', id: ol1_waitlist_form_id, class: 'ol1-waitlist__form' -%}
           {%- liquid
             assign ol1_submission_state = 'idle'
             assign ol1_status_message = blank
