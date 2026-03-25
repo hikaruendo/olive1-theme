@@ -1,0 +1,593 @@
+<script src="{{ 'waitlist.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  #shopify-section-{{ section.id }} {
+    --ol1-waitlist-bg: #f8f5ee;
+    --ol1-waitlist-panel: rgba(255, 252, 246, 0.94);
+    --ol1-waitlist-text: #1a2820;
+    --ol1-waitlist-accent: #2e5038;
+    --ol1-waitlist-accent-hover: #4a7c59;
+    --ol1-waitlist-gold: #c9a84c;
+    --ol1-waitlist-border: rgba(201, 168, 76, 0.55);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist {
+    background:
+      radial-gradient(circle at top, rgba(201, 168, 76, 0.12), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.44), transparent 42%),
+      var(--ol1-waitlist-bg);
+    color: var(--ol1-waitlist-text);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__inner {
+    width: min(100%, 64rem);
+    margin: 0 auto;
+    padding-inline: 2rem;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__panel {
+    position: relative;
+    padding: 3.2rem 2rem;
+    border: 1px solid var(--ol1-waitlist-border);
+    border-radius: 1.6rem;
+    background: var(--ol1-waitlist-panel);
+    box-shadow: 0 1.6rem 4rem rgba(26, 40, 32, 0.08);
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__panel::before {
+    content: '';
+    position: absolute;
+    inset: 1.2rem;
+    border: 1px solid rgba(201, 168, 76, 0.16);
+    border-radius: 1.2rem;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.2rem;
+    color: var(--ol1-waitlist-accent);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: none;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__eyebrow::before {
+    content: '';
+    width: 3.6rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201, 168, 76, 0.3), var(--ol1-waitlist-gold));
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__heading {
+    margin: 0;
+    color: var(--ol1-waitlist-text);
+    font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+    font-size: clamp(3rem, 8vw, 4.6rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.03em;
+    white-space: pre-line;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__description {
+    margin-top: 1.6rem;
+    color: rgba(26, 40, 32, 0.86);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.45rem;
+    line-height: 2;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__description p {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__form {
+    position: relative;
+    z-index: 1;
+    margin-top: 2.8rem;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__cta {
+    margin: 0 0 1.6rem;
+    color: var(--ol1-waitlist-text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__fields {
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__field {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__label,
+  #shopify-section-{{ section.id }} .ol1-waitlist__legend {
+    margin: 0;
+    color: var(--ol1-waitlist-text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__input {
+    width: 100%;
+    min-height: 5.4rem;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid var(--ol1-waitlist-gold);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ol1-waitlist-text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__input::placeholder {
+    color: rgba(26, 40, 32, 0.45);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__input:focus-visible {
+    outline: none;
+    border-color: var(--ol1-waitlist-accent);
+    box-shadow: 0 0 0 0.3rem rgba(46, 80, 56, 0.14);
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reasons {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-option {
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    min-height: 5.2rem;
+    padding: 1.3rem 1.4rem;
+    border: 1px solid rgba(201, 168, 76, 0.78);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--ol1-waitlist-text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.45rem;
+    line-height: 1.6;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-label::after {
+    content: '';
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid rgba(46, 80, 56, 0.4);
+    border-radius: 50%;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-label:hover {
+    transform: translateY(-1px);
+    border-color: var(--ol1-waitlist-accent);
+    box-shadow: 0 0.8rem 1.6rem rgba(26, 40, 32, 0.07);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-input:focus-visible + .ol1-waitlist__reason-label,
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-input:focus + .ol1-waitlist__reason-label {
+    outline: none;
+    border-color: var(--ol1-waitlist-accent);
+    box-shadow: 0 0 0 0.3rem rgba(46, 80, 56, 0.14);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-input:checked + .ol1-waitlist__reason-label {
+    border-color: var(--ol1-waitlist-accent);
+    background: rgba(46, 80, 56, 0.08);
+    color: var(--ol1-waitlist-accent);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__reason-input:checked + .ol1-waitlist__reason-label::after {
+    border-color: var(--ol1-waitlist-accent);
+    background: var(--ol1-waitlist-accent);
+    box-shadow: inset 0 0 0 0.35rem #f8f5ee;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 5.6rem;
+    margin-top: 0.6rem;
+    padding: 1.2rem 2rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--ol1-waitlist-accent);
+    color: #f8f5ee;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__submit:hover {
+    background: var(--ol1-waitlist-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 1rem 2.4rem rgba(46, 80, 56, 0.18);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.3rem rgba(46, 80, 56, 0.2);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__submit[disabled] {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__status {
+    margin: 0 0 1.6rem;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.8;
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__status[data-state='success'],
+  #shopify-section-{{ section.id }} .ol1-waitlist__status[data-state='duplicate'] {
+    border-color: rgba(46, 80, 56, 0.24);
+    background: rgba(46, 80, 56, 0.08);
+    color: var(--ol1-waitlist-accent);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__status[data-state='error'] {
+    border-color: rgba(201, 168, 76, 0.55);
+    background: rgba(201, 168, 76, 0.12);
+    color: var(--ol1-waitlist-text);
+  }
+
+  #shopify-section-{{ section.id }} .ol1-waitlist__footnote {
+    margin: 1.4rem 0 0;
+    color: rgba(26, 40, 32, 0.64);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    #shopify-section-{{ section.id }} .ol1-waitlist__panel {
+      padding: 4.8rem;
+    }
+
+    #shopify-section-{{ section.id }} .ol1-waitlist__reason-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 1080px) {
+    #shopify-section-{{ section.id }} .ol1-waitlist__inner {
+      max-width: 64rem;
+    }
+  }
+{%- endstyle -%}
+
+<section class="ol1-waitlist section-{{ section.id }}-padding">
+  <div class="ol1-waitlist__inner">
+    <div class="ol1-waitlist__panel">
+      <ol1-waitlist
+        class="ol1-waitlist__content"
+        data-section-id="{{ section.id }}"
+        data-network-error-message="送信に失敗しました。時間をおいて再度お試しください。"
+        data-email-required-message="メールアドレスを入力してください。"
+        data-email-invalid-message="有効なメールアドレスを入力してください。"
+        data-reason-required-message="登録理由をひとつ選んでください。"
+      >
+        <p class="ol1-waitlist__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="ol1-waitlist__heading">{{ section.settings.heading | escape }}</h2>
+        <div class="ol1-waitlist__description rte">
+          {{ section.settings.description }}
+        </div>
+
+        {%- form 'customer', id: 'Ol1WaitlistForm-' | append: section.id, class: 'ol1-waitlist__form' -%}
+          {%- liquid
+            assign ol1_submission_state = 'idle'
+            assign ol1_status_message = blank
+            capture ol1_email_error_messages
+              echo form.errors.messages.email
+            endcapture
+            assign ol1_email_error_messages = ol1_email_error_messages | downcase
+
+            if form.posted_successfully?
+              assign ol1_submission_state = 'success'
+              assign ol1_status_message = section.settings.success_message
+            elsif form.errors
+              assign ol1_submission_state = 'error'
+              assign ol1_status_message = form.errors.messages.email | default: '入力内容をご確認ください。'
+
+              if ol1_email_error_messages contains 'already' or ol1_email_error_messages contains 'subscribed' or ol1_email_error_messages contains 'taken' or ol1_email_error_messages contains 'associated' or ol1_email_error_messages contains 'exists' or ol1_email_error_messages contains '登録' or ol1_email_error_messages contains 'すでに'
+                assign ol1_submission_state = 'duplicate'
+                assign ol1_status_message = section.settings.duplicate_message
+              endif
+            endif
+          -%}
+
+          <input type="hidden" name="contact[tags]" value="waitlist" data-waitlist-tags-input>
+          <input
+            type="hidden"
+            name="contact[note][waitlist_reason]"
+            value=""
+            data-waitlist-reason-note-input
+          >
+
+          <div
+            class="ol1-waitlist__status"
+            data-state="{{ ol1_submission_state }}"
+            data-waitlist-state="{{ ol1_submission_state }}"
+            data-waitlist-status-message
+            tabindex="-1"
+            {% if ol1_submission_state == 'idle' %}
+              hidden
+            {% endif %}
+          >
+            {{ ol1_status_message }}
+          </div>
+
+          <div
+            class="ol1-waitlist__fields"
+            data-waitlist-form-panel
+            {% if ol1_submission_state == 'success' or ol1_submission_state == 'duplicate' %}
+              hidden
+            {% endif %}
+          >
+            <p class="ol1-waitlist__cta">{{ section.settings.cta }}</p>
+
+            <div class="ol1-waitlist__field">
+              <label class="ol1-waitlist__label" for="Ol1WaitlistEmail-{{ section.id }}">
+                メールアドレス
+              </label>
+              <input
+                id="Ol1WaitlistEmail-{{ section.id }}"
+                class="ol1-waitlist__input"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email | escape }}"
+                placeholder="name@example.com"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                inputmode="email"
+                aria-required="true"
+                required
+              >
+            </div>
+
+            <fieldset class="ol1-waitlist__reasons">
+              <legend class="ol1-waitlist__legend">{{ section.settings.reason_prompt }}</legend>
+              <div class="ol1-waitlist__reason-grid">
+                <div class="ol1-waitlist__reason-option">
+                  <input
+                    id="Ol1WaitlistReasonTaste-{{ section.id }}"
+                    class="ol1-waitlist__reason-input"
+                    type="radio"
+                    name="waitlist_reason"
+                    value="味が気になる"
+                    data-tag-value="reason:味"
+                    required
+                  >
+                  <label class="ol1-waitlist__reason-label" for="Ol1WaitlistReasonTaste-{{ section.id }}">
+                    味が気になる
+                  </label>
+                </div>
+                <div class="ol1-waitlist__reason-option">
+                  <input
+                    id="Ol1WaitlistReasonHealth-{{ section.id }}"
+                    class="ol1-waitlist__reason-input"
+                    type="radio"
+                    name="waitlist_reason"
+                    value="健康のため"
+                    data-tag-value="reason:健康"
+                    required
+                  >
+                  <label class="ol1-waitlist__reason-label" for="Ol1WaitlistReasonHealth-{{ section.id }}">
+                    健康のため
+                  </label>
+                </div>
+                <div class="ol1-waitlist__reason-option">
+                  <input
+                    id="Ol1WaitlistReasonCooking-{{ section.id }}"
+                    class="ol1-waitlist__reason-input"
+                    type="radio"
+                    name="waitlist_reason"
+                    value="料理に使いたい"
+                    data-tag-value="reason:料理"
+                    required
+                  >
+                  <label class="ol1-waitlist__reason-label" for="Ol1WaitlistReasonCooking-{{ section.id }}">
+                    料理に使いたい
+                  </label>
+                </div>
+                <div class="ol1-waitlist__reason-option">
+                  <input
+                    id="Ol1WaitlistReasonGift-{{ section.id }}"
+                    class="ol1-waitlist__reason-input"
+                    type="radio"
+                    name="waitlist_reason"
+                    value="ギフトにしたい"
+                    data-tag-value="reason:ギフト"
+                    required
+                  >
+                  <label class="ol1-waitlist__reason-label" for="Ol1WaitlistReasonGift-{{ section.id }}">
+                    ギフトにしたい
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <button class="ol1-waitlist__submit" type="submit" data-waitlist-submit>
+              {{ section.settings.button_label }}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <p class="ol1-waitlist__footnote">
+          ご登録内容は入荷案内にのみ利用します。Shopify上では waitlist と選択理由のタグで管理されます。
+        </p>
+      </ol1-waitlist>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Olive1 waitlist",
+  "tag": "section",
+  "class": "section section-olive1-waitlist",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "英語サブヘッド",
+      "default": "Specialty EVOO, arriving soon."
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "日本語ヒーロー",
+      "default": "毎日の料理にかけたくなる、\nスペシャルティEVOO。"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "説明文",
+      "default": "<p>産地 / 品種 / 収穫年 / 酸度 ── すべて開示。<br>本物のエクストラバージンオリーブオイルだけを届けます。</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "CTAテキスト",
+      "default": "先行入荷のお知らせを受け取る"
+    },
+    {
+      "type": "text",
+      "id": "reason_prompt",
+      "label": "質問テキスト",
+      "default": "何が気になりましたか？（ひとつ選んでください）"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンラベル",
+      "default": "登録する"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "成功メッセージ",
+      "default": "ありがとうございます。入荷時にお知らせします。"
+    },
+    {
+      "type": "text",
+      "id": "duplicate_message",
+      "label": "重複メッセージ",
+      "default": "すでに登録いただいています。入荷までもう少々お待ちください。"
+    },
+    {
+      "type": "header",
+      "content": "余白"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "上余白",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "下余白",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Olive1 waitlist"
+    }
+  ]
+}
+{% endschema %}
