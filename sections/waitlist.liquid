@@ -343,9 +343,11 @@
         class="ol1-waitlist__content"
         data-section-id="{{ section.id }}"
         data-network-error-message="送信に失敗しました。時間をおいて再度お試しください。"
+        data-captcha-error-message="認証に失敗しました。もう一度お試しください。"
         data-email-required-message="メールアドレスを入力してください。"
         data-email-invalid-message="有効なメールアドレスを入力してください。"
         data-reason-required-message="登録理由をひとつ選んでください。"
+        data-duplicate-message="{{ section.settings.duplicate_message }}"
       >
         <p class="ol1-waitlist__eyebrow">{{ section.settings.eyebrow }}</p>
         <h2 class="ol1-waitlist__heading">{{ section.settings.heading | escape }}</h2>
@@ -353,7 +355,9 @@
           {{ section.settings.description }}
         </div>
 
-        {%- form 'customer', id: 'Ol1WaitlistForm-' | append: section.id, class: 'ol1-waitlist__form' -%}
+        {%- assign ol1_waitlist_form_id = 'Ol1WaitlistForm-' | append: section.id -%}
+
+        {%- form 'customer', id: ol1_waitlist_form_id, class: 'ol1-waitlist__form' -%}
           {%- liquid
             assign ol1_submission_state = 'idle'
             assign ol1_status_message = blank
