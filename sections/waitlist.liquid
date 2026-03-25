@@ -306,6 +306,13 @@
     color: var(--ol1-waitlist-text);
   }
 
+  #shopify-section-{{ section.id }} .ol1-waitlist__transport {
+    display: none;
+    width: 0;
+    height: 0;
+    border: 0;
+  }
+
   #shopify-section-{{ section.id }} .ol1-waitlist__footnote {
     margin: 1.4rem 0 0;
     color: rgba(26, 40, 32, 0.64);
@@ -346,6 +353,7 @@
         data-email-required-message="メールアドレスを入力してください。"
         data-email-invalid-message="有効なメールアドレスを入力してください。"
         data-reason-required-message="登録理由をひとつ選んでください。"
+        data-duplicate-message="{{ section.settings.duplicate_message }}"
       >
         <p class="ol1-waitlist__eyebrow">{{ section.settings.eyebrow }}</p>
         <h2 class="ol1-waitlist__heading">{{ section.settings.heading | escape }}</h2>
@@ -355,9 +363,18 @@
 
         {%- liquid
           assign ol1_waitlist_form_id = 'Ol1WaitlistForm-' | append: section.id
+          assign ol1_waitlist_transport_id = 'Ol1WaitlistTransport-' | append: section.id
         -%}
 
-        {%- form 'customer', id: ol1_waitlist_form_id, class: 'ol1-waitlist__form' -%}
+        <iframe
+          class="ol1-waitlist__transport"
+          id="{{ ol1_waitlist_transport_id }}"
+          name="{{ ol1_waitlist_transport_id }}"
+          title="Waitlist submission transport"
+          data-waitlist-transport
+        ></iframe>
+
+        {%- form 'customer', id: ol1_waitlist_form_id, class: 'ol1-waitlist__form', target: ol1_waitlist_transport_id -%}
           {%- liquid
             assign ol1_submission_state = 'idle'
             assign ol1_status_message = blank

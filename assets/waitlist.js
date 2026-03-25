@@ -6,6 +6,7 @@ if (!customElements.get('ol1-waitlist')) {
       this.onSubmit = this.onSubmit.bind(this);
       this.onReasonChange = this.onReasonChange.bind(this);
       this.onEmailInput = this.onEmailInput.bind(this);
+      this.onTransportLoad = this.onTransportLoad.bind(this);
     }
 
     connectedCallback() {
@@ -22,12 +23,14 @@ if (!customElements.get('ol1-waitlist')) {
       this.reasonNoteInput = this.querySelector('[data-waitlist-reason-note-input]');
       this.reasonInputs = Array.from(this.querySelectorAll('input[name="waitlist_reason"]'));
       this.emailInput = this.querySelector('input[name="contact[email]"]');
+      this.transport = this.querySelector('[data-waitlist-transport]');
 
       if (!this.form || this.dataset.bound === 'true') return;
 
       this.form.addEventListener('submit', this.onSubmit);
       this.reasonInputs.forEach((input) => input.addEventListener('change', this.onReasonChange));
       this.emailInput?.addEventListener('input', this.onEmailInput);
+      this.transport?.addEventListener('load', this.onTransportLoad);
       this.dataset.bound = 'true';
     }
 
@@ -37,6 +40,7 @@ if (!customElements.get('ol1-waitlist')) {
       this.form.removeEventListener('submit', this.onSubmit);
       this.reasonInputs?.forEach((input) => input.removeEventListener('change', this.onReasonChange));
       this.emailInput?.removeEventListener('input', this.onEmailInput);
+      this.transport?.removeEventListener('load', this.onTransportLoad);
       this.dataset.bound = 'false';
     }
 
@@ -82,35 +86,38 @@ if (!customElements.get('ol1-waitlist')) {
       return true;
     }
 
-    async onSubmit(event) {
-      event.preventDefault();
-
+    onSubmit(event) {
       if (!this.form || this.isSubmitting) return;
 
       this.syncReasonMetadata();
 
-      if (!this.validate()) return;
+      if (!this.validate()) {
+        event.preventDefault();
+        return;
+      }
+
+      if (this.isKnownDuplicate()) {
+        event.preventDefault();
+        this.showStatus('duplicate', this.dataset.duplicateMessage);
+        if (this.formPanel) this.formPanel.hidden = true;
+        return;
+      }
 
       this.isSubmitting = true;
       this.setLoadingState(true);
+    }
+
+    onTransportLoad() {
+      if (!this.isSubmitting || !this.transport) return;
 
       try {
-        const response = await fetch(this.form.action, {
-          method: 'POST',
-          headers: {
-            Accept: 'text/html',
-            'X-Requested-With': 'XMLHttpRequest',
-          },
-          body: new FormData(this.form),
-        });
-
-        const html = await response.text();
-        const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-        const responseRoot = parsedDocument.querySelector(`ol1-waitlist[data-section-id="${this.dataset.sectionId}"]`);
+        const transportDocument = this.transport.contentDocument;
+        const responseRoot = transportDocument?.querySelector(`ol1-waitlist[data-section-id="${this.dataset.sectionId}"]`);
         const responseStatus = responseRoot?.querySelector('[data-waitlist-state]');
 
         if (!responseStatus) {
           this.showStatus('error', this.dataset.networkErrorMessage);
+          if (this.formPanel) this.formPanel.hidden = false;
           return;
         }
 
@@ -121,7 +128,9 @@ if (!customElements.get('ol1-waitlist')) {
 
         if (nextState === 'success' || nextState === 'duplicate') {
           if (this.formPanel) this.formPanel.hidden = true;
+
           if (nextState === 'success') {
+            this.rememberSubmittedEmail();
             this.form.reset();
             this.syncReasonMetadata();
           }
@@ -130,6 +139,7 @@ if (!customElements.get('ol1-waitlist')) {
         }
       } catch (error) {
         this.showStatus('error', this.dataset.networkErrorMessage);
+        if (this.formPanel) this.formPanel.hidden = false;
       } finally {
         this.isSubmitting = false;
         this.setLoadingState(false);
@@ -144,10 +154,11 @@ if (!customElements.get('ol1-waitlist')) {
     }
 
     clearStatus() {
-      if (!this.statusMessage || this.statusMessage.dataset.state === 'success' || this.statusMessage.dataset.state === 'duplicate') {
+      if (!this.statusMessage || this.statusMessage.dataset.state === 'success') {
         return;
       }
 
+      if (this.formPanel) this.formPanel.hidden = false;
       this.statusMessage.hidden = true;
       this.statusMessage.textContent = '';
       this.statusMessage.dataset.state = 'idle';
@@ -171,6 +182,41 @@ if (!customElements.get('ol1-waitlist')) {
       }
 
       this.statusMessage.focus();
+    }
+
+    storageKey() {
+      return `ol1-waitlist:${window.location.host}`;
+    }
+
+    submittedEmails() {
+      try {
+        return JSON.parse(window.localStorage.getItem(this.storageKey()) || '[]');
+      } catch (error) {
+        return [];
+      }
+    }
+
+    normalizeEmail(value) {
+      return value.trim().toLowerCase();
+    }
+
+    isKnownDuplicate() {
+      if (!this.emailInput) return false;
+
+      const email = this.normalizeEmail(this.emailInput.value);
+      return this.submittedEmails().includes(email);
+    }
+
+    rememberSubmittedEmail() {
+      if (!this.emailInput) return;
+
+      const email = this.normalizeEmail(this.emailInput.value);
+      const emails = this.submittedEmails();
+
+      if (!email || emails.includes(email)) return;
+
+      emails.push(email);
+      window.localStorage.setItem(this.storageKey(), JSON.stringify(emails.slice(-20)));
     }
   }
 
