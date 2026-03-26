@@ -17,6 +17,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
+            "text": "🫒 先行入荷の登録受付中 — 数量限定",
             "link": ""
           }
         }

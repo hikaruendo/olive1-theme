@@ -17,6 +17,7 @@
   }
 
   #shopify-section-{{ section.id }} .ol1-waitlist {
+    scroll-margin-top: 12rem;
     background:
       radial-gradient(circle at top, rgba(201, 168, 76, 0.12), transparent 34%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.44), transparent 42%),
@@ -249,16 +250,16 @@
     justify-content: center;
     width: 100%;
     min-height: 5.6rem;
-    margin-top: 0.6rem;
-    padding: 1.2rem 2rem;
+    margin-top: 0.8rem;
+    padding: 1.4rem 3.2rem;
     border: 0;
     border-radius: 4px;
     background: var(--ol1-waitlist-accent);
     color: #f8f5ee;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
@@ -336,7 +337,7 @@
   }
 {%- endstyle -%}
 
-<section class="ol1-waitlist section-{{ section.id }}-padding">
+<section id="waitlist-form" class="ol1-waitlist waitlist-form section-{{ section.id }}-padding">
   <div class="ol1-waitlist__inner">
     <div class="ol1-waitlist__panel">
       <ol1-waitlist
@@ -499,7 +500,7 @@
         {%- endform -%}
 
         <p class="ol1-waitlist__footnote">
-          ご登録内容は入荷案内にのみ利用します。Shopify上では waitlist と選択理由のタグで管理されます。
+          入荷のお知らせにのみ使用します。
         </p>
       </ol1-waitlist>
     </div>

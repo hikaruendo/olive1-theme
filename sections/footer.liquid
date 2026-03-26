@@ -29,6 +29,7 @@
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
   {%- liquid
+    assign ol1_footer_newsletter_enabled = false
     assign has_social_icons = true
     if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
       assign has_social_icons = false
@@ -38,12 +39,12 @@
       assign brand_empty = true
     endif
 
-    if section.blocks.size == 1 and section.blocks[0].type == 'brand_information' and brand_empty and has_social_icons == false and section.settings.newsletter_enable == false and section.settings.enable_follow_on_shop == false
+    if section.blocks.size == 1 and section.blocks[0].type == 'brand_information' and brand_empty and has_social_icons == false and ol1_footer_newsletter_enabled == false and section.settings.enable_follow_on_shop == false
       assign only_empty_brand = true
     endif
   -%}
   {%- if section.blocks.size > 0
-    or section.settings.newsletter_enable
+    or ol1_footer_newsletter_enabled
     or section.settings.show_social
     and has_social_icons == true
     or section.settings.enable_follow_on_shop
@@ -165,7 +166,7 @@
             data-cascade
           {% endif %}
         >
-          {%- if section.settings.newsletter_enable -%}
+          {%- if ol1_footer_newsletter_enabled -%}
             <div class="footer-block__newsletter">
               {%- if section.settings.newsletter_heading != blank -%}
                 <h2 class="footer-block__heading inline-richtext">{{ section.settings.newsletter_heading }}</h2>
