@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #f5f0e6;
+  --green: #1a3329;
+  --gold: #c9a44c;
+  --ivory: #f5f0e6;
+  --wood: #3a2818;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(201, 164, 76, 0.12), transparent 30rem),
+    linear-gradient(135deg, #000000 0%, #140d08 48%, #000000 100%);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+main {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-section {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: clamp(6rem, 10vw, 10rem) clamp(1.25rem, 6vw, 7rem);
+  isolation: isolate;
+}
+
+.hero-image {
+  object-fit: cover;
+  z-index: -3;
+}
+
+.mobile-hero {
+  display: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(16, 11, 7, 0.78) 38%, rgba(0, 0, 0, 0.18) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.62));
+}
+
+.hero-content {
+  width: min(42rem, 100%);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-noto-sans-jp), var(--font-geist-sans), sans-serif;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: white;
+  -webkit-text-stroke: 3px #000000;
+  paint-order: stroke fill;
+}
+
+h1 {
+  max-width: 12em;
+  font-size: clamp(3rem, 8vw, 6.6rem);
+  line-height: 0.98;
+}
+
+h2 {
+  font-size: clamp(2.1rem, 5vw, 4.8rem);
+  line-height: 1.04;
+}
+
+.hero-copy,
+.section-copy p {
+  color: rgba(245, 240, 230, 0.82);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 2;
+}
+
+.hero-copy {
+  max-width: 39rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.waitlist-form {
+  width: min(34rem, 100%);
+  padding: 1rem;
+  border: 1px solid rgba(245, 240, 230, 0.16);
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(16px);
+}
+
+.waitlist-form label {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: white;
+  font-weight: 800;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+}
+
+.waitlist-form input {
+  min-width: 0;
+  height: 3.25rem;
+  border: 1px solid rgba(245, 240, 230, 0.28);
+  background: rgba(245, 240, 230, 0.08);
+  color: white;
+  padding: 0 1rem;
+  outline: none;
+}
+
+.waitlist-form input:focus {
+  border-color: var(--gold);
+}
+
+.waitlist-form button {
+  height: 3.25rem;
+  border: 0;
+  background: var(--gold);
+  color: #000000;
+  padding: 0 1.35rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.waitlist-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.form-message {
+  min-height: 1.5rem;
+  margin: 0.65rem 0 0;
+  color: rgba(245, 240, 230, 0.68);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.form-message.is-error {
+  color: #f5c2b8;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: center;
+  padding: clamp(5rem, 9vw, 9rem) clamp(1.25rem, 6vw, 7rem);
+  background:
+    linear-gradient(180deg, rgba(26, 51, 41, 0.18), transparent 55%),
+    #000000;
+}
+
+.split-section {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  background:
+    linear-gradient(135deg, rgba(58, 40, 24, 0.78), rgba(0, 0, 0, 0.96) 56%),
+    #000000;
+}
+
+.section-copy {
+  max-width: 44rem;
+}
+
+.section-copy p {
+  margin: 1.3rem 0 0;
+}
+
+.image-panel,
+.wide-image-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(245, 240, 230, 0.12);
+  background: var(--wood);
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.42);
+}
+
+.image-panel {
+  aspect-ratio: 16 / 10;
+}
+
+.wide-image-panel {
+  margin-top: 2rem;
+  aspect-ratio: 16 / 9;
+}
+
+.image-panel img,
+.wide-image-panel img {
+  object-fit: cover;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
+
+.metric-card {
+  border: 1px solid rgba(201, 164, 76, 0.28);
+  background: rgba(26, 51, 41, 0.42);
+  padding: 1rem;
+}
+
+.metric-card span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 0.5rem;
+  color: white;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1;
+}
+
+.metric-card small {
+  margin-left: 0.3rem;
+  color: var(--ivory);
+  font-size: 0.85rem;
+}
+
+.table-section {
+  display: block;
+}
+
+.compact {
+  max-width: 62rem;
+}
+
+.compact ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact li {
+  border: 1px solid rgba(245, 240, 230, 0.16);
+  background: rgba(245, 240, 230, 0.06);
+  color: white;
+  padding: 0.72rem 0.9rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    min-height: 100svh;
+    align-items: start;
+    padding-top: 4rem;
+  }
+
+  .desktop-hero {
+    display: none;
+  }
+
+  .mobile-hero {
+    display: block;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.74) 42%, rgba(0, 0, 0, 0.24) 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.25), transparent);
+  }
+
+  h1 {
+    font-size: clamp(2.7rem, 14vw, 4.8rem);
+  }
+
+  .form-row,
+  .section,
+  .split-section,
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .waitlist-form button {
+    width: 100%;
+  }
+
+  .section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .split-section .image-panel {
+    order: 2;
+  }
+}
