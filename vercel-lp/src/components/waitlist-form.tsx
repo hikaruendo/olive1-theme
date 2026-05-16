@@ -15,12 +15,13 @@ export function WaitlistForm() {
 
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email") ?? "");
+    const reason = String(formData.get("reason") ?? "");
 
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, reason }),
       });
       const data = (await response.json()) as { message?: string };
 
@@ -39,22 +40,38 @@ export function WaitlistForm() {
 
   return (
     <form className="waitlist-form" onSubmit={handleSubmit}>
-      <label htmlFor="email">発売案内を受け取る</label>
-      <div className="form-row">
+      <p className="form-title">発売案内を受け取る</p>
+      <div className="form-field">
+        <label htmlFor="email">メールアドレス</label>
         <input
           id="email"
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="email@example.com"
+          placeholder="name@example.com"
           required
         />
+      </div>
+      <fieldset className="reason-fieldset">
+        <legend>気になっていること</legend>
+        <div className="reason-grid">
+          {["味が気になる", "健康のため", "料理に使いたい", "ギフトにしたい"].map(
+            (reason) => (
+              <label className="reason-option" key={reason}>
+                <input name="reason" type="radio" value={reason} required />
+                <span>{reason}</span>
+              </label>
+            ),
+          )}
+        </div>
+      </fieldset>
+      <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "送信中" : "登録"}
+          {status === "loading" ? "送信中" : "入荷案内に登録する"}
         </button>
       </div>
       <p className={`form-message ${status === "error" ? "is-error" : ""}`}>
-        {message || "広告メールの配信停止リンクは各メールに記載します。"}
+        {message || "入荷のお知らせにのみ使用します。"}
       </p>
     </form>
   );

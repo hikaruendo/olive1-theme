@@ -20,8 +20,10 @@ function isAlreadyRegisteredError(error: unknown) {
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     email?: unknown;
+    reason?: unknown;
   } | null;
   const email = typeof body?.email === "string" ? body.email.trim() : "";
+  const reason = typeof body?.reason === "string" ? body.reason.trim() : "";
 
   if (!emailPattern.test(email)) {
     return NextResponse.json(
@@ -46,6 +48,7 @@ export async function POST(request: Request) {
   const properties = {
     source,
     submitted_at: new Date().toISOString(),
+    ...(reason ? { reason } : {}),
   };
 
   const { error } = await resend.contacts.create(
