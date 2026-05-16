@@ -105,7 +105,8 @@ main {
 }
 
 .hero-media .desktop-hero {
-  object-position: right center;
+  object-fit: contain;
+  object-position: center bottom;
 }
 
 .hero-media .mobile-hero {
@@ -173,15 +174,6 @@ h2 {
 
 .hero-copy {
   margin: 1.55rem 0 0;
-}
-
-.evidence-note {
-  margin: 1.5rem 0 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--gold);
-  color: rgba(26, 26, 24, 0.64);
-  font-size: 0.95rem;
-  line-height: 1.9;
 }
 
 .waitlist-band {
@@ -382,8 +374,7 @@ h2 {
   margin: 1.25rem 0 0;
 }
 
-.image-frame,
-.wide-image-frame {
+.image-frame {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(26, 26, 24, 0.12);
@@ -394,13 +385,7 @@ h2 {
   aspect-ratio: 16 / 10;
 }
 
-.wide-image-frame {
-  margin-top: 2.2rem;
-  aspect-ratio: 16 / 9;
-}
-
-.image-frame img,
-.wide-image-frame img {
+.image-frame img {
   object-fit: cover;
 }
 

@@ -33,7 +33,7 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-media">
           <Image
-            src="/images/hero-bottle-desktop.png"
+            src="/images/hero-bottle-mobile.png"
             alt="Olive1 bottle on a dark wooden table with fresh olives"
             fill
             priority
@@ -56,10 +56,6 @@ export default function Home() {
             Olive1は、ポリフェノール値、収穫年、酸度をラベルで公開する
             スペシャルティEVOOです。初回ロットの入荷案内を、登録いただいた方から
             お届けします。
-          </p>
-          <p className="evidence-note">
-            トマトに含まれるカロテノイドは脂溶性なので、油と一緒に摂ると
-            吸収されやすいことが報告されています。
           </p>
         </div>
       </section>
@@ -119,7 +115,7 @@ export default function Home() {
           <h2>産地を探すところから、ブランドを作っています。</h2>
           <p>
             どこの畑で、いつ採れて、どんな検査結果だったか。そこまで見えるEVOOを、
-            東京の食卓に合う形で届けます。派手な説明より、ラベルの情報を信じられる
+            日本の食卓に合う形で届けます。派手な説明より、ラベルの情報を信じられる
             ほうがいいと思っています。
           </p>
         </div>
@@ -138,14 +134,6 @@ export default function Home() {
               <li key={meal}>{meal}</li>
             ))}
           </ul>
-        </div>
-        <div className="wide-image-frame">
-          <Image
-            src="/images/everyday-table-food.png"
-            alt="Japanese everyday table with miso soup, tofu, tomatoes, and Olive1 EVOO"
-            fill
-            sizes="100vw"
-          />
         </div>
       </section>
     </main>
