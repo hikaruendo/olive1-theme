@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { WaitlistForm } from "@/components/waitlist-form";
 
-const values = [
-  { label: "POLYPHENOL", value: "671", unit: "mg/kg" },
-  { label: "ACIDITY", value: "0.20", unit: "%" },
-  { label: "HARVEST", value: "2025", unit: "" },
+const disclosureItems = [
+  "ポリフェノール値",
+  "酸度",
+  "収穫年",
+  "産地",
+  "品種",
+  "搾油日",
 ];
 
 const meals = [
@@ -55,8 +58,8 @@ export default function Home() {
             お届けします。
           </p>
           <p className="evidence-note">
-            EU 432/2012では、オリーブオイルポリフェノールの表示条件として
-            20gあたり5mg以上が基準にされています。
+            トマトに含まれるカロテノイドは脂溶性なので、油と一緒に摂ると
+            吸収されやすいことが報告されています。
           </p>
         </div>
       </section>
@@ -67,7 +70,7 @@ export default function Home() {
             <p className="script-label">Waitlist</p>
             <h2>入荷前に、選べる情報を先に届けます。</h2>
             <p>
-              入荷日、価格、ラベルの数値が決まったらメールでお知らせします。
+              入荷日、価格、ラベル内容が決まったらメールでお知らせします。
               売り込みというより、ちゃんと選べる情報を先に共有する感じです。
             </p>
           </div>
@@ -78,28 +81,24 @@ export default function Home() {
       <section className="section transparency-section" id="transparency">
         <div className="section-copy">
           <p className="script-label">Transparency</p>
-          <h2>数値まで見えると、選びやすいです。</h2>
+          <h2>ラベルで、ちゃんと選べるようにします。</h2>
           <p>
-            Olive1は香りだけでなく、ポリフェノール671 mg/kg、酸度0.20%、
-            収穫2025年のような判断材料を前に出します。買う前に見たい数字を、
-            ラベルにも商品ページにもそのまま載せます。
+            Olive1は香りだけでなく、検査結果や収穫情報も判断材料として
+            公開する方針です。初回ロットが確定してから、ラベルにも商品ページにも
+            同じ情報を載せます。
           </p>
-          <div className="metric-grid" aria-label="Olive1 label values">
-            {values.map((item) => (
-              <div className="metric-item" key={item.label}>
-                <span>{item.label}</span>
-                <strong>
-                  {item.value}
-                  {item.unit && <small>{item.unit}</small>}
-                </strong>
+          <div className="disclosure-grid" aria-label="Olive1 disclosure items">
+            {disclosureItems.map((item) => (
+              <div className="disclosure-item" key={item}>
+                {item}
               </div>
             ))}
           </div>
         </div>
         <div className="image-frame">
           <Image
-            src="/images/transparency-label.png"
-            alt="Close-up of Olive1 bottle label showing polyphenol, acidity, and harvest values"
+            src="/images/hero-bottle-desktop.png"
+            alt="Olive1 bottle on dark wood with fresh olives"
             fill
             sizes="(max-width: 900px) 100vw, 50vw"
           />
@@ -119,7 +118,7 @@ export default function Home() {
           <p className="script-label">Journey</p>
           <h2>産地を探すところから、ブランドを作っています。</h2>
           <p>
-            どこの畑で、いつ採れて、どんな数値だったか。そこまで見えるEVOOを、
+            どこの畑で、いつ採れて、どんな検査結果だったか。そこまで見えるEVOOを、
             東京の食卓に合う形で届けます。派手な説明より、ラベルの情報を信じられる
             ほうがいいと思っています。
           </p>

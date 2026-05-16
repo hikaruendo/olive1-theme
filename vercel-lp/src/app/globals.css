@@ -404,7 +404,7 @@ h2 {
   object-fit: cover;
 }
 
-.metric-grid {
+.disclosure-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
@@ -413,33 +413,13 @@ h2 {
   background: var(--border-gold);
 }
 
-.metric-item {
+.disclosure-item {
   background: rgba(255, 252, 246, 0.92);
-  padding: 1.1rem;
-}
-
-.metric-item span {
-  display: block;
+  padding: 1rem;
   color: var(--green);
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.metric-item strong {
-  display: block;
-  margin-top: 0.55rem;
-  color: var(--text);
-  font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1;
-}
-
-.metric-item small {
-  margin-left: 0.28rem;
-  color: rgba(26, 26, 24, 0.7);
-  font-family: var(--font-murecho), sans-serif;
-  font-size: 0.86rem;
+  line-height: 1.7;
 }
 
 .table-section {
@@ -521,7 +501,7 @@ h2 {
   }
 
   .reason-grid,
-  .metric-grid {
+  .disclosure-grid {
     grid-template-columns: 1fr;
   }
 
