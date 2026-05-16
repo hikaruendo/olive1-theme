@@ -23,16 +23,24 @@ When importing the Git repository into Vercel, set:
 
 The form posts to `/api/waitlist`.
 
-Set `WAITLIST_WEBHOOK_URL` in Vercel Environment Variables to forward signups to a no-code endpoint such as Make, Zapier, Formspark, or a small database API.
+Set `RESEND_API_KEY` in Vercel Environment Variables to save signups as Resend contacts.
 
-Payload sent to the webhook:
+Optional list routing:
+
+- `RESEND_SEGMENT_ID`: recommended. Adds the contact to a Resend Segment.
+- `RESEND_AUDIENCE_ID`: legacy fallback if the account still uses Audiences.
+
+Each contact is created with:
 
 ```json
 {
   "email": "customer@example.com",
-  "source": "olive1-lp",
-  "submittedAt": "2026-05-16T00:00:00.000Z"
+  "unsubscribed": false,
+  "properties": {
+    "source": "olive1-lp",
+    "submitted_at": "2026-05-16T00:00:00.000Z"
+  }
 }
 ```
 
-Without `WAITLIST_WEBHOOK_URL`, local submissions are accepted but only logged by the Vercel function.
+Without `RESEND_API_KEY`, submissions return a setup error so leads are not silently lost.
