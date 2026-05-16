@@ -51,7 +51,7 @@ export default function Home() {
         </div>
         <div className="hero-content">
           <p className="eyebrow">Tokyo specialty EVOO</p>
-          <h1>毎日のごはんに、透明なオリーブオイルを。</h1>
+          <h1>毎日のごはんに、信頼できるEVOOを。</h1>
           <p className="hero-copy">
             Olive1は、ポリフェノール値、収穫年、酸度をラベルで公開する
             スペシャルティEVOOです。初回ロットの入荷案内を、登録いただいた方から
