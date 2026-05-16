@@ -65,7 +65,7 @@ export default function Home() {
         <div className="waitlist-panel">
           <div className="waitlist-copy">
             <p className="script-label">Waitlist</p>
-            <h2>最初の案内を、LINEみたいに軽く送ります。</h2>
+            <h2>入荷前に、選べる情報を先に届けます。</h2>
             <p>
               入荷日、価格、ラベルの数値が決まったらメールでお知らせします。
               売り込みというより、ちゃんと選べる情報を先に共有する感じです。
