@@ -158,17 +158,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section split-section">
-        <div className="origin-gallery" aria-label="Shodoshima olive grove photos">
-          <div className="image-frame origin-gallery-main">
-            <Image
-              src="/images/shodoshima-grove-wide.jpg"
-              alt="Olive trees growing in a Shodoshima grove"
-              fill
-              sizes="(max-width: 900px) 100vw, 56vw"
-            />
-          </div>
-        </div>
+      <section className="section split-section journey-section">
         <div className="section-copy">
           <p className="script-label">Journey</p>
           <h2>「おいしそう」だけで、選ばないために。</h2>

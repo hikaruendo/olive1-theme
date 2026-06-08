@@ -366,6 +366,14 @@ h2 {
   background: var(--surface-deep);
 }
 
+.journey-section {
+  display: block;
+}
+
+.journey-section .section-copy {
+  max-width: 58rem;
+}
+
 .process-section {
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   background: var(--surface);
@@ -415,15 +423,6 @@ h2 {
 
 .image-frame-grove img {
   object-position: center center;
-}
-
-.origin-gallery {
-  display: grid;
-}
-
-.origin-gallery-main {
-  width: 100%;
-  aspect-ratio: 16 / 10;
 }
 
 .process-media-grid {
@@ -566,9 +565,6 @@ h2 {
     aspect-ratio: 16 / 11;
   }
 
-  .origin-gallery-main {
-    width: 100%;
-  }
 }
 
 @media (max-width: 560px) {
