@@ -427,7 +427,7 @@ h2 {
 
 .process-media-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.86fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.8vw, 1.15rem);
   align-items: stretch;
 }
@@ -437,8 +437,7 @@ h2 {
 }
 
 .process-card-tasting {
-  grid-row: span 2;
-  aspect-ratio: 4 / 5.25;
+  aspect-ratio: 4 / 5;
 }
 
 .process-card img {
@@ -446,7 +445,7 @@ h2 {
 }
 
 .process-card-tasting img {
-  object-position: center center;
+  object-position: center 70%;
 }
 
 .disclosure-grid {
