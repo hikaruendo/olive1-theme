@@ -106,11 +106,11 @@ main {
 
 .hero-media .desktop-hero {
   object-fit: cover;
-  object-position: center center;
+  object-position: center 42%;
 }
 
 .hero-media .mobile-hero {
-  object-position: center center;
+  object-position: center 38%;
 }
 
 .mobile-hero {

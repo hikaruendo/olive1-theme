@@ -33,16 +33,16 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-media">
           <Image
-            src="/images/shodoshima-hands-olives.jpg"
-            alt="Hands checking young olives on an olive branch in Shodoshima"
+            src="/images/shodoshima-grove-wide.jpg"
+            alt="Olive trees growing in a Shodoshima grove"
             fill
             priority
             sizes="(max-width: 900px) 100vw, 52vw"
             className="desktop-hero"
           />
           <Image
-            src="/images/shodoshima-hands-olives.jpg"
-            alt="Hands checking young olives on an olive branch in Shodoshima"
+            src="/images/shodoshima-grove-wide.jpg"
+            alt="Olive trees growing in a Shodoshima grove"
             fill
             priority
             sizes="100vw"
