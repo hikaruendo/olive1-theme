@@ -94,6 +94,44 @@ export default function Home() {
         </figure>
       </section>
 
+      <section className="section process-section">
+        <div className="process-media-grid" aria-label="Shodoshima tasting and production photos">
+          <figure className="image-frame process-card process-card-tasting">
+            <Image
+              src="/images/shodoshima-tasting.jpg"
+              alt="Hands tasting olive oil samples at a glass table"
+              fill
+              sizes="(max-width: 900px) 100vw, 34vw"
+            />
+          </figure>
+          <figure className="image-frame process-card">
+            <Image
+              src="/images/shodoshima-filling-line.jpg"
+              alt="Olive oil bottles lined up beside a filling machine"
+              fill
+              sizes="(max-width: 900px) 50vw, 18vw"
+            />
+          </figure>
+          <figure className="image-frame process-card">
+            <Image
+              src="/images/shodoshima-machine.jpg"
+              alt="Olive oil processing machine in a Shodoshima facility"
+              fill
+              sizes="(max-width: 900px) 50vw, 18vw"
+            />
+          </figure>
+        </div>
+        <div className="section-copy">
+          <p className="script-label">Tasting & Mill</p>
+          <h2>味だけでなく、作られ方も見ます。</h2>
+          <p>
+            複数のオイルを同じ場所で比べて、香り、苦み、辛み、余韻を確認。
+            そのうえで、搾油機や充填まわりも見て、どう扱われているかを記録します。
+            選ぶ前の確認を、ちゃんと積み上げます。
+          </p>
+        </div>
+      </section>
+
       <section className="section transparency-section" id="transparency">
         <div className="section-copy">
           <p className="script-label">Transparency</p>
