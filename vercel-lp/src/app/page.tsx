@@ -33,16 +33,16 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-media">
           <Image
-            src="/images/hero-bottle-mobile.png"
-            alt="Olive1 bottle on a dark wooden table with fresh olives"
+            src="/images/shodoshima-hands-olives.jpg"
+            alt="Hands checking young olives on an olive branch in Shodoshima"
             fill
             priority
             sizes="(max-width: 900px) 100vw, 52vw"
             className="desktop-hero"
           />
           <Image
-            src="/images/hero-bottle-mobile.png"
-            alt="Olive1 bottle on a dark wooden table for mobile hero"
+            src="/images/shodoshima-hands-olives.jpg"
+            alt="Hands checking young olives on an olive branch in Shodoshima"
             fill
             priority
             sizes="100vw"
@@ -128,14 +128,6 @@ export default function Home() {
               alt="Olive trees growing in a Shodoshima grove"
               fill
               sizes="(max-width: 900px) 100vw, 56vw"
-            />
-          </div>
-          <div className="image-frame origin-gallery-detail">
-            <Image
-              src="/images/shodoshima-grove-rows.jpg"
-              alt="Rows of olive trees and dark soil in Shodoshima"
-              fill
-              sizes="(max-width: 900px) 45vw, 18vw"
             />
           </div>
         </div>
