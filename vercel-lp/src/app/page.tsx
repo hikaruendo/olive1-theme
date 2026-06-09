@@ -98,7 +98,7 @@ export default function Home() {
         <div className="process-media-grid" aria-label="Shodoshima tasting and production photos">
           <figure className="image-frame process-card process-card-tasting">
             <Image
-              src="/images/shodoshima-tasting.jpg"
+              src="/images/shodoshima-tasting-cropped.jpg"
               alt="Hands tasting olive oil samples at a glass table"
               fill
               sizes="(max-width: 900px) 100vw, 34vw"
