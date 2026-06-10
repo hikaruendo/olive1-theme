@@ -40,7 +40,7 @@ export function WaitlistForm() {
 
   return (
     <form className="waitlist-form" onSubmit={handleSubmit}>
-      <p className="form-title">発売案内を受け取る</p>
+      <p className="form-title">旅の便りと入荷案内を受け取る</p>
       <div className="form-field">
         <label htmlFor="email">メールアドレス</label>
         <input
@@ -71,7 +71,7 @@ export function WaitlistForm() {
         </button>
       </div>
       <p className={`form-message ${status === "error" ? "is-error" : ""}`}>
-        {message || "入荷のお知らせにのみ使用します。"}
+        {message || "旅の便りと入荷のお知らせにのみ使用します。"}
       </p>
     </form>
   );
