@@ -98,7 +98,6 @@ export default function Home() {
             <p>
               登録いただいた方には、旅の進み具合と、初回ロットの入荷日・価格・
               検査値が決まったタイミングでメールを送ります。
-              売り込みというより、ちゃんと選べる情報を先に共有する感じです。
             </p>
           </div>
           <WaitlistForm />
@@ -113,8 +112,6 @@ export default function Home() {
             2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、
             畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べてきました。
             6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。
-            だから秋、収穫期にもう一度行きます。その先は地中海。
-            最初の一本が決まるまでの過程は、ここで全部公開します。
           </p>
           <ul className="episode-list">
             <li>第2話：秋、収穫期の小豆島</li>
@@ -159,44 +156,6 @@ export default function Home() {
         </figure>
       </section>
 
-      <section className="section process-section">
-        <div className="process-media-grid" aria-label="Shodoshima tasting and production photos">
-          <figure className="image-frame process-card process-card-tasting">
-            <Image
-              src="/images/shodoshima-tasting-cropped.jpg"
-              alt="Hands tasting olive oil samples at a glass table"
-              fill
-              sizes="(max-width: 900px) 100vw, 34vw"
-            />
-          </figure>
-          <figure className="image-frame process-card">
-            <Image
-              src="/images/shodoshima-filling-line.jpg"
-              alt="Olive oil bottles lined up beside a filling machine"
-              fill
-              sizes="(max-width: 900px) 50vw, 18vw"
-            />
-          </figure>
-          <figure className="image-frame process-card">
-            <Image
-              src="/images/shodoshima-machine.jpg"
-              alt="Olive oil processing machine in a Shodoshima facility"
-              fill
-              sizes="(max-width: 900px) 50vw, 18vw"
-            />
-          </figure>
-        </div>
-        <div className="section-copy">
-          <p className="script-label">Tasting & Mill</p>
-          <h2>味だけでなく、作られ方も見ます。</h2>
-          <p>
-            複数のオイルを同じ場所で比べて、香り、苦み、辛み、余韻を確認。
-            そのうえで、搾油機や充填まわりも見て、どう扱われているかを記録します。
-            選ぶ前の確認を、ちゃんと積み上げます。
-          </p>
-        </div>
-      </section>
-
       <section className="section transparency-section" id="transparency">
         <div className="section-copy">
           <p className="script-label">Transparency</p>
@@ -226,14 +185,15 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="image-frame image-frame-grove">
+        <figure className="image-frame image-frame-document">
           <Image
-            src="/images/shodoshima-branch-detail.jpg"
-            alt="Olive branches with young olives in Shodoshima"
+            src="/images/coa-sample.jpg"
+            alt="Laboratory test report for extra virgin olive oil showing acidity and UV values"
             fill
             sizes="(max-width: 900px) 100vw, 50vw"
           />
-        </div>
+          <figcaption>検査分析書（CoA）の例：仕入れ判断に使っている実物です</figcaption>
+        </figure>
       </section>
 
       <section className="section table-section" id="table">

@@ -381,9 +381,8 @@ h2 {
   position: relative;
   margin: 0;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
-  border: 1px solid rgba(26, 26, 24, 0.12);
-  background: #3a2818;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-deep);
 }
 
 .journey-clip video {
@@ -397,10 +396,10 @@ h2 {
 .journey-clip figcaption {
   position: absolute;
   inset: auto 0 0 0;
-  padding: 2.2rem 0.9rem 0.75rem;
-  background: linear-gradient(180deg, transparent, rgba(20, 18, 14, 0.66));
+  padding: 1.4rem 0.8rem 0.55rem;
+  background: linear-gradient(180deg, transparent, rgba(20, 18, 14, 0.45));
   color: var(--ivory);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -462,11 +461,6 @@ h2 {
   color: var(--text);
 }
 
-.process-section {
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  background: var(--surface);
-}
-
 .section-copy {
   max-width: 41rem;
 }
@@ -509,31 +503,28 @@ h2 {
   object-position: center center;
 }
 
-.image-frame-grove img {
-  object-position: center center;
+.image-frame-document {
+  background: #ffffff;
 }
 
-.process-media-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.75rem, 1.8vw, 1.15rem);
-  align-items: stretch;
+.image-frame-document::after {
+  background: none;
 }
 
-.process-card {
-  aspect-ratio: 4 / 5;
+.image-frame-document img {
+  object-fit: cover;
+  object-position: center top;
 }
 
-.process-card-tasting {
-  aspect-ratio: 4 / 5;
-}
-
-.process-card img {
-  object-position: center center;
-}
-
-.process-card-tasting img {
-  object-position: center 70%;
+.image-frame-document figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.6rem 0.95rem;
+  background: rgba(250, 248, 244, 0.94);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .disclosure-grid {
@@ -643,21 +634,6 @@ h2 {
 
   .journey-grid {
     order: 2;
-  }
-
-  .journey-clip {
-    aspect-ratio: 1 / 1;
-  }
-
-  .process-media-grid {
-    order: 2;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .process-card-tasting {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    aspect-ratio: 16 / 11;
   }
 
 }
