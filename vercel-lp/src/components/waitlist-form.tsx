@@ -26,21 +26,21 @@ export function WaitlistForm() {
       const data = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(data.message ?? "登録できませんでした。");
+        throw new Error(data.message ?? "参加できませんでした。");
       }
 
       setStatus("success");
-      setMessage(data.message ?? "登録しました。");
+      setMessage(data.message ?? "クラブに参加しました。");
       event.currentTarget.reset();
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "登録できませんでした。");
+      setMessage(error instanceof Error ? error.message : "参加できませんでした。");
     }
   }
 
   return (
     <form className="waitlist-form" onSubmit={handleSubmit}>
-      <p className="form-title">旅の便りと入荷案内を受け取る</p>
+      <p className="form-title">Olive1クラブに参加する</p>
       <div className="form-field">
         <label htmlFor="email">メールアドレス</label>
         <input
@@ -53,9 +53,9 @@ export function WaitlistForm() {
         />
       </div>
       <fieldset className="reason-fieldset">
-        <legend>気になっていること</legend>
+        <legend>クラブで知りたいこと</legend>
         <div className="reason-grid">
-          {["味が気になる", "健康のため", "料理に使いたい", "ギフトにしたい"].map(
+          {["味が気になる", "選び方を知りたい", "料理に使いたい", "ギフトにしたい"].map(
             (reason) => (
               <label className="reason-option" key={reason}>
                 <input name="reason" type="radio" value={reason} required />
@@ -67,11 +67,11 @@ export function WaitlistForm() {
       </fieldset>
       <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "送信中" : "入荷案内に登録する"}
+          {status === "loading" ? "送信中" : "クラブに参加する"}
         </button>
       </div>
       <p className={`form-message ${status === "error" ? "is-error" : ""}`}>
-        {message || "旅の便りと入荷のお知らせにのみ使用します。"}
+        {message || "旅の記録と先行案内にのみ使用します。"}
       </p>
     </form>
   );

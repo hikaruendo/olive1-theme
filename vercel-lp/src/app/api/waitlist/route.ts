@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   if (!resendApiKey) {
     console.error("[waitlist]", { configured: false });
     return NextResponse.json(
-      { message: "登録先の設定がまだです。" },
+      { message: "クラブ受付の設定がまだです。" },
       { status: 503 },
     );
   }
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
   if (error && !isAlreadyRegisteredError(error)) {
     console.error("[waitlist]", { error });
     return NextResponse.json(
-      { message: "登録先への送信に失敗しました。" },
+      { message: "クラブ受付への送信に失敗しました。" },
       { status: 502 },
     );
   }
@@ -82,5 +82,5 @@ export async function POST(request: Request) {
     });
   }
 
-  return NextResponse.json({ message: "登録しました。案内をお待ちください。" });
+  return NextResponse.json({ message: "Olive1クラブに参加しました。次の案内をお待ちください。" });
 }

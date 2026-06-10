@@ -55,7 +55,7 @@ export default function Home() {
         <nav>
           <a href="#journey">旅の記録</a>
           <a href="#transparency">品質表示</a>
-          <a href="#waitlist">登録</a>
+          <a href="#waitlist">クラブ</a>
         </nav>
       </header>
 
@@ -93,11 +93,12 @@ export default function Home() {
       <section className="waitlist-band" id="waitlist">
         <div className="waitlist-panel">
           <div className="waitlist-copy">
-            <p className="script-label">Waitlist</p>
-            <h2>この旅の続きを、最前列で。</h2>
+            <p className="script-label">Olive1 Club</p>
+            <h2>先に知れる、食べるのが好きな人のクラブです。</h2>
             <p>
-              登録いただいた方には、旅の進み具合と、初回ロットの入荷日・価格・
-              検査値が決まったタイミングでメールを送ります。
+              Olive1クラブでは、産地を探す旅の続き、初回ロットの入荷日・価格・
+              検査値が決まったタイミングの先行案内をお届けします。
+              まずは一緒に選ぶための、小さな案内所みたいな場所です。
             </p>
           </div>
           <WaitlistForm />
