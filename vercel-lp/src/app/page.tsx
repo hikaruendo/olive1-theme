@@ -43,10 +43,10 @@ const disclosureItems = [
 ];
 
 const journeyClips = [
-  { src: "/videos/journey-ferry.mp4", poster: "/images/posters/journey-ferry.jpg", num: "01", caption: "フェリーで島へ", w: 1280, h: 720 },
-  { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く", w: 1280, h: 720 },
-  { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る", w: 1280, h: 720 },
-  { src: "/videos/journey-tasting-oils.mp4", poster: "/images/posters/journey-tasting-oils.jpg", num: "04", caption: "飲み比べる", w: 490, h: 660 },
+  { src: "/videos/journey-ferry.mp4", poster: "/images/posters/journey-ferry.jpg", num: "01", caption: "フェリーで島へ" },
+  { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く" },
+  { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る" },
+  { src: "/videos/journey-tasting-oils.mp4", poster: "/images/posters/journey-tasting-oils.jpg", num: "04", caption: "飲み比べる" },
 ];
 
 const articles = [
@@ -320,8 +320,8 @@ export default function Home() {
               </div>
               <div className="sip-visual">
                 <Image
-                  src="/images/posters/journey-tasting.jpg"
-                  alt="EVOOを飲み比べる“喉テスト”のひと口"
+                  src="/images/sip-oil.jpg"
+                  alt="小皿に注いだEVOOひと口分の“喉テスト”"
                   fill
                   sizes="(max-width: 860px) 100vw, 30vw"
                 />
@@ -341,7 +341,7 @@ export default function Home() {
             <div className="clips">
               {journeyClips.map((clip) => (
                 <figure className="clip" key={clip.src}>
-                  <div className="vid" style={{ aspectRatio: `${clip.w} / ${clip.h}` }}>
+                  <div className="vid">
                     <video
                       src={clip.src}
                       poster={clip.poster}

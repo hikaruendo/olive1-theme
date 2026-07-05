@@ -708,10 +708,11 @@ h3 {
   content: "";
   position: absolute;
   inset: 0;
+  /* subtle warm glow only — keep the real photo readable */
   background: radial-gradient(
-    circle at 50% 40%,
-    rgba(232, 160, 44, 0.28),
-    transparent 62%
+    circle at 50% 38%,
+    rgba(232, 160, 44, 0.12),
+    transparent 68%
   );
 }
 
@@ -731,8 +732,9 @@ h3 {
 }
 .clip .vid {
   position: relative;
-  /* aspect-ratio is set per clip from the video's native size, so the
-     footage shows at its own proportions without stretching or cropping */
+  /* uniform cell size across clips; object-fit: contain keeps each video at
+     its own proportions (no stretch/crop), letterboxing onto the soft bg */
+  aspect-ratio: 16 / 9;
   border-radius: var(--r);
   overflow: hidden;
   background: var(--green-soft);
