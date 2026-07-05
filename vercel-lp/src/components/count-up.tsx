@@ -25,18 +25,28 @@ export function CountUp({ to, decimals = 0, suffix = "", className }: Props) {
 
     let raf = 0;
     let start: number | null = null;
+    let finished = false;
+    const finish = () => {
+      finished = true;
+      setValue(to);
+    };
+    // Fallback: converge to the final value even where IntersectionObserver /
+    // rAF are throttled or never fire (and never restart once finished).
+    const settle = window.setTimeout(finish, 1400);
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+          if (!entry.isIntersecting || finished) return;
           io.unobserve(entry.target);
           const step = (t: number) => {
+            if (finished) return;
             start = start ?? t;
             const p = Math.min((t - start) / 900, 1);
             const eased = 0.2 + 0.8 * p * (2 - p);
             setValue(to * eased);
             if (p < 1) raf = requestAnimationFrame(step);
-            else setValue(to);
+            else finish();
           };
           raf = requestAnimationFrame(step);
         });
@@ -47,6 +57,7 @@ export function CountUp({ to, decimals = 0, suffix = "", className }: Props) {
     return () => {
       io.disconnect();
       cancelAnimationFrame(raf);
+      clearTimeout(settle);
     };
   }, [to]);
 

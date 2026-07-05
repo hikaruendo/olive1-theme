@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { CountUp } from "@/components/count-up";
+import { SiteFooter } from "@/components/site-footer";
+import { oils } from "@/lib/oils";
 
 const promises = [
   {
@@ -37,33 +40,6 @@ const disclosureItems = [
   "収穫年",
   "産地・品種",
   "搾油日",
-];
-
-const oils = [
-  {
-    tag: "LIGHT",
-    sku: "Light ／ やさしい",
-    title: "朝と、生野菜に。",
-    strength: 1,
-    use: "パン、マリネ、サラダ。香りをそっと添えたいときに。",
-    variety: "品種：アルベキーナ系（予定）",
-  },
-  {
-    tag: "MEDIUM",
-    sku: "Medium ／ ふつう",
-    title: "毎日のごはんに。",
-    strength: 2,
-    use: "味噌汁・豆腐・トマト。いちばん使い回しがきく一本。",
-    variety: "品種：ブレンド（予定）",
-  },
-  {
-    tag: "INTENSE",
-    sku: "Intense ／ しっかり",
-    title: "肉と、仕上げに。",
-    strength: 3,
-    use: "パスタ、焼いた肉、スープの仕上げのひと回しに。",
-    variety: "品種：コラティーナ系（予定）",
-  },
 ];
 
 const journeyClips = [
@@ -292,16 +268,16 @@ export default function Home() {
             </div>
             <div className="oils-grid">
               {oils.map((oil) => (
-                <article className="oil" key={oil.tag}>
-                  <div className="cap">
+                <article className="oil" key={oil.slug}>
+                  <Link className="cap" href={`/oils/${oil.slug}`} aria-label={`${oil.sku} の詳細`}>
                     <Image
-                      src="/images/hero-bottle-desktop.png"
+                      src={oil.image}
                       alt={`${oil.sku} のボトル`}
                       fill
                       sizes="(max-width: 860px) 100vw, 33vw"
                     />
                     <span className="tag">{oil.tag}</span>
-                  </div>
+                  </Link>
                   <div className="body">
                     <span className="sku">{oil.sku}</span>
                     <h3>{oil.title}</h3>
@@ -315,9 +291,9 @@ export default function Home() {
                     </div>
                     <p className="use">{oil.use}</p>
                     <p className="variety">{oil.variety}</p>
-                    <a href="#club" className="btn btn-citrus">
-                      先行案内を受け取る
-                    </a>
+                    <Link href={`/oils/${oil.slug}`} className="btn btn-citrus">
+                      この一本を見る
+                    </Link>
                   </div>
                 </article>
               ))}
@@ -538,49 +514,7 @@ export default function Home() {
       </main>
 
       {/* SECTION: footer */}
-      <footer>
-        <div className="wrap">
-          <div className="foot-grid">
-            <div>
-              <a className="brand" href="#top">
-                Olive<span style={{ color: "var(--citrus)" }}>1</span>
-              </a>
-              <p style={{ marginTop: 12, maxWidth: "34ch", color: "#a7b28c" }}>
-                東京発のスペシャルティEVOO。数値を公開し、産地を自分の足で確かめて、毎日のごはんに届けます。
-              </p>
-            </div>
-            <div>
-              <h4>探す</h4>
-              <ul>
-                <li><a href="#oils">ラインナップ</a></li>
-                <li><a href="#transparency">品質の見方</a></li>
-                <li><a href="#journey">旅の記録</a></li>
-                <li><a href="#journal">読み物</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>クラブ</h4>
-              <ul>
-                <li><a href="#club">クラブに入る</a></li>
-                <li><a href="#faq">よくある質問</a></li>
-                <li><a href="#about">考え方</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Follow</h4>
-              <ul>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">YouTube</a></li>
-                <li><a href="#">LINE</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="foot-btm">
-            <span>© 2026 Olive1</span>
-            <span>特定商取引法 · プライバシーポリシー · クラブ規約</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
