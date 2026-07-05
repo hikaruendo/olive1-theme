@@ -43,10 +43,10 @@ const disclosureItems = [
 ];
 
 const journeyClips = [
-  { src: "/videos/journey-ferry.mp4", poster: "/images/posters/journey-ferry.jpg", num: "01", caption: "フェリーで島へ" },
-  { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く" },
-  { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る" },
-  { src: "/videos/journey-tasting.mp4", poster: "/images/posters/journey-tasting.jpg", num: "04", caption: "飲み比べる" },
+  { src: "/videos/journey-ferry.mp4", poster: "/images/posters/journey-ferry.jpg", num: "01", caption: "フェリーで島へ", w: 1280, h: 720 },
+  { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く", w: 1280, h: 720 },
+  { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る", w: 1280, h: 720 },
+  { src: "/videos/journey-tasting-oils.mp4", poster: "/images/posters/journey-tasting-oils.jpg", num: "04", caption: "飲み比べる", w: 490, h: 660 },
 ];
 
 const articles = [
@@ -341,7 +341,7 @@ export default function Home() {
             <div className="clips">
               {journeyClips.map((clip) => (
                 <figure className="clip" key={clip.src}>
-                  <div className="vid">
+                  <div className="vid" style={{ aspectRatio: `${clip.w} / ${clip.h}` }}>
                     <video
                       src={clip.src}
                       poster={clip.poster}

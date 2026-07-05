@@ -724,13 +724,15 @@ h3 {
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 32px;
+  align-items: start;
 }
 .clip {
   margin: 0;
 }
 .clip .vid {
   position: relative;
-  aspect-ratio: 3 / 4;
+  /* aspect-ratio is set per clip from the video's native size, so the
+     footage shows at its own proportions without stretching or cropping */
   border-radius: var(--r);
   overflow: hidden;
   background: var(--green-soft);
@@ -738,7 +740,7 @@ h3 {
 .clip video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 .clip figcaption {
