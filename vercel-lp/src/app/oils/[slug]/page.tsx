@@ -194,7 +194,7 @@ export default async function OilPage({
               <Link href="/#journey" className="btn btn-ghost">この産地を旅で見る</Link>
             </div>
             <figure className="media" style={{ margin: 0 }}>
-              <Image src="/images/shodoshima-grove-wide.jpg" alt="小豆島のオリーブ畑" fill sizes="(max-width: 860px) 100vw, 46vw" />
+              <Image src="/images/mill-press.jpg" alt="岬工房の搾油機（搾油の現場）" fill sizes="(max-width: 860px) 100vw, 46vw" />
             </figure>
           </div>
         </section>
