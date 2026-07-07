@@ -19,8 +19,10 @@ export function CountUp({ to, decimals = 0, suffix = "", className }: Props) {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setValue(to);
-      return;
+      // Snap to the final value on the next frame (avoids a synchronous
+      // setState in the effect body) instead of animating.
+      const snap = requestAnimationFrame(() => setValue(to));
+      return () => cancelAnimationFrame(snap);
     }
 
     let raf = 0;

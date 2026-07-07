@@ -1500,3 +1500,128 @@ footer a:hover {
     display: none;
   }
 }
+
+/* ---------- journal index card dek ---------- */
+.art .art-dek {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+/* ---------- article (journal detail) ---------- */
+.article {
+  padding-top: clamp(8px, 2vw, 20px);
+}
+.article-head {
+  max-width: 760px;
+  text-align: center;
+  padding-top: 10px;
+}
+.article-head h1 {
+  font-size: clamp(26px, 4.6vw, 42px);
+  margin: 14px 0 0;
+}
+.article-dek {
+  font-size: clamp(15px, 1.7vw, 17px);
+  color: var(--ink-soft);
+  line-height: 1.85;
+  margin: 16px auto 0;
+  max-width: 54ch;
+}
+.article-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--ink-mute);
+  margin-top: 16px;
+}
+.article-hero-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: clamp(24px, 4vw, 40px);
+  background: var(--green-soft);
+}
+.article-hero-media img {
+  object-fit: cover;
+}
+
+.prose {
+  max-width: 720px;
+  margin: clamp(28px, 5vw, 48px) auto 0;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h2 {
+  font-size: clamp(20px, 3vw, 27px);
+  letter-spacing: -0.01em;
+  margin: 44px 0 14px;
+}
+.prose p {
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+.prose ul {
+  list-style: none;
+  margin: 4px 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.prose li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+.prose li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 11px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--citrus);
+}
+.prose .callout {
+  background: var(--green-soft);
+  border-left: 3px solid var(--green);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--green-deep);
+  margin: 6px 0 24px;
+}
+.prose blockquote {
+  margin: 26px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--citrus);
+  font-weight: 700;
+  font-size: clamp(17px, 2.4vw, 21px);
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+/* ---------- compact club CTA (journal pages) ---------- */
+.club-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 44px);
+  flex-wrap: wrap;
+}
+.club-cta > div {
+  max-width: 60ch;
+}
+.club-cta .btn {
+  flex-shrink: 0;
+}
