@@ -19,7 +19,7 @@ export function SiteFooter() {
               <li><Link href="/oils/medium">ラインナップ</Link></li>
               <li><Link href="/#transparency">品質の見方</Link></li>
               <li><Link href="/#journey">旅の記録</Link></li>
-              <li><Link href="/#journal">読み物</Link></li>
+              <li><Link href="/journal">読み物</Link></li>
             </ul>
           </div>
           <div>
@@ -33,9 +33,11 @@ export function SiteFooter() {
           <div>
             <h4>Follow</h4>
             <ul>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">YouTube</a></li>
-              <li><a href="#">LINE</a></li>
+              <li>
+                <a href="https://instagram.com/olive1_official" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
             </ul>
           </div>
         </div>
