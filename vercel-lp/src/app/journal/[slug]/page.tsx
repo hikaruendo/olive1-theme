@@ -104,6 +104,24 @@ export default async function ArticlePage({
               <Block block={block} key={i} />
             ))}
           </div>
+
+          {article.video && (
+            <div className="wrap article-video">
+              <p className="label" style={{ justifyContent: "center" }}>
+                Watch ／ 動画で見る
+              </p>
+              <div className="reel">
+                <video
+                  src={article.video}
+                  poster={article.videoPoster}
+                  controls
+                  muted
+                  playsInline
+                  preload="none"
+                />
+              </div>
+            </div>
+          )}
         </article>
 
         {/* SECTION: related */}

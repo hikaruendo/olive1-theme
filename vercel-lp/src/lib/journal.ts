@@ -19,6 +19,8 @@ export type Article = {
   keywords: string[];
   blocks: JournalBlock[];
   related: string[];
+  video?: string; // optional 9:16 reel embedded in the article
+  videoPoster?: string;
 };
 
 export const articles: Article[] = [
@@ -30,6 +32,8 @@ export const articles: Article[] = [
     hero: "/images/sip-oil.jpg",
     readMin: 4,
     keywords: ["オリーブオイル 本物", "見分け方", "ポリフェノール", "健康効果", "オレオカンタール"],
+    video: "/videos/reel-goodevoo.mp4",
+    videoPoster: "/images/posters/reel-goodevoo.jpg",
     blocks: [
       { type: "p", text: "「良いオリーブオイルってどう選ぶの？」と聞かれたら、まずおすすめするのが“喉テスト”です。特別な道具はいりません。小皿とスプーン、そして自分の喉があれば十分です。" },
       { type: "h", text: "なぜ“喉”なのか" },
@@ -86,6 +90,8 @@ export const articles: Article[] = [
     hero: "/images/shodoshima-grove-wide.jpg",
     readMin: 5,
     keywords: ["国産 オリーブオイル", "値段", "値上げ", "小豆島", "違い"],
+    video: "/videos/reel-domestic.mp4",
+    videoPoster: "/images/posters/reel-domestic.jpg",
     blocks: [
       { type: "p", text: "小豆島などの国産エクストラバージンオリーブオイルは、海外産の何倍もの値段がつくことがあります。「高すぎない？」と感じるのは自然です。でも、その背景を知ると見え方が変わります。" },
       { type: "h", text: "① 収量が少ない" },

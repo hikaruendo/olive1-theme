@@ -327,11 +327,26 @@ export default function Home() {
         {/* SECTION: journey (videos) */}
         <section className="section journey" id="journey">
           <div className="wrap">
-            <p className="label">The Journey ／ 旅の記録</p>
-            <h2>第1話は、小豆島。</h2>
-            <p className="lead">
-              2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
-            </p>
+            <div className="journey-top">
+              <div className="journey-intro">
+                <p className="label">The Journey ／ 旅の記録</p>
+                <h2>第1話は、小豆島。</h2>
+                <p className="lead">
+                  2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
+                </p>
+              </div>
+              <figure className="journey-reel">
+                <video
+                  src="/videos/reel-journey.mp4"
+                  poster="/images/posters/reel-journey.jpg"
+                  controls
+                  muted
+                  playsInline
+                  preload="none"
+                />
+                <figcaption>第1話ダイジェスト（動画）</figcaption>
+              </figure>
+            </div>
             <div className="clips">
               {journeyClips.map((clip) => (
                 <figure className="clip" key={clip.src}>
