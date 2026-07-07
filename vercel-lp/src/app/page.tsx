@@ -452,8 +452,8 @@ export default function Home() {
             </div>
             <figure className="media" style={{ margin: 0 }}>
               <Image
-                src="/images/journey-grove.png"
-                alt="毎日の食卓に使うEVOO"
+                src="/images/usage-tomato-evoo.jpg"
+                alt="スライスしたトマトにEVOOをひと回しかける"
                 fill
                 sizes="(max-width: 860px) 100vw, 46vw"
               />
