@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const interests = ["毎日使い", "ギフト", "飲む健康", "レシピ"];
+
 export function WaitlistForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
@@ -13,9 +15,10 @@ export function WaitlistForm() {
     setStatus("loading");
     setMessage("");
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const email = String(formData.get("email") ?? "");
-    const reason = String(formData.get("reason") ?? "");
+    const reason = formData.getAll("reason").map(String).join("・");
 
     try {
       const response = await fetch("/api/waitlist", {
@@ -31,7 +34,7 @@ export function WaitlistForm() {
 
       setStatus("success");
       setMessage(data.message ?? "クラブに参加しました。");
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "参加できませんでした。");
@@ -53,25 +56,31 @@ export function WaitlistForm() {
         />
       </div>
       <fieldset className="reason-fieldset">
-        <legend>クラブで知りたいこと</legend>
+        <legend>興味のあること（任意・複数可）</legend>
         <div className="reason-grid">
-          {["味が気になる", "選び方を知りたい", "料理に使いたい", "ギフトにしたい"].map(
-            (reason) => (
-              <label className="reason-option" key={reason}>
-                <input name="reason" type="radio" value={reason} required />
-                <span>{reason}</span>
-              </label>
-            ),
-          )}
+          {interests.map((reason) => (
+            <label className="reason-option" key={reason}>
+              <input
+                name="reason"
+                type="checkbox"
+                value={reason}
+                defaultChecked={reason === "毎日使い"}
+              />
+              <span>{reason}</span>
+            </label>
+          ))}
         </div>
       </fieldset>
       <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "送信中" : "クラブに参加する"}
+          {status === "loading" ? "送信中" : "クラブに入る"}
         </button>
       </div>
-      <p className={`form-message ${status === "error" ? "is-error" : ""}`}>
-        {message || "旅の記録と先行案内にのみ使用します。"}
+      <p
+        className={`form-message ${status === "error" ? "is-error" : ""}`}
+        style={status === "success" ? { color: "var(--green)", fontWeight: 600 } : undefined}
+      >
+        {message || "いつでも解除できます。しつこいメールは送りません。"}
       </p>
     </form>
   );

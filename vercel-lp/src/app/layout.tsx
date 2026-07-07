@@ -1,40 +1,31 @@
 import type { Metadata } from "next";
-import {
-  Murecho,
-  Noto_Sans_JP,
-  Noto_Serif_JP,
-  Playfair_Display,
-} from "next/font/google";
+import { Zen_Kaku_Gothic_New, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const zenKaku = Zen_Kaku_Gothic_New({
+  variable: "--font-jp",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["300", "400", "500", "700", "900"],
 });
 
-const notoSansJp = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
-const notoSerifJp = Noto_Serif_JP({
-  variable: "--font-noto-serif-jp",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-});
-
-const murecho = Murecho({
-  variable: "--font-murecho",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Olive1 | Specialty EVOO from Tokyo",
+  title:
+    "Olive1 | 見えるEVOO、毎日のごはんに｜スペシャルティ エクストラバージンオリーブオイル",
   description:
-    "Olive1 is a Tokyo specialty EVOO brand sharing polyphenol value, harvest year, and acidity on the label.",
+    "ポリフェノール量・酸度・収穫年を、測定法まで添えてラベルに公開する、東京発のスペシャルティEVOO（エクストラバージンオリーブオイル）。産地を自分の足で確かめる旅ごと公開中。事前登録受付中。",
+  openGraph: {
+    title: "Olive1 | 見えるEVOO、毎日のごはんに",
+    description:
+      "数値を公開し、産地を自分の足で確かめて届ける、東京発のスペシャルティEVOO。事前登録受付中。",
+    locale: "ja_JP",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -45,9 +36,17 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${playfair.variable} ${notoSansJp.variable} ${notoSerifJp.variable} ${murecho.variable} h-full antialiased`}
+      className={`${zenKaku.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Fontshare: Latin display + accent (Next hoists <link> into <head>) */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap"
+        />
+        {children}
+      </body>
     </html>
   );
 }
