@@ -5,6 +5,7 @@ import { WaitlistForm } from "@/components/waitlist-form";
 import { CountUp } from "@/components/count-up";
 import { SiteFooter } from "@/components/site-footer";
 import { oils } from "@/lib/oils";
+import { articles } from "@/lib/journal";
 
 const promises = [
   {
@@ -47,13 +48,6 @@ const journeyClips = [
   { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く" },
   { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る" },
   { src: "/videos/journey-tasting-oils.mp4", poster: "/images/posters/journey-tasting-oils.jpg", num: "04", caption: "飲み比べる" },
-];
-
-const articles = [
-  { cat: "HOW-TO", title: "喉テストのやり方：良いEVOOの見分け方", img: "/images/posters/journey-tasting.jpg" },
-  { cat: "BASICS", title: "ラベルの読み方：ポリフェノール・酸度・収穫年", img: "/images/transparency-label.png" },
-  { cat: "MARKET", title: "なぜ国産EVOOは高いのか", img: "/images/shodoshima-grove-wide.jpg" },
-  { cat: "STORAGE", title: "流通で劣化する話：光・熱・時間", img: "/images/hero-bottle-desktop.png" },
 ];
 
 const meals = [
@@ -333,11 +327,26 @@ export default function Home() {
         {/* SECTION: journey (videos) */}
         <section className="section journey" id="journey">
           <div className="wrap">
-            <p className="label">The Journey ／ 旅の記録</p>
-            <h2>第1話は、小豆島。</h2>
-            <p className="lead">
-              2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
-            </p>
+            <div className="journey-top">
+              <div className="journey-intro">
+                <p className="label">The Journey ／ 旅の記録</p>
+                <h2>第1話は、小豆島。</h2>
+                <p className="lead">
+                  2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
+                </p>
+              </div>
+              <figure className="journey-reel">
+                <video
+                  src="/videos/reel-journey.mp4"
+                  poster="/images/posters/reel-journey.jpg"
+                  controls
+                  muted
+                  playsInline
+                  preload="none"
+                />
+                <figcaption>第1話ダイジェスト（動画）</figcaption>
+              </figure>
+            </div>
             <div className="clips">
               {journeyClips.map((clip) => (
                 <figure className="clip" key={clip.src}>
@@ -420,21 +429,21 @@ export default function Home() {
             <h2>目利きの、読みもの。</h2>
             <div className="jr-grid">
               {articles.map((a) => (
-                <a className="art" href="#journal" key={a.title}>
+                <Link className="art" href={`/journal/${a.slug}`} key={a.slug}>
                   <div className="media">
-                    <Image src={a.img} alt={a.title} fill sizes="(max-width: 520px) 100vw, 25vw" />
+                    <Image src={a.hero} alt={a.title} fill sizes="(max-width: 520px) 100vw, 25vw" />
                   </div>
                   <div className="body">
                     <div className="cat">{a.cat}</div>
                     <h3>{a.title}</h3>
                     <span className="more">読む →</span>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
-            <a href="#journal" className="btn btn-ghost" style={{ marginTop: 28 }}>
+            <Link href="/journal" className="btn btn-ghost" style={{ marginTop: 28 }}>
               記事一覧へ
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -458,8 +467,8 @@ export default function Home() {
             </div>
             <figure className="media" style={{ margin: 0 }}>
               <Image
-                src="/images/journey-grove.png"
-                alt="毎日の食卓に使うEVOO"
+                src="/images/usage-tomato-evoo.jpg"
+                alt="スライスしたトマトにEVOOをひと回しかける"
                 fill
                 sizes="(max-width: 860px) 100vw, 46vw"
               />
