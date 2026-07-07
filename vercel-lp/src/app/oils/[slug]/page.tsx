@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { CountUp } from "@/components/count-up";
+import { StrengthTile } from "@/components/strength-tile";
 import { getOil, oils } from "@/lib/oils";
 
 type Params = { slug: string };
@@ -88,14 +89,11 @@ export default async function OilPage({
           <div className="wrap pdp-grid">
             <div className="pdp-gallery">
               <div className="media">
-                <Image
-                  src={oil.image}
-                  alt={`${oil.sku} のボトル`}
-                  fill
-                  priority
-                  sizes="(max-width: 860px) 100vw, 50vw"
+                <StrengthTile
+                  tag={oil.tag}
+                  strength={oil.strength}
+                  sub={oil.sku.split("／")[1]?.trim()}
                 />
-                <span className="pdp-tag">{oil.tag}</span>
               </div>
             </div>
             <div className="pdp-info">
@@ -232,8 +230,11 @@ export default async function OilPage({
               {others.map((o) => (
                 <Link className="cross" href={`/oils/${o.slug}`} key={o.slug}>
                   <div className="media">
-                    <Image src={o.image} alt={`${o.sku} のボトル`} fill sizes="(max-width: 860px) 100vw, 50vw" />
-                    <span className="tag">{o.tag}</span>
+                    <StrengthTile
+                      tag={o.tag}
+                      strength={o.strength}
+                      sub={o.sku.split("／")[1]?.trim()}
+                    />
                   </div>
                   <div className="cross-body">
                     <span className="sku">{o.sku}</span>

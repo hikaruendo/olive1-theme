@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { CountUp } from "@/components/count-up";
+import { StrengthTile } from "@/components/strength-tile";
 import { SiteFooter } from "@/components/site-footer";
 import { oils } from "@/lib/oils";
 import { articles } from "@/lib/journal";
@@ -264,13 +265,11 @@ export default function Home() {
               {oils.map((oil) => (
                 <article className="oil" key={oil.slug}>
                   <Link className="cap" href={`/oils/${oil.slug}`} aria-label={`${oil.sku} の詳細`}>
-                    <Image
-                      src={oil.image}
-                      alt={`${oil.sku} のボトル`}
-                      fill
-                      sizes="(max-width: 860px) 100vw, 33vw"
+                    <StrengthTile
+                      tag={oil.tag}
+                      strength={oil.strength}
+                      sub={oil.sku.split("／")[1]?.trim()}
                     />
-                    <span className="tag">{oil.tag}</span>
                   </Link>
                   <div className="body">
                     <span className="sku">{oil.sku}</span>

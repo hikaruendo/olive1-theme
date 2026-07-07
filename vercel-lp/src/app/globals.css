@@ -353,8 +353,8 @@ h3 {
 }
 .hero-badge {
   position: absolute;
-  left: -8px;
-  top: 22px;
+  left: 16px;
+  top: 16px;
   background: #fff;
   border-radius: var(--r-pill);
   box-shadow: var(--shadow);
@@ -1670,6 +1670,100 @@ footer a:hover {
     justify-self: center;
     margin-top: 8px;
   }
+}
+
+/* ---------- strength tile (typographic SKU, replaces product photo) ---------- */
+.strength-tile {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(16px, 3vw, 26px);
+  overflow: hidden;
+}
+.strength-tile .st-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.strength-tile .st-eyebrow {
+  font-family: var(--latin);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 11px;
+  opacity: 0.75;
+}
+.strength-tile .st-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  opacity: 0.55;
+}
+.strength-tile .st-tag {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(34px, 5.6vw, 58px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.strength-tile .st-sub {
+  display: block;
+  font-family: var(--jp);
+  font-weight: 700;
+  font-size: clamp(14px, 1.6vw, 17px);
+  margin-top: 8px;
+  opacity: 0.85;
+}
+.strength-tile .st-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.strength-tile .st-meter {
+  display: flex;
+  gap: 5px;
+}
+.strength-tile .st-meter i {
+  width: 22px;
+  height: 6px;
+  border-radius: 99px;
+  background: currentColor;
+  opacity: 0.22;
+}
+.strength-tile .st-lvl {
+  font-family: var(--mono);
+  font-size: 11px;
+  opacity: 0.7;
+}
+.st-1 {
+  background: linear-gradient(160deg, #edf1e1, #d6e0bf);
+  color: #2c4020;
+}
+.st-1 .st-meter i.on {
+  opacity: 1;
+  background: #3e5a2a;
+}
+.st-2 {
+  background: linear-gradient(160deg, #4e6a31, #33471e);
+  color: #f7f1e4;
+}
+.st-2 .st-meter i.on {
+  opacity: 1;
+  background: var(--citrus);
+}
+.st-3 {
+  background: linear-gradient(160deg, #273a1a, #16230e);
+  color: #f7f1e4;
+}
+.st-3 .st-meter i.on {
+  opacity: 1;
+  background: var(--citrus);
+}
+.oil:hover .strength-tile .st-tag {
+  transform: translateX(3px);
+  transition: transform 0.35s ease;
 }
 
 /* ---------- compact club CTA (journal pages) ---------- */
