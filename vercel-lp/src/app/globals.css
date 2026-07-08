@@ -732,9 +732,9 @@ h3 {
 }
 .clip .vid {
   position: relative;
-  /* uniform cell size across clips; object-fit: contain keeps each video at
-     its own proportions (no stretch/crop), letterboxing onto the soft bg */
-  aspect-ratio: 16 / 9;
+  /* portrait cells sized to the 飲み比べる clip; the landscape clips fill via
+     cover (no stretch — centre-cropped), so every thumbnail is the same size */
+  aspect-ratio: 490 / 660;
   border-radius: var(--r);
   overflow: hidden;
   background: var(--green-soft);
@@ -742,7 +742,7 @@ h3 {
 .clip video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 .clip figcaption {
