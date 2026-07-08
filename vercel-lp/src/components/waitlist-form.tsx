@@ -76,12 +76,14 @@ export function WaitlistForm() {
           {status === "loading" ? "送信中" : "クラブに入る"}
         </button>
       </div>
-      <p
-        className={`form-message ${status === "error" ? "is-error" : ""}`}
-        style={status === "success" ? { color: "var(--green)", fontWeight: 600 } : undefined}
-      >
-        {message || "いつでも解除できます。しつこいメールは送りません。"}
-      </p>
+      {message && (
+        <p
+          className={`form-message ${status === "error" ? "is-error" : ""}`}
+          style={status === "success" ? { color: "var(--green)", fontWeight: 600 } : undefined}
+        >
+          {message}
+        </p>
+      )}
     </form>
   );
 }
