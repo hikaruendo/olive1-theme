@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { CountUp } from "@/components/count-up";
+import { StrengthTile } from "@/components/strength-tile";
 import { SiteFooter } from "@/components/site-footer";
 import { oils } from "@/lib/oils";
 import { articles } from "@/lib/journal";
@@ -130,8 +131,8 @@ export default function Home() {
             <div className="hero-media">
               <div className="media">
                 <Image
-                  src="/images/hero-bottle-mobile.png"
-                  alt="Olive1のEVOOボトル"
+                  src="/images/hero-grove-shodoshima.jpg"
+                  alt="小豆島のオリーブ古木（Episode 1 の産地）"
                   fill
                   priority
                   sizes="(max-width: 860px) 100vw, 46vw"
@@ -229,9 +230,9 @@ export default function Home() {
                 <p className="note">
                   ※数値は例です。初回ロット確定後に、実測値をラベルと商品ページに掲載します。
                 </p>
-                <a href="#transparency" className="btn btn-ghost" style={{ marginTop: 18 }}>
+                <Link href="/journal/label-reading" className="btn btn-ghost" style={{ marginTop: 18 }}>
                   品質の見方をもっと読む
-                </a>
+                </Link>
               </div>
 
               <figure className="coa">
@@ -264,13 +265,11 @@ export default function Home() {
               {oils.map((oil) => (
                 <article className="oil" key={oil.slug}>
                   <Link className="cap" href={`/oils/${oil.slug}`} aria-label={`${oil.sku} の詳細`}>
-                    <Image
-                      src={oil.image}
-                      alt={`${oil.sku} のボトル`}
-                      fill
-                      sizes="(max-width: 860px) 100vw, 33vw"
+                    <StrengthTile
+                      tag={oil.tag}
+                      strength={oil.strength}
+                      sub={oil.sku.split("／")[1]?.trim()}
                     />
-                    <span className="tag">{oil.tag}</span>
                   </Link>
                   <div className="body">
                     <span className="sku">{oil.sku}</span>
@@ -367,8 +366,14 @@ export default function Home() {
                 </figure>
               ))}
             </div>
-            <a href="#journey" className="btn btn-ghost" style={{ marginTop: 28 }}>
-              旅の記録を全部見る
+            <a
+              href="https://instagram.com/olive1_official"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+              style={{ marginTop: 28 }}
+            >
+              旅の記録を全部見る（Instagram）
             </a>
           </div>
         </section>
@@ -393,9 +398,9 @@ export default function Home() {
               <p>
                 顔は出しません。信頼は、公開する数値と、現地で撮った実写と、目利きの言葉でつくります。産地未訪問はいまの弱点ですが、あなたと一緒に旅できる“未完の物語”でもあります。
               </p>
-              <a href="#about" className="btn btn-ghost">
+              <Link href="/journal" className="btn btn-ghost">
                 考え方を読む
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -461,9 +466,9 @@ export default function Home() {
                   <li key={meal}>{meal}</li>
                 ))}
               </ul>
-              <a href="#journal" className="btn btn-ghost">
+              <Link href="/journal" className="btn btn-ghost">
                 使い方・レシピを見る
-              </a>
+              </Link>
             </div>
             <figure className="media" style={{ margin: 0 }}>
               <Image

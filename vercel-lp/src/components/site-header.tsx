@@ -1,13 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// Absolute (home-anchored) hrefs so the nav works from every route — on
+// /journal or /oils a bare "#journey" would resolve against the current path.
 const links = [
-  { href: "#journey", label: "旅の記録" },
-  { href: "#transparency", label: "品質の見方" },
-  { href: "#oils", label: "ラインナップ" },
-  { href: "#journal", label: "読み物" },
-  { href: "#club", label: "クラブ" },
+  { href: "/#journey", label: "旅の記録" },
+  { href: "/#transparency", label: "品質の見方" },
+  { href: "/#oils", label: "ラインナップ" },
+  { href: "/journal", label: "読み物" },
+  { href: "/#club", label: "クラブ" },
 ];
 
 export function SiteHeader() {
@@ -24,19 +27,19 @@ export function SiteHeader() {
   return (
     <header className={`site${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav">
-        <a className="brand" href="#top" onClick={() => setOpen(false)}>
+        <Link className="brand" href="/" onClick={() => setOpen(false)}>
           Olive<small>1</small>
-        </a>
+        </Link>
         <nav className="nav-links">
           {links.map((l) => (
-            <a key={l.href} href={l.href}>
+            <Link key={l.href} href={l.href}>
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
-        <a href="#club" className="btn btn-primary">
+        <Link href="/#club" className="btn btn-primary">
           クラブに入る
-        </a>
+        </Link>
         <button
           className="menu-btn"
           aria-label="メニュー"
@@ -48,13 +51,13 @@ export function SiteHeader() {
       </div>
       <div className={`mobile-menu${open ? " open" : ""}`}>
         {links.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+          <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>
             {l.label}
-          </a>
+          </Link>
         ))}
-        <a href="#club" className="btn btn-primary" onClick={() => setOpen(false)}>
+        <Link href="/#club" className="btn btn-primary" onClick={() => setOpen(false)}>
           クラブに入る
-        </a>
+        </Link>
       </div>
     </header>
   );
