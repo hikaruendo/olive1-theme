@@ -79,7 +79,7 @@ const faqs = [
   },
   {
     q: "いつ届きますか？",
-    a: "初回ロットの入荷時期が決まり次第、事前登録の方へ先にお知らせします。喉テスト（極小ポーション）も、ローンチ準備が整い次第、先行でお届け予定です。",
+    a: "初回ロットは今年の秋に搾ります。入荷時期が決まり次第、事前登録の方へいちばん先にお知らせします。",
   },
   {
     q: "クラブは解約できますか？",
@@ -311,17 +311,17 @@ export default function Home() {
           <div className="wrap">
             <div className="sip">
               <div>
-                <p className="label">First Sip ／ お試し</p>
+                <p className="label">First Sip ／ 確かめ方</p>
                 <h2>喉で確かめる</h2>
                 <p>
-                  EVOOの良し悪しは、飲んだあと喉に残るピリッとした辛みで分かります。ローンチ時に、極小ポーションの「喉テスト」を、事前登録の方から先にお届けする予定です。
+                  エクストラバージンオリーブオイルの状態は、飲んだあと喉に残るピリッとした辛みで見当がつきます。小皿に少し注いで、香りをかいで、ゆっくり飲み込む。それだけで、いま家にある一本のことがだいぶ分かります。
                 </p>
                 <p className="fine">
-                  ※サンプルはローンチ準備中です。いまお約束できるのは、事前登録者への先行案内です。
+                  やり方は読み物にまとめています。特別な道具はいりません。
                 </p>
-                <a href="#club" className="btn btn-citrus" style={{ marginTop: 20 }}>
-                  事前登録して喉テストを待つ
-                </a>
+                <Link href="/journal/throat-test" className="btn btn-citrus" style={{ marginTop: 20 }}>
+                  喉テストのやり方を読む
+                </Link>
               </div>
               <div className="sip-visual">
                 <Image
