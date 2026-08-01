@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const links = [
   { href: "/#journey", label: "旅の記録" },
   { href: "/#transparency", label: "品質の見方" },
-  { href: "/#oils", label: "ラインナップ" },
+  { href: "/#oils", label: "今年の一本" },
   { href: "/journal", label: "読み物" },
   { href: "/#club", label: "クラブ" },
 ];

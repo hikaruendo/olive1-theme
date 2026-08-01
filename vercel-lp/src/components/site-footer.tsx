@@ -16,7 +16,7 @@ export function SiteFooter() {
           <div>
             <h4>探す</h4>
             <ul>
-              <li><Link href="/oils/medium">ラインナップ</Link></li>
+              <li><Link href="/#oils">今年の一本</Link></li>
               <li><Link href="/#transparency">品質の見方</Link></li>
               <li><Link href="/#journey">旅の記録</Link></li>
               <li><Link href="/journal">読み物</Link></li>

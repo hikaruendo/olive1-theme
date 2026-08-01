@@ -32,7 +32,7 @@ export default function JournalIndex() {
         <section className="section">
           <div className="wrap">
             <p className="label">Journal ／ 読み物</p>
-            <h1>目利きの、読みもの。</h1>
+            <h1>目利きの読みもの</h1>
             <p className="lead">
               良いオリーブオイルの見分け方から、ラベルの読み方、国産の値段、鮮度の話まで。感想ではなく、数字で選ぶための手がかりを集めました。
             </p>

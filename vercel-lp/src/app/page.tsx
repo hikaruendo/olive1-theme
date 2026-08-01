@@ -2,30 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { WaitlistForm } from "@/components/waitlist-form";
-import { CountUp } from "@/components/count-up";
-import { StrengthTile } from "@/components/strength-tile";
 import { SiteFooter } from "@/components/site-footer";
-import { oils } from "@/lib/oils";
 import { articles } from "@/lib/journal";
 
+// ブランドの3本柱（Consistency / Social Impact / Genuine）は内部の判断基準。
+// 顧客向けには抽象名詞で掲げず、検証可能な行動の約束として見せる（show, don't tell）。
 const promises = [
   {
+    // Consistency：生鮮品という定義から、すべての行動が導かれる
     num: "01",
-    title: "数値を、ぜんぶ見せる。",
-    body: "ポリフェノール量・酸度・収穫年。感想ではなく数字で選べるようにします。",
-    points: ["総ポリフェノール／HPLC等の測定法も併記", "ラボの検査分析書（CoA）を公開"],
+    title: "収穫年と搾油日を書く",
+    body: "オリーブオイルは生鮮に近い食べものだと考えています。だから日付を書き、寝かせず、その年のうちに食べきれる量で届けます。決めごとは全部、この一点から出ています。",
+    points: ["収穫年・搾油日を明記", "その年のうちに食べきる量で"],
   },
   {
+    // Social Impact：作り手の仕事が正しく評価される流通をつくる
     num: "02",
-    title: "産地を、自分の足で。",
-    body: "どこの誰から仕入れるかを決める前に、畑と搾油機を現地で確かめます。小豆島から地中海へ。",
-    points: ["畑・手元・ボトルの実写", "旅の過程ごと公開"],
+    title: "作り手の名前まで見せる",
+    body: "良いものを作っても、流通の途中で味が落ち、値段の理由も見えないまま棚に並ぶことがあります。誰が、どこで、どう作ったか。なぜこの値段なのか。そこまで見えるように届けます。",
+    points: ["生産者と産地を実名で", "価格の理由を隠さない"],
   },
   {
+    // Genuine：確かめてから言う。言えることだけを言う
     num: "03",
-    title: "毎日、生で使える一本。",
-    body: "高級すぎない中間価格で。味噌汁にもトマトにも、火を入れず“ひと回し”。",
-    points: ["火を入れない仕上げに", "強度で選べる3本"],
+    title: "確かめたことだけを言う",
+    body: "検査値は測定方法まで添えて公開し、産地には自分の足で行き、自分の舌で確かめてから仕入れます。すべてを毎回測れるわけではありません。だから、確かめられていないことは断定せず、正直にそう書きます。",
+    points: ["測定方法まで併記して公開", "産地を自分の足で確かめる"],
   },
 ];
 
@@ -44,11 +46,12 @@ const disclosureItems = [
   "搾油日",
 ];
 
+// 素材は 1280x720 のものだけを使う。低解像度・縦横比の合わないクリップは
+// 引き伸ばしになるので載せない（journey-tasting-oils は 490x660 のため除外）。
 const journeyClips = [
   { src: "/videos/journey-ferry.mp4", poster: "/images/posters/journey-ferry.jpg", num: "01", caption: "フェリーで島へ" },
   { src: "/videos/journey-grove.mp4", poster: "/images/posters/journey-grove.jpg", num: "02", caption: "畑を歩く" },
   { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る" },
-  { src: "/videos/journey-tasting-oils.mp4", poster: "/images/posters/journey-tasting-oils.jpg", num: "04", caption: "飲み比べる" },
 ];
 
 const meals = [
@@ -84,7 +87,7 @@ const faqs = [
   },
   {
     q: "価格帯は？",
-    a: "“高級すぎない、毎日生で使える中間価格”を目指しています。確定価格は初回ロットと一緒にご案内します。",
+    a: "一本目は国産の搾りたてで、数量も限られるため、気軽な普段使いの価格にはなりません。新茶の初摘みのような、年に一度のものと考えていただくのが近いと思います。確定価格は初回ロットと一緒にご案内します。",
   },
 ];
 
@@ -106,13 +109,12 @@ export default function Home() {
             <div className="hero-copy">
               <p className="eng">Tokyo Specialty EVOO</p>
               <h1>
-                毎日のごはんに、
+                オリーブオイルは、
                 <br />
-                <span className="hl">見えるEVOO</span>を。
+                <span className="hl">旬</span>があります。
               </h1>
               <p className="lead">
-                ポリフェノール量・酸度・収穫年を、測定法まで添えてラベルに公開する、スペシャルティ
-                エクストラバージンオリーブオイル。まだ最初の一本を選んでいる途中です。産地を自分の足で確かめる旅ごと、公開しながら作っています。
+                エクストラバージンオリーブオイルは、オリーブの果汁です。搾った瞬間から変わっていく、生鮮に近い食べもの。だから見るのは賞味期限ではなく、収穫年と搾油日です。今年の搾りたてを、いちばんおいしい数か月で食べきる一本を、この秋、小豆島から。
               </p>
               <div className="hero-cta">
                 <a href="#club" className="btn btn-primary">
@@ -123,9 +125,9 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-trust">
-                <span className="chip">数値をラベル公開</span>
+                <span className="chip">収穫年と搾油日を明記</span>
                 <span className="chip">産地を自分の足で</span>
-                <span className="chip">毎日生で使える中間価格</span>
+                <span className="chip">今年のぶんだけ</span>
               </div>
             </div>
             <div className="hero-media">
@@ -149,7 +151,7 @@ export default function Home() {
         <section className="section tinted" id="promise">
           <div className="wrap">
             <p className="label">Why Olive1</p>
-            <h2>顔は出しません。信頼は、この3つで。</h2>
+            <h2>3つの約束</h2>
             <div className="promise-grid">
               {promises.map((p) => (
                 <article className="p-card" key={p.num}>
@@ -173,7 +175,7 @@ export default function Home() {
         <section className="section" id="transparency">
           <div className="wrap">
             <p className="label">Transparency ／ 品質の見方</p>
-            <h2>ラベルで、ちゃんと選べるように。</h2>
+            <h2>ラベルで選べるように</h2>
             <div className="trans-grid">
               <div>
                 <p className="lead">
@@ -181,28 +183,26 @@ export default function Home() {
                 </p>
 
                 <div className="stat-row">
-                  <div className="stat">
+                  <div className="stat pending">
                     <div className="k">Polyphenol</div>
                     <div className="v">
-                      <CountUp to={412} />
+                      測定後に公開
                       <small> mg/kg</small>
                     </div>
                     <div className="n">総ポリフェノール</div>
                   </div>
-                  <div className="stat">
+                  <div className="stat pending">
                     <div className="k">Acidity</div>
                     <div className="v">
-                      <CountUp to={0.19} decimals={2} />
+                      測定後に公開
                       <small> %</small>
                     </div>
                     <div className="n">酸度（低いほど良）</div>
                   </div>
-                  <div className="stat">
+                  <div className="stat pending">
                     <div className="k">Harvest</div>
-                    <div className="v">
-                      <CountUp to={2025} />
-                    </div>
-                    <div className="n">収穫年</div>
+                    <div className="v">2026</div>
+                    <div className="n">収穫年（今秋の初回ロット）</div>
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="note">
-                  ※数値は例です。初回ロット確定後に、実測値をラベルと商品ページに掲載します。
+                  ※初回ロットはこの秋に搾ります。分析はそのあとなので、いまお見せできる数値はありません。出たものをそのまま、測定方法とあわせてこことラベルに載せます。
                 </p>
                 <Link href="/journal/label-reading" className="btn btn-ghost" style={{ marginTop: 18 }}>
                   品質の見方をもっと読む
@@ -251,45 +251,57 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION: oils (Light / Medium / Intense) */}
+        {/* SECTION: 今年の一本（初回SKU＝国産） */}
         <section className="section tinted" id="oils">
           <div className="wrap">
             <div className="oils-head">
               <div>
-                <p className="label">The Oils ／ 予定ラインナップ</p>
-                <h2>強度で選ぶ、3本。</h2>
+                <p className="label">The First Bottle ／ 今年の一本</p>
+                <h2>最初の一本は小豆島から</h2>
               </div>
-              <div className="oils-note">プレローンチ中。価格・入荷は事前登録者へ先行案内します。</div>
+              <div className="oils-note">
+                内容量・価格・検査値は、搾ってから確定します。決まり次第、事前登録の方へいちばん先にお知らせします。
+              </div>
             </div>
-            <div className="oils-grid">
-              {oils.map((oil) => (
-                <article className="oil" key={oil.slug}>
-                  <Link className="cap" href={`/oils/${oil.slug}`} aria-label={`${oil.sku} の詳細`}>
-                    <StrengthTile
-                      tag={oil.tag}
-                      strength={oil.strength}
-                      sub={oil.sku.split("／")[1]?.trim()}
-                    />
-                  </Link>
-                  <div className="body">
-                    <span className="sku">{oil.sku}</span>
-                    <h3>{oil.title}</h3>
-                    <div className="strength">
-                      <span className="dots">
-                        {[1, 2, 3].map((i) => (
-                          <i key={i} className={i <= oil.strength ? "on" : ""} />
-                        ))}
-                      </span>
-                      強度 {oil.strength} / 3
-                    </div>
-                    <p className="use">{oil.use}</p>
-                    <p className="variety">{oil.variety}</p>
-                    <Link href={`/oils/${oil.slug}`} className="btn btn-citrus">
-                      この一本を見る
-                    </Link>
-                  </div>
-                </article>
-              ))}
+            <div className="first-bottle">
+              <figure className="fb-media">
+                <Image
+                  src="/images/hero-bottle-desktop.png"
+                  alt="Olive1 の瓶（イメージ）"
+                  fill
+                  sizes="(max-width: 860px) 100vw, 46vw"
+                />
+              </figure>
+              <div className="fb-body">
+                <ul className="fb-spec">
+                  <li>
+                    <span>産地</span>
+                    <b>香川県・小豆島</b>
+                  </li>
+                  <li>
+                    <span>収穫</span>
+                    <b>2026年 秋</b>
+                  </li>
+                  <li>
+                    <span>搾油</span>
+                    <b>収穫後すぐ、島の工房で</b>
+                  </li>
+                  <li>
+                    <span>数量</span>
+                    <b>初回はごく少量</b>
+                  </li>
+                  <li>
+                    <span>検査値</span>
+                    <b>搾油後に測定し、測定方法とあわせて公開</b>
+                  </li>
+                </ul>
+                <p className="fb-note">
+                  今年穫れた実を、島で搾って、そのままお届けします。寝かせません。いちばんおいしい数か月で食べきってもらうつもりで、容量を決めます。
+                </p>
+                <a href="#club" className="btn btn-citrus">
+                  入荷の知らせを受け取る
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -300,7 +312,7 @@ export default function Home() {
             <div className="sip">
               <div>
                 <p className="label">First Sip ／ お試し</p>
-                <h2>まずは、喉で確かめる。</h2>
+                <h2>喉で確かめる</h2>
                 <p>
                   EVOOの良し悪しは、飲んだあと喉に残るピリッとした辛みで分かります。ローンチ時に、極小ポーションの「喉テスト」を、事前登録の方から先にお届けする予定です。
                 </p>
@@ -314,7 +326,7 @@ export default function Home() {
               <div className="sip-visual">
                 <Image
                   src="/images/sip-oil.jpg"
-                  alt="小皿に注いだEVOOひと口分の“喉テスト”"
+                  alt="テイスティンググラスに注がれたエクストラバージンオリーブオイル"
                   fill
                   sizes="(max-width: 860px) 100vw, 30vw"
                 />
@@ -329,7 +341,7 @@ export default function Home() {
             <div className="journey-top">
               <div className="journey-intro">
                 <p className="label">The Journey ／ 旅の記録</p>
-                <h2>第1話は、小豆島。</h2>
+                <h2>第1話 小豆島</h2>
                 <p className="lead">
                   2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
                 </p>
@@ -378,25 +390,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION: about (no faces) */}
+        {/* SECTION: about */}
         <section className="section tinted about" id="about">
           <div className="wrap about-grid">
             <figure className="media" style={{ margin: 0 }}>
               <Image
                 src="/images/shodoshima-hands-olives.jpg"
-                alt="小豆島で枝についた若い実を確かめる手元（顔は写していない）"
+                alt="小豆島で枝についた若い実を確かめる手元"
                 fill
                 sizes="(max-width: 860px) 100vw, 40vw"
               />
             </figure>
             <div>
               <p className="label">About ／ 考え方</p>
-              <h2>未完のまま、公開する理由。</h2>
+              <h2>未完のまま公開する理由</h2>
               <p>
                 ふつうは“完成した店”だけを見せます。でもEVOOは、どこの誰から、どんな検査値で仕入れるかで中身がまるで変わる。だから私たちは、選んでいる途中を隠さず、一緒に旅する席にしました。
               </p>
               <p>
-                顔は出しません。信頼は、公開する数値と、現地で撮った実写と、目利きの言葉でつくります。産地未訪問はいまの弱点ですが、あなたと一緒に旅できる“未完の物語”でもあります。
+                信頼は、公開する数値と、現地で撮った実写と、産地で交わした言葉でつくります。まだ確かめきれていないことも多い。それも含めて、決まっていく過程ごと公開していきます。
               </p>
               <Link href="/journal" className="btn btn-ghost">
                 考え方を読む
@@ -431,7 +443,7 @@ export default function Home() {
         <section className="section" id="journal">
           <div className="wrap">
             <p className="label">Journal ／ 読み物</p>
-            <h2>目利きの、読みもの。</h2>
+            <h2>目利きの読みもの</h2>
             <div className="jr-grid">
               {articles.map((a) => (
                 <Link className="art" href={`/journal/${a.slug}`} key={a.slug}>
@@ -457,9 +469,9 @@ export default function Home() {
           <div className="wrap use-grid">
             <div>
               <p className="label">Everyday ／ 使い方</p>
-              <h2>和食にも、ちゃんと合う。</h2>
+              <h2>和食にもちゃんと合う</h2>
               <p className="lead">
-                火を入れない仕上げに使うと、香りと苦みが料理の輪郭を少しだけ引き上げます。EVOOの苦みや喉に残る辛みは、オレオカンタールなどのフェノール化合物と関係するとされています。
+                卵かけご飯に、ひと回し。火を入れない仕上げに使うと、香りと苦みが料理の輪郭を少しだけ引き上げます。EVOOの苦みや喉に残る辛みは、オレオカンタールなどのフェノール化合物と関係するとされています。
               </p>
               <ul>
                 {meals.map((meal) => (
@@ -472,8 +484,8 @@ export default function Home() {
             </div>
             <figure className="media" style={{ margin: 0 }}>
               <Image
-                src="/images/usage-tomato-evoo.jpg"
-                alt="スライスしたトマトにEVOOをひと回しかける"
+                src="/images/usage-tkg-evoo.jpg"
+                alt="卵かけご飯にエクストラバージンオリーブオイルをひと回しかける"
                 fill
                 sizes="(max-width: 860px) 100vw, 46vw"
               />
@@ -487,11 +499,8 @@ export default function Home() {
             <p className="label">Voices ／ お客様の声</p>
             <h2>声は、ローンチのあとで。</h2>
             <div className="gate">
-              <div className="cnt">
-                <CountUp to={128} />人
-              </div>
               <p>
-                いま、これだけの人が旅の途中にいます。実際に使った感想は、届いてから正直に載せます。だから今は、事前登録の数だけをお見せします。
+                まだ一本も出していないので、ここに載せられる声はありません。実際に使った方の感想は、商品が届いてから、いただいたまま載せます。良かったところも、そうでないところも。
               </p>
             </div>
           </div>

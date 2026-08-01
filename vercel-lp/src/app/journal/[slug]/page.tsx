@@ -129,7 +129,7 @@ export default async function ArticlePage({
           <section className="section tinted">
             <div className="wrap">
               <p className="label">Keep reading ／ 続けて読む</p>
-              <h2>この話の、つづき。</h2>
+              <h2>この話のつづき</h2>
               <div className="jr-grid">
                 {related.map((a) => (
                   <Link className="art" href={`/journal/${a.slug}`} key={a.slug}>

@@ -25,9 +25,10 @@
   --r-lg: 26px;
   --r-pill: 999px;
   --jp: var(--font-jp), ui-sans-serif, system-ui, sans-serif;
+  --serif: var(--font-serif), "Hiragino Mincho ProN", serif;
   --mono: var(--font-mono), ui-monospace, monospace;
   --latin: "General Sans", var(--font-jp), sans-serif;
-  --display: "Clash Display", var(--font-jp), sans-serif;
+  --display: var(--font-serif), "Clash Display", var(--font-jp), serif;
   --shadow: 0 18px 40px -24px rgba(36, 48, 25, 0.4);
   --maxw: 1180px;
 }
@@ -65,9 +66,10 @@ img {
 h1,
 h2,
 h3 {
-  line-height: 1.18;
-  letter-spacing: -0.01em;
-  font-weight: 900;
+  font-family: var(--serif);
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -396,9 +398,26 @@ h3 {
   color: var(--citrus-deep);
   font-weight: 600;
 }
+.p-eng {
+  font-family: var(--latin);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--citrus-deep);
+  margin: 14px 0 0;
+}
+.p-eng::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 2px;
+  background: var(--citrus);
+  margin-top: 10px;
+}
 .p-card h3 {
   font-size: 21px;
-  margin: 10px 0 12px;
+  margin: 14px 0 12px;
 }
 .p-card p {
   font-size: 14.5px;
@@ -448,6 +467,23 @@ h3 {
   color: var(--ink);
   margin-top: 6px;
   letter-spacing: -0.02em;
+}
+/* 実測値が出るまでのプレースホルダー。架空の数値は置かない。 */
+.stat.pending {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--line-2);
+}
+.stat.pending .v {
+  font-family: var(--jp);
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 500;
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+}
+.stat.pending .v small {
+  color: var(--ink-mute);
+  opacity: 0.7;
 }
 .stat .v small {
   font-size: 13px;
@@ -722,7 +758,7 @@ h3 {
 }
 .clips {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 32px;
   align-items: start;
@@ -732,9 +768,9 @@ h3 {
 }
 .clip .vid {
   position: relative;
-  /* portrait cells sized to the 飲み比べる clip; the landscape clips fill via
-     cover (no stretch — centre-cropped), so every thumbnail is the same size */
-  aspect-ratio: 490 / 660;
+  /* 素材はすべて 1280x720。セルも 16:9 にして、切り抜きも引き伸ばしもせず
+     元の画角のまま表示する。 */
+  aspect-ratio: 16 / 9;
   border-radius: var(--r);
   overflow: hidden;
   background: var(--green-soft);
@@ -757,6 +793,62 @@ h3 {
   font-family: var(--mono);
   color: var(--citrus-deep);
   font-size: 11px;
+}
+
+/* ---------- first bottle（今年の一本） ---------- */
+.first-bottle {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+  margin-top: 32px;
+}
+.fb-media {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--green-soft);
+}
+.fb-media img {
+  object-fit: cover;
+}
+.fb-spec {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.fb-spec li {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.fb-spec span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.fb-spec b {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink);
+}
+.fb-note {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 20px 0 22px;
+}
+@media (max-width: 860px) {
+  .first-bottle {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- about ---------- */
@@ -1542,6 +1634,7 @@ footer a:hover {
   border-radius: var(--r-lg);
   overflow: hidden;
   margin-top: clamp(24px, 4vw, 40px);
+  margin-bottom: clamp(28px, 4vw, 48px);
   background: var(--green-soft);
 }
 .article-hero-media img {
@@ -1614,7 +1707,7 @@ footer a:hover {
 /* ---------- article embedded reel (9:16) ---------- */
 .article-video {
   max-width: 720px;
-  margin: 36px auto 0;
+  margin: 36px auto clamp(48px, 7vw, 88px);
   text-align: center;
 }
 .article-video .reel {

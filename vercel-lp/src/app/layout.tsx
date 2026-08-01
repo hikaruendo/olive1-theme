@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Zen_Kaku_Gothic_New, IBM_Plex_Mono } from "next/font/google";
+import { Zen_Kaku_Gothic_New, Shippori_Mincho, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const zenKaku = Zen_Kaku_Gothic_New({
   variable: "--font-jp",
   subsets: ["latin"],
   weight: ["300", "400", "500", "700", "900"],
+});
+
+// 見出し用の明朝。Instagram のカルーセルと同じ editorial のトーンに揃える。
+const shippori = Shippori_Mincho({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -36,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${zenKaku.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${zenKaku.variable} ${shippori.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* Fontshare: Latin display + accent (Next hoists <link> into <head>) */}
