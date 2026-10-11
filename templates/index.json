@@ -15,14 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "本物のEVOOを、日本の食卓に。",
+            "heading": "オリーブオイルは、旬があります。",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "産地 / 品種 / 収穫日 / 酸度 — すべて開示",
+            "text": "開けてから2ヶ月で使い切れる量にしました。収穫年と搾油日を書いてお届けします。",
             "text_style": "subtitle"
           }
         },
@@ -56,8 +56,8 @@
       "type": "waitlist",
       "settings": {
         "eyebrow": "Specialty EVOO, arriving soon.",
-        "heading": "毎日の料理にかけたくなる、\nスペシャルティEVOO。",
-        "description": "<p>産地 / 品種 / 収穫年 / 酸度 ── すべて開示。<br/>本物のエクストラバージンオリーブオイルだけを届けます。</p>",
+        "heading": "今年の搾りたてを、\n2ヶ月で使い切る一本。",
+        "description": "<p>小豆島のエクストラバージンオリーブオイル（EVOO）を、使い切れる量で。<br/>10月の終わりに詰めて、収穫年と搾油日を書いてお届けします。</p>",
         "cta": "先行入荷のお知らせを受け取る",
         "reason_prompt": "何が気になりましたか？（ひとつ選んでください）",
         "button_label": "登録する",
@@ -81,14 +81,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "スペシャルティEVOO、産地直送。",
+            "heading": "いいオイルほど、残すともったいない。",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>市場に出回る多くのオリーブオイルには、産地も品種も収穫日も記されていません。Olive1は違います。すべての情報をオープンにした、本物のエクストラバージンオリーブオイルをお届けします。</p>"
+            "text": "<p>開けた日から、オリーブオイルは空気にふれて少しずつ変わっていきます。香りが重くなる前に使い切れるよう、Olive1は量を小さくしました。目安は開けてから2ヶ月。ラベルには、収穫年と搾油日を書いています。</p>"
           }
         },
         "button": {
