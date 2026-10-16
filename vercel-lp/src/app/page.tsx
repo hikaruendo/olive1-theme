@@ -12,8 +12,8 @@ const promises = [
     // Consistency：生鮮品という定義から、すべての行動が導かれる
     num: "01",
     title: "収穫年と搾油日を書く",
-    body: "オリーブオイルは生鮮に近い食べものだと考えています。だから日付を書き、寝かせず、その年のうちに食べきれる量で届けます。決めごとは全部、この一点から出ています。",
-    points: ["収穫年・搾油日を明記", "その年のうちに食べきる量で"],
+    body: "オリーブオイルは生鮮に近い食べものだと考えています。だから日付を書き、寝かせず、開けてから2ヶ月で使い切れる量で届けます。決めごとは全部、この一点から出ています。",
+    points: ["収穫年・搾油日を明記", "開けて2ヶ月で使い切れる量"],
   },
   {
     // Social Impact：作り手の仕事が正しく評価される流通をつくる
@@ -54,13 +54,21 @@ const journeyClips = [
   { src: "/videos/journey-mill.mp4", poster: "/images/posters/journey-mill.jpg", num: "03", caption: "搾油機を見る" },
 ];
 
+// 第2話（2026年10月の収穫）。ライブラリの実写から、他社のラベルや人の顔が映らないものだけを使う。
+const harvestPhotos = [
+  { src: "/images/harvest-picking.jpg", num: "01", caption: "枝から摘む", alt: "小豆島の畑で、枝についた青いオリーブの実を手で摘む" },
+  { src: "/images/harvest-crate.jpg", num: "02", caption: "カゴいっぱいの実", alt: "収穫した青いオリーブの実で満たされたオレンジのカゴ" },
+  { src: "/images/mill-malaxer.jpg", num: "03", caption: "搾油機へ", alt: "工房のステンレスの搾油機。中で実のペーストを練る" },
+  { src: "/images/mill-fresh-oil.jpg", num: "04", caption: "搾りたて", alt: "工房で、搾りたてのオリーブオイルを白い小皿に注いで手に持つ" },
+];
+
 const meals = [
   "味噌汁にひと回し",
   "絹豆腐に塩とEVOO",
   "トマトに塩とEVOO",
-  "大さじ1を朝に",
+  "ティースプーン1杯を、食べる直前に",
   "パスタの仕上げに",
-  "アヒージョに",
+  "焼き魚にひとたらし",
 ];
 
 const faqs = [
@@ -79,7 +87,15 @@ const faqs = [
   },
   {
     q: "いつ届きますか？",
-    a: "初回ロットは今年の秋に搾ります。入荷時期が決まり次第、事前登録の方へいちばん先にお知らせします。",
+    a: "初回ロットは今年の秋に搾り、10月の終わりに詰めます。届く日が決まり次第、事前登録の方へいちばん先にお知らせします。",
+  },
+  {
+    q: "どのくらいの量ですか？",
+    a: "開けてから2ヶ月で使い切れる量にします。1回にティースプーン1杯、ほぼ毎日使って2ヶ月で空になるくらいが目安です。正確な容量は、搾ってから価格と一緒にお知らせします。",
+  },
+  {
+    q: "なぜ2ヶ月なのですか？",
+    a: "開けた瞬間から、油は空気にふれて少しずつ変わっていくからです。香りが重くなる前に使い切れるよう、目安を2ヶ月にしました。",
   },
   {
     q: "クラブは解約できますか？",
@@ -96,7 +112,7 @@ export default function Home() {
     <>
       {/* SECTION: announcement */}
       <div className="topbar">
-        プレローンチ ─ <b>事前登録受付中</b>。初回ロットの入荷日・価格・検査値を、いちばん先にお知らせします。
+        プレローンチ ─ <b>事前登録受付中</b>。10月の終わりに詰めます。入荷日・価格・検査値を、いちばん先にお知らせします。
       </div>
 
       {/* SECTION: header */}
@@ -114,7 +130,7 @@ export default function Home() {
                 <span className="hl">旬</span>があります。
               </h1>
               <p className="lead">
-                エクストラバージンオリーブオイルは、オリーブの果汁です。搾った瞬間から変わっていく、生鮮に近い食べもの。だから見るのは賞味期限ではなく、収穫年と搾油日です。今年の搾りたてを、いちばんおいしい数か月で食べきる一本を、この秋、小豆島から。
+                エクストラバージンオリーブオイル（EVOO）は、オリーブの果汁です。搾った瞬間から変わっていく、生鮮に近い食べもの。開けた日からは空気にふれて、香りが少しずつ重くなっていきます。目安は、開けてから2ヶ月。だから、2ヶ月で使い切れる量にしました。今年の搾りたてを、小豆島から。10月の終わりに詰めます。
               </p>
               <div className="hero-cta">
                 <a href="#club" className="btn btn-primary">
@@ -127,7 +143,7 @@ export default function Home() {
               <div className="hero-trust">
                 <span className="chip">収穫年と搾油日を明記</span>
                 <span className="chip">産地を自分の足で</span>
-                <span className="chip">今年のぶんだけ</span>
+                <span className="chip">2ヶ月で使い切れる量</span>
               </div>
             </div>
             <div className="hero-media">
@@ -260,14 +276,14 @@ export default function Home() {
                 <h2>最初の一本は小豆島から</h2>
               </div>
               <div className="oils-note">
-                内容量・価格・検査値は、搾ってから確定します。決まり次第、事前登録の方へいちばん先にお知らせします。
+                価格と検査値は、搾ってから確定します。容量は「開けてから2ヶ月で使い切れる量」を基準に決めます。決まり次第、事前登録の方へいちばん先にお知らせします。
               </div>
             </div>
             <div className="first-bottle">
               <figure className="fb-media">
                 <Image
-                  src="/images/hero-bottle-desktop.png"
-                  alt="Olive1 の瓶（イメージ）"
+                  src="/images/harvest-hand-olives.jpg"
+                  alt="小豆島の畑で摘んだ青いオリーブの実（2026年10月）"
                   fill
                   sizes="(max-width: 860px) 100vw, 46vw"
                 />
@@ -287,6 +303,14 @@ export default function Home() {
                     <b>収穫後すぐ、島の工房で</b>
                   </li>
                   <li>
+                    <span>詰める</span>
+                    <b>10月の終わり</b>
+                  </li>
+                  <li>
+                    <span>容量</span>
+                    <b>開けてから2ヶ月で使い切れる量（搾ってから確定）</b>
+                  </li>
+                  <li>
                     <span>数量</span>
                     <b>初回はごく少量</b>
                   </li>
@@ -296,7 +320,7 @@ export default function Home() {
                   </li>
                 </ul>
                 <p className="fb-note">
-                  今年穫れた実を、島で搾って、そのままお届けします。寝かせません。いちばんおいしい数か月で食べきってもらうつもりで、容量を決めます。
+                  今年穫れた実を、島で搾って、そのままお届けします。寝かせません。いいオイルほど、使い切れずに残すのがいちばんもったいない。だから、使い切れる量にしました。1回にティースプーン1杯、食べる直前にたらして、開けてから2ヶ月くらいです。
                 </p>
                 <a href="#club" className="btn btn-citrus">
                   入荷の知らせを受け取る
@@ -343,7 +367,7 @@ export default function Home() {
                 <p className="label">The Journey ／ 旅の記録</p>
                 <h2>第1話 小豆島</h2>
                 <p className="lead">
-                  2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもまだ撮れていません。次は秋の収穫期、その先は地中海の産地へ。
+                  2026年6月、日本最大のオリーブ産地・小豆島へ。フェリーで海を渡り、畑を歩き、搾油機を見て、同じテーブルで何本も飲み比べました。6月は収穫の時期ではないので、手摘みも搾りたてもこのときは撮れていません。秋の収穫は第2話で。その先は地中海の産地へ。
                 </p>
               </div>
               <figure className="journey-reel">
@@ -377,6 +401,24 @@ export default function Home() {
                   </figcaption>
                 </figure>
               ))}
+            </div>
+            <div className="episode2">
+              <h3>第2話 収穫</h3>
+              <p>
+                2026年10月、ふたたび小豆島へ。畑で青い実を摘むところから、工房の搾油機を通って搾りたての油になるまでを、ひと続きで見てきました。
+              </p>
+              <div className="harvest-photos">
+                {harvestPhotos.map((photo) => (
+                  <figure className="clip" key={photo.src}>
+                    <div className="photo">
+                      <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 860px) 50vw, 23vw" />
+                    </div>
+                    <figcaption>
+                      <b>{photo.num}</b> {photo.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
             </div>
             <a
               href="https://instagram.com/olive1_official"

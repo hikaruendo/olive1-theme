@@ -78,7 +78,7 @@ export const articles: Article[] = [
     cat: "BASICS",
     title: "「エキストラバージン」は、品質保証ではありません",
     dek: "同じ表示でも中身は同じではありません。エキストラバージンという等級が何を意味していて、何を意味していないのか。日本の制度の話まで。",
-    hero: "/images/transparency-label.png",
+    hero: "/images/mill-crates.jpg",
     readMin: 6,
     keywords: ["エキストラバージン 意味", "オリーブオイル 等級", "JAS", "公正競争規約", "本物"],
     blocks: [
@@ -163,7 +163,7 @@ export const articles: Article[] = [
     cat: "BASICS",
     title: "ラベルの読み方：ポリフェノール・酸度・収穫年",
     dek: "「エクストラバージン」表示だけでは中身は分かりません。ラベルのどこを見れば“本物”を選べるのか、数字の意味から。",
-    hero: "/images/transparency-label.png",
+    hero: "/images/coa-sample.jpg",
     readMin: 5,
     keywords: ["エクストラバージンオリーブオイル", "酸度", "ポリフェノール", "収穫年", "違い"],
     blocks: [
@@ -215,7 +215,7 @@ export const articles: Article[] = [
     cat: "STORAGE",
     title: "流通で劣化する話：光・熱・時間",
     dek: "オリーブオイルは生鮮品です。搾ってから手元に届くまで、そして開封後の保存で、鮮度もポリフェノールも変わります。",
-    hero: "/images/hero-bottle-desktop.png",
+    hero: "/images/mill-fresh-oil.jpg",
     readMin: 4,
     keywords: ["オリーブオイル 保存", "劣化", "鮮度", "使い方", "健康効果"],
     blocks: [

@@ -795,6 +795,34 @@ h3 {
   font-size: 11px;
 }
 
+/* 第2話：収穫の写真（縦位置 3:4） */
+.episode2 {
+  margin-top: clamp(40px, 6vw, 64px);
+}
+.episode2 h3 {
+  font-size: clamp(22px, 3vw, 30px);
+}
+.episode2 > p {
+  max-width: 720px;
+  margin-top: 12px;
+}
+.harvest-photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.clip .photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--green-soft);
+}
+.clip .photo img {
+  object-fit: cover;
+}
+
 /* ---------- first bottle（今年の一本） ---------- */
 .first-bottle {
   display: grid;
@@ -806,7 +834,8 @@ h3 {
 .fb-media {
   position: relative;
   margin: 0;
-  aspect-ratio: 16 / 9;
+  /* 実写（縦位置）をそのまま見せるため 4:5。 */
+  aspect-ratio: 4 / 5;
   border-radius: var(--r-lg);
   overflow: hidden;
   background: var(--green-soft);
@@ -1227,6 +1256,9 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
   .clips {
+    grid-template-columns: 1fr 1fr;
+  }
+  .harvest-photos {
     grid-template-columns: 1fr 1fr;
   }
   .foot-grid {
