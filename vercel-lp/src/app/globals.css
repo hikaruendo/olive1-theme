@@ -1905,3 +1905,152 @@ footer a:hover {
 .club-cta .btn {
   flex-shrink: 0;
 }
+
+/* ---------- reserve (/reserve) ---------- */
+.reserve-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.reserve-copy h1,
+.reserve-thanks h1 {
+  font-size: clamp(30px, 4.4vw, 48px);
+  line-height: 1.2;
+  margin: 14px 0 18px;
+}
+.reserve-facts {
+  margin: 22px 0 0;
+  border-top: 1px solid var(--line);
+}
+.reserve-facts > div {
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.reserve-facts dt {
+  color: var(--ink-mute);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+.reserve-facts dd {
+  margin: 0;
+  color: var(--ink);
+}
+.reserve-note {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 16px 0 0;
+}
+.reserve-side {
+  position: sticky;
+  top: 88px;
+}
+.reserve-form {
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+.reserve-form .form-field {
+  margin-top: 14px;
+}
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  border: 1.5px solid var(--line-2);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-family: var(--jp);
+  font-size: 15px;
+  background: #fff;
+  color: var(--ink);
+}
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: 2px solid var(--green);
+  border-color: var(--green);
+}
+.radio-list {
+  display: grid;
+  gap: 8px;
+}
+.radio-option {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  background: var(--green-soft);
+  border-radius: 14px;
+  padding: 11px 13px;
+  cursor: pointer;
+  color: var(--green-deep);
+}
+.radio-option input {
+  accent-color: var(--green);
+  margin-top: 3px;
+}
+.radio-option b {
+  display: block;
+  font-size: 14px;
+}
+.radio-option small {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.radio-option.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.reserve-total {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.reserve-total b {
+  font-size: 22px;
+  font-family: var(--latin);
+}
+.reserve-total small {
+  color: var(--ink-mute);
+  font-size: 12px;
+}
+.reserve-closed p {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+.reserve-thanks {
+  max-width: 720px;
+}
+.reserve-thanks .mono {
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+.reserve-bank {
+  margin-top: 26px;
+}
+.reserve-bank .reserve-facts {
+  margin-top: 6px;
+}
+.link {
+  color: var(--green);
+  text-decoration: underline;
+}
+@media (max-width: 860px) {
+  .reserve-grid {
+    grid-template-columns: 1fr;
+  }
+  .reserve-side {
+    position: static;
+  }
+}
