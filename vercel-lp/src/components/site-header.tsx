@@ -1,19 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { href, otherLang, splitPath, type Lang } from "@/lib/i18n";
+import { ui } from "@/content/ui";
 
-// Absolute (home-anchored) hrefs so the nav works from every route — on
-// /journal or /oils a bare "#journey" would resolve against the current path.
-const links = [
-  { href: "/#journey", label: "旅の記録" },
-  { href: "/#transparency", label: "品質の見方" },
-  { href: "/#oils", label: "今年の一本" },
-  { href: "/journal", label: "読み物" },
-  { href: "/#club", label: "クラブ" },
-];
-
-export function SiteHeader() {
+export function SiteHeader({ lang }: { lang: Lang }) {
+  const t = ui[lang].nav;
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -24,10 +19,23 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Absolute (home-anchored) hrefs so the nav works from every route — on
+  // /journal a bare "#journey" would resolve against the current path.
+  const links = [
+    { href: href(lang, "/#journey"), label: t.journey },
+    { href: href(lang, "/#transparency"), label: t.transparency },
+    { href: href(lang, "/#oils"), label: t.oils },
+    { href: href(lang, "/journal"), label: t.journal },
+    { href: href(lang, "/#club"), label: t.club },
+  ];
+
+  // 同じページを別の言語で開くリンク（/reserve ⇄ /en/reserve）
+  const switchHref = href(otherLang(lang), splitPath(pathname ?? "/").path);
+
   return (
     <header className={`site${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav">
-        <Link className="brand" href="/" onClick={() => setOpen(false)}>
+        <Link className="brand" href={href(lang, "/")} onClick={() => setOpen(false)}>
           Olive<small>1</small>
         </Link>
         <nav className="nav-links">
@@ -36,13 +44,16 @@ export function SiteHeader() {
               {l.label}
             </Link>
           ))}
+          <Link href={switchHref} className="lang-switch" aria-label={t.switchAria} hrefLang={otherLang(lang)}>
+            {t.switchTo}
+          </Link>
         </nav>
-        <Link href="/#club" className="btn btn-primary">
-          クラブに入る
+        <Link href={href(lang, "/#club")} className="btn btn-primary">
+          {t.joinClub}
         </Link>
         <button
           className="menu-btn"
-          aria-label="メニュー"
+          aria-label={t.menu}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -55,8 +66,11 @@ export function SiteHeader() {
             {l.label}
           </Link>
         ))}
-        <Link href="/#club" className="btn btn-primary" onClick={() => setOpen(false)}>
-          クラブに入る
+        <Link href={switchHref} className="lang-switch" hrefLang={otherLang(lang)} onClick={() => setOpen(false)}>
+          {t.switchTo}
+        </Link>
+        <Link href={href(lang, "/#club")} className="btn btn-primary" onClick={() => setOpen(false)}>
+          {t.joinClub}
         </Link>
       </div>
     </header>

@@ -2054,3 +2054,23 @@ footer a:hover {
     position: static;
   }
 }
+
+/* 言語切り替え（ヘッダー右・モバイルメニュー） */
+.nav-links .lang-switch {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+.nav-links .lang-switch:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+.mobile-menu .lang-switch {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}

@@ -3,15 +3,19 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { maxQty, product, yen } from "@/lib/reserve";
+import { href, type Lang } from "@/lib/i18n";
+import { reserveText } from "@/content/reserve";
 
 type Status = "idle" | "loading" | "error";
 
 type Props = {
+  lang: Lang;
   cardAvailable: boolean;
   bankAvailable: boolean;
 };
 
-export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
+export function ReserveForm({ lang, cardAvailable, bankAvailable }: Props) {
+  const t = reserveText[lang].form;
   const router = useRouter();
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
@@ -35,6 +39,7 @@ export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
       payment,
       note: String(fd.get("note") ?? ""),
       referrer: String(fd.get("referrer") ?? ""),
+      lang,
     };
 
     try {
@@ -49,7 +54,7 @@ export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
         cardUrl?: string | null;
       };
       if (!response.ok || !data.id) {
-        throw new Error(data.message ?? "予約できませんでした。");
+        throw new Error(data.message ?? t.failed);
       }
 
       if (payment === "card" && data.cardUrl) {
@@ -57,10 +62,12 @@ export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
         window.location.href = data.cardUrl;
         return;
       }
-      router.push(`/reserve/thanks?id=${encodeURIComponent(data.id)}&qty=${qty}&receive=${receive}&method=${payment}`);
+      router.push(
+        `${href(lang, "/reserve/thanks")}?id=${encodeURIComponent(data.id)}&qty=${qty}&receive=${receive}&method=${payment}`,
+      );
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "予約できませんでした。");
+      setMessage(error instanceof Error ? error.message : t.failed);
     }
   }
 
@@ -68,44 +75,44 @@ export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
 
   return (
     <form className="waitlist-form reserve-form" onSubmit={handleSubmit}>
-      <p className="form-title">予約する</p>
+      <p className="form-title">{t.title}</p>
 
       <div className="form-field">
-        <label htmlFor="name">お名前</label>
+        <label htmlFor="name">{t.name}</label>
         <input id="name" name="name" type="text" autoComplete="name" required maxLength={80} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="email">メールアドレス</label>
+        <label htmlFor="email">{t.email}</label>
         <input id="email" name="email" type="email" autoComplete="email" placeholder="name@example.com" required />
       </div>
 
       <div className="form-field">
-        <label htmlFor="qty">本数</label>
+        <label htmlFor="qty">{t.qty}</label>
         <select id="qty" name="qty" value={qty} onChange={(e) => setQty(Number(e.target.value))}>
           {Array.from({ length: maxQty }, (_, i) => i + 1).map((n) => (
             <option key={n} value={n}>
-              {n}本（{yen(product.price * n)}）
+              {t.qtyOption(n, yen(product.price * n))}
             </option>
           ))}
         </select>
       </div>
 
       <fieldset className="reason-fieldset">
-        <legend>受け取り</legend>
+        <legend>{t.receiveLegend}</legend>
         <div className="radio-list">
           <label className="radio-option">
             <input type="radio" name="receive" value="event" checked={receive === "event"} onChange={() => setReceive("event")} />
             <span>
-              <b>12月の会で受け取る</b>
-              <small>{product.event}。本番号を付けて手渡しします。</small>
+              <b>{t.receiveEvent}</b>
+              <small>{t.receiveEventSub}</small>
             </span>
           </label>
           <label className="radio-option">
             <input type="radio" name="receive" value="ship" checked={receive === "ship"} onChange={() => setReceive("ship")} />
             <span>
-              <b>発送</b>
-              <small>12月に発送します。送料は別途ご案内します。</small>
+              <b>{t.receiveShip}</b>
+              <small>{t.receiveShipSub}</small>
             </span>
           </label>
         </div>
@@ -113,50 +120,50 @@ export function ReserveForm({ cardAvailable, bankAvailable }: Props) {
 
       {receive === "ship" && (
         <div className="form-field">
-          <label htmlFor="address">発送先（郵便番号・住所・宛名）</label>
+          <label htmlFor="address">{t.address}</label>
           <textarea id="address" name="address" rows={3} required maxLength={400} autoComplete="street-address" />
         </div>
       )}
 
       <fieldset className="reason-fieldset">
-        <legend>お支払い</legend>
+        <legend>{t.paymentLegend}</legend>
         <div className="radio-list">
           <label className={`radio-option${bankAvailable ? "" : " is-disabled"}`}>
             <input type="radio" name="payment" value="bank" disabled={!bankAvailable} checked={payment === "bank"} onChange={() => setPayment("bank")} />
             <span>
-              <b>銀行振込</b>
-              <small>予約後に振込先をメールでお送りします。</small>
+              <b>{t.bank}</b>
+              <small>{t.bankSub}</small>
             </span>
           </label>
           <label className={`radio-option${cardAvailable ? "" : " is-disabled"}`}>
             <input type="radio" name="payment" value="card" disabled={!cardAvailable} checked={payment === "card"} onChange={() => setPayment("card")} />
             <span>
-              <b>カード（Stripe）</b>
-              <small>このあと決済ページに進みます。</small>
+              <b>{t.card}</b>
+              <small>{t.cardSub}</small>
             </span>
           </label>
         </div>
       </fieldset>
 
       <div className="form-field">
-        <label htmlFor="referrer">紹介してくれた人（任意）</label>
-        <input id="referrer" name="referrer" type="text" maxLength={80} placeholder="例：〇〇さん" />
+        <label htmlFor="referrer">{t.referrer}</label>
+        <input id="referrer" name="referrer" type="text" maxLength={80} placeholder={t.referrerPlaceholder} />
       </div>
 
       <div className="form-field">
-        <label htmlFor="note">メモ（任意）</label>
+        <label htmlFor="note">{t.note}</label>
         <textarea id="note" name="note" rows={2} maxLength={600} />
       </div>
 
       <div className="reserve-total">
-        <span>小計</span>
+        <span>{t.subtotal}</span>
         <b>{yen(subtotal)}</b>
-        <small>税込・送料別</small>
+        <small>{t.subtotalSub}</small>
       </div>
 
       <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "送信中" : payment === "card" ? "予約して決済に進む" : "予約する"}
+          {status === "loading" ? t.sending : payment === "card" ? t.submitCard : t.submit}
         </button>
       </div>
       {message && <p className={`form-message ${status === "error" ? "is-error" : ""}`}>{message}</p>}

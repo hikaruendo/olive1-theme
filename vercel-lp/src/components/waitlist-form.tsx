@@ -1,12 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import type { Lang } from "@/lib/i18n";
+import { ui } from "@/content/ui";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-const interests = ["毎日使い", "ギフト", "飲む健康", "レシピ"];
-
-export function WaitlistForm() {
+export function WaitlistForm({ lang }: { lang: Lang }) {
+  const t = ui[lang].waitlist;
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
@@ -24,28 +25,28 @@ export function WaitlistForm() {
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, reason }),
+        body: JSON.stringify({ email, reason, lang }),
       });
       const data = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(data.message ?? "参加できませんでした。");
+        throw new Error(data.message ?? t.failed);
       }
 
       setStatus("success");
-      setMessage(data.message ?? "クラブに参加しました。");
+      setMessage(data.message ?? t.joined);
       form.reset();
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "参加できませんでした。");
+      setMessage(error instanceof Error ? error.message : t.failed);
     }
   }
 
   return (
     <form className="waitlist-form" onSubmit={handleSubmit}>
-      <p className="form-title">Olive1クラブに参加する</p>
+      <p className="form-title">{t.title}</p>
       <div className="form-field">
-        <label htmlFor="email">メールアドレス</label>
+        <label htmlFor="email">{t.email}</label>
         <input
           id="email"
           name="email"
@@ -56,16 +57,11 @@ export function WaitlistForm() {
         />
       </div>
       <fieldset className="reason-fieldset">
-        <legend>興味のあること（任意・複数可）</legend>
+        <legend>{t.interestsLegend}</legend>
         <div className="reason-grid">
-          {interests.map((reason) => (
+          {t.interests.map((reason, i) => (
             <label className="reason-option" key={reason}>
-              <input
-                name="reason"
-                type="checkbox"
-                value={reason}
-                defaultChecked={reason === "毎日使い"}
-              />
+              <input name="reason" type="checkbox" value={reason} defaultChecked={i === 0} />
               <span>{reason}</span>
             </label>
           ))}
@@ -73,7 +69,7 @@ export function WaitlistForm() {
       </fieldset>
       <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "送信中" : "クラブに入る"}
+          {status === "loading" ? t.sending : t.submit}
         </button>
       </div>
       {message && (

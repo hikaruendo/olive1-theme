@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Zen_Kaku_Gothic_New, Shippori_Mincho, IBM_Plex_Mono } from "next/font/google";
+import { alternates, isLang, langs, ogLocale, siteUrl, type Lang } from "@/lib/i18n";
+import { home } from "@/content/home";
 import "./globals.css";
 
 const zenKaku = Zen_Kaku_Gothic_New({
@@ -21,28 +24,41 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title:
-    "Olive1 | 見えるEVOO、毎日のごはんに｜スペシャルティ エクストラバージンオリーブオイル",
-  description:
-    "ポリフェノール量・酸度・収穫年を、測定法まで添えてラベルに公開する、東京発のスペシャルティEVOO（エクストラバージンオリーブオイル）。産地を自分の足で確かめる旅ごと公開中。事前登録受付中。",
-  openGraph: {
-    title: "Olive1 | 見えるEVOO、毎日のごはんに",
-    description:
-      "数値を公開し、産地を自分の足で確かめて届ける、東京発のスペシャルティEVOO。事前登録受付中。",
-    locale: "ja_JP",
-    type: "website",
-  },
-};
+export function generateStaticParams() {
+  return langs.map((lang) => ({ lang }));
+}
 
-export default function RootLayout({
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang: raw } = await params;
+  const lang: Lang = isLang(raw) ? raw : "ja";
+  const t = home[lang].meta;
+  return {
+    metadataBase: new URL(siteUrl),
+    title: t.title,
+    description: t.description,
+    alternates: alternates("/"),
+    openGraph: {
+      title: t.ogTitle,
+      description: t.ogDescription,
+      locale: ogLocale[lang],
+      type: "website",
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  const { lang } = await params;
+  if (!isLang(lang)) notFound();
+
   return (
     <html
-      lang="ja"
+      lang={lang}
       className={`${zenKaku.variable} ${shippori.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
