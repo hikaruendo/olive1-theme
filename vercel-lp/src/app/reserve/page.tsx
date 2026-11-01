@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: `予約｜Olive1 — ${product.name} ${product.size}`,
-  description: `2026年10月、小豆島で収穫・搾油した油を${product.bottles}本。瓶詰め${product.bottlingDate}。本番号付きで、12月の会で手渡しか発送。`,
+  description: `2026年10〜11月、小豆島で収穫・搾油した油を${product.bottles}本。瓶詰めは${product.bottlingDate}。本番号付きで、12月の会で手渡しか発送。`,
   openGraph: {
     title: `予約｜Olive1 — ${product.name}`,
     description: `${product.harvest}。${product.bottlingDate}瓶詰め。${product.bottles}本。`,
@@ -47,12 +47,12 @@ export default function ReservePage() {
             <div className="reserve-copy">
               <p className="label">Reserve ／ 予約</p>
               <h1>
-                {product.bottlingDate.replace("2026年", "")}に詰めた。
+                {product.bottlingLabel}に詰める。
                 <br />
                 使い切る。
               </h1>
               <p className="lead">
-                2026年10月、小豆島で、僕も収穫と搾油に加わった実の油です。10月いっぱい毎日搾ってタンクに貯め、月末に一度だけ瓶に詰めました。{product.bottles}本。1本ずつ本番号を付けます。
+                2026年10月から11月、小豆島で、僕も収穫と搾油に加わった実の油です。収穫のあいだ毎日搾ってタンクに貯め、11月末に一度だけ瓶に詰めます。{product.bottles}本。1本ずつ本番号を付けます。
               </p>
               <dl className="reserve-facts">
                 {facts.map((f) => (

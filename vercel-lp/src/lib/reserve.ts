@@ -6,8 +6,10 @@ export const product = {
   size: "112g",
   price: 4800, // 税込・送料別
   bottles: 50, // 本番号 n/50
-  harvest: "2026年10月、小豆島で収穫・搾油",
-  bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年10月31日",
+  harvest: "2026年10〜11月、小豆島で収穫・搾油",
+  // 瓶詰め（充填）は11月末（10/31ではない・2026-11-01 Hikaru訂正）。日が決まったら env で上書き
+  bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月末（予定）",
+  bottlingLabel: process.env.NEXT_PUBLIC_BOTTLING_LABEL ?? "11月末",
   event: process.env.NEXT_PUBLIC_EVENT_NOTE ?? "12月上旬、東京で「今年の油を開ける会」",
 };
 
