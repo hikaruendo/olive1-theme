@@ -44,3 +44,16 @@ Each contact is created with:
 ```
 
 Without `RESEND_API_KEY`, submissions return a setup error so leads are not silently lost.
+
+## Reserve endpoint (/reserve)
+
+`/reserve` is the pre-order page for the first lot. The form posts to `/api/reserve`.
+
+- `RESERVE_STATUS`: `closed` (default) shows "11/26から", `open` shows the form, `soldout` shows the sold-out card.
+- `RESERVE_NOTIFY_EMAIL`: where each reservation is emailed (required in `open`).
+- `RESEND_FROM`: sender for the notification and the customer confirmation. Must be a verified domain in Resend.
+- `BANK_*`: all five must be set for "銀行振込" to be selectable. The account appears on `/reserve/thanks` and in the confirmation email only.
+- `STRIPE_PAYMENT_LINK_URL`: a Stripe Payment Link. The customer is redirected with `prefilled_email` and `client_reference_id=<reservation id>`. Enable adjustable quantity on the link; the form cannot pass quantity to a Payment Link.
+- `RESERVE_DRY_RUN=1`: log instead of sending email (local only).
+
+Each reservation gets an id `R-YYYYMMDD-NNNN`. Bottle numbers (n/50) are assigned by hand in the reply.
