@@ -14,14 +14,18 @@ export function isLang(v: string): v is Lang {
 export function href(lang: Lang, path: string) {
   if (lang === defaultLang) return path;
   if (path === "/") return "/en";
-  if (path.startsWith("/#")) return `/en${path}`;
+  if (path.startsWith("/#")) return `/en${path.slice(1)}`; // /#club → /en#club
   return `/en${path}`;
 }
 
-// 公開URLのパスから、言語と内部パスを取り出す（言語切り替え用）
+// 公開URLのパスから、言語と内部パスを取り出す（言語切り替え用）。
+// サーバー側の usePathname は proxy で書き換えた /ja/... を返すことがあるので、/ja も剥がす
 export function splitPath(pathname: string): { lang: Lang; path: string } {
   if (pathname === "/en" || pathname.startsWith("/en/")) {
     return { lang: "en", path: pathname.slice(3) || "/" };
+  }
+  if (pathname === "/ja" || pathname.startsWith("/ja/")) {
+    return { lang: "ja", path: pathname.slice(3) || "/" };
   }
   return { lang: "ja", path: pathname || "/" };
 }
