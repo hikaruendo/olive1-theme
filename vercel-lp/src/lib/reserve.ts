@@ -11,6 +11,11 @@ export const product = {
   bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月末（予定）",
   bottlingLabel: process.env.NEXT_PUBLIC_BOTTLING_LABEL ?? "11月末",
   event: process.env.NEXT_PUBLIC_EVENT_NOTE ?? "12月上旬、東京で「今年の油を開ける会」",
+  // 英語版（/en）。日が決まったら NEXT_PUBLIC_BOTTLING_DATE_EN / LABEL_EN も入れる
+  harvestEn: "Picked and pressed on Shodoshima, October to November 2026",
+  bottlingDateEn: process.env.NEXT_PUBLIC_BOTTLING_DATE_EN ?? "end of November 2026 (planned)",
+  bottlingLabelEn: process.env.NEXT_PUBLIC_BOTTLING_LABEL_EN ?? "end of November",
+  eventEn: process.env.NEXT_PUBLIC_EVENT_NOTE_EN ?? "Early December, Tokyo: the gathering to open this year's oil",
 };
 
 export const maxQty = 6;
@@ -54,11 +59,13 @@ export function yen(n: number) {
 export type ReceiveMethod = "event" | "ship";
 export type PaymentMethod = "bank" | "card";
 
-export function receiveLabel(r: ReceiveMethod) {
+export function receiveLabel(r: ReceiveMethod, lang: "ja" | "en" = "ja") {
+  if (lang === "en") return r === "event" ? "Collect at the December gathering" : "Shipping";
   return r === "event" ? "12月の会で受け取る" : "発送";
 }
 
-export function paymentLabel(p: PaymentMethod) {
+export function paymentLabel(p: PaymentMethod, lang: "ja" | "en" = "ja") {
+  if (lang === "en") return p === "bank" ? "Bank transfer" : "Card (Stripe)";
   return p === "bank" ? "銀行振込" : "カード（Stripe）";
 }
 

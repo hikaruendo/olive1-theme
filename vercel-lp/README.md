@@ -57,3 +57,11 @@ Without `RESEND_API_KEY`, submissions return a setup error so leads are not sile
 - `RESERVE_DRY_RUN=1`: log instead of sending email (local only).
 
 Each reservation gets an id `R-YYYYMMDD-NNNN`. Bottle numbers (n/50) are assigned by hand in the reply.
+
+## 日英切り替え（/en）
+
+- 日本語は接頭辞なし（`/`, `/reserve`, `/journal/x`）、英語は `/en` 付き（`/en`, `/en/reserve`, `/en/journal/x`）。`src/proxy.ts` が接頭辞なしのパスを内部的に `/ja/...` へ書き換える（`/ja/...` を直接開くと接頭辞なしへ308）。
+- ページは `src/app/[lang]/` の下。文言は `src/content/`（`ui.ts` ヘッダー・フッター・フォーム／`home.ts` トップ／`reserve.ts` 予約／`journal-en.ts` 英語の読み物）。日本語の読み物は `src/lib/journal.ts` のまま。英語は直訳にせず、同じ事実を同じ順で書く。
+- ヘッダー右の「English／日本語」で同じページの別言語へ。`<html lang>` と `hreflang` も言語ごとに出る。
+- 予約フォームと会員登録は `lang` をAPIに送る。英語から予約すると、お客さんへの確認メールは英語、自分への通知メールは日本語のまま（末尾に「言語: 英語ページから」）。
+- 瓶詰め日を確定したら `NEXT_PUBLIC_BOTTLING_DATE_EN` / `NEXT_PUBLIC_BOTTLING_LABEL_EN` も入れる。

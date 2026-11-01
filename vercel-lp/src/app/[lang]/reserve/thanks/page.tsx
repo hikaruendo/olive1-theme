@@ -1,19 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { getBankInfo, getStripePaymentLink, maxQty, product, yen } from "@/lib/reserve";
+import { href, isLang } from "@/lib/i18n";
+import { reserveText } from "@/content/reserve";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "予約を受け付けました｜Olive1",
-  robots: { index: false, follow: false },
-};
-
+type Params = { lang: string };
 type Search = { id?: string; qty?: string; receive?: string; method?: string };
 
-export default async function ThanksPage({ searchParams }: { searchParams: Promise<Search> }) {
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { lang: raw } = await params;
+  const lang = isLang(raw) ? raw : "ja";
+  return { title: reserveText[lang].meta.thanksTitle, robots: { index: false, follow: false } };
+}
+
+export default async function ThanksPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>;
+  searchParams: Promise<Search>;
+}) {
+  const { lang } = await params;
+  if (!isLang(lang)) notFound();
+  const t = reserveText[lang].thanks;
   const sp = await searchParams;
   const id = typeof sp.id === "string" && /^R-\d{8}-\d{4}$/.test(sp.id) ? sp.id : "";
   const qtyRaw = Number(sp.qty);
@@ -24,106 +38,114 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
   const subtotal = product.price * qty;
   const bank = method === "bank" ? getBankInfo() : null;
   const stripe = method === "card" ? getStripePaymentLink() : null;
+  const bottlingDate = reserveText[lang].product.bottlingDate;
+  const event = reserveText[lang].product.event;
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader lang={lang} />
       <main id="top">
         <section className="section">
           <div className="wrap reserve-thanks">
-            <p className="label">Reserved ／ 予約</p>
-            <h1>予約を受け付けました。</h1>
+            <p className="label">{t.label}</p>
+            <h1>{t.title}</h1>
             {id && (
               <p className="lead">
-                予約番号は <b className="mono">{id}</b> です。確認メールを送りました。届かない時は迷惑メールフォルダも見てください。
+                {t.leadA}
+                <b className="mono">{id}</b>
+                {t.leadB}
               </p>
             )}
 
             <dl className="reserve-facts">
               <div>
-                <dt>商品</dt>
+                <dt>{t.product}</dt>
                 <dd>
-                  {product.name} {product.size}（瓶詰め {product.bottlingDate}）
+                  {product.name} {product.size}（{t.bottlingPrefix}
+                  {bottlingDate}）
                 </dd>
               </div>
               {hasQty && (
                 <div>
-                  <dt>本数</dt>
-                  <dd>{qty}本</dd>
+                  <dt>{t.qty}</dt>
+                  <dd>{t.qtyValue(qty)}</dd>
                 </div>
               )}
               {hasQty && (
                 <div>
-                  <dt>小計</dt>
-                  <dd>{yen(subtotal)}（税込・送料別）</dd>
+                  <dt>{t.subtotal}</dt>
+                  <dd>
+                    {yen(subtotal)}
+                    {t.subtotalSuffix}
+                  </dd>
                 </div>
               )}
               <div>
-                <dt>受け取り</dt>
-                <dd>{receive === "event" ? product.event : "発送（12月予定・送料は別途ご案内）"}</dd>
+                <dt>{t.receive}</dt>
+                <dd>{receive === "event" ? event : t.receiveShip}</dd>
               </div>
             </dl>
 
             {method === "bank" && bank && (
               <div className="waitlist-form reserve-bank">
-                <p className="form-title">お振込先</p>
+                <p className="form-title">{t.bankTitle}</p>
                 <dl className="reserve-facts">
                   <div>
-                    <dt>銀行</dt>
+                    <dt>{t.bank}</dt>
                     <dd>
                       {bank.bank} {bank.branch}
                     </dd>
                   </div>
                   <div>
-                    <dt>口座</dt>
+                    <dt>{t.account}</dt>
                     <dd>
                       {bank.type} {bank.number}
                     </dd>
                   </div>
                   <div>
-                    <dt>名義</dt>
+                    <dt>{t.holder}</dt>
                     <dd>{bank.holder}</dd>
                   </div>
                   <div>
-                    <dt>金額</dt>
-                    <dd>{yen(subtotal)}{receive === "ship" ? "（送料は別途）" : ""}</dd>
+                    <dt>{t.amount}</dt>
+                    <dd>
+                      {yen(subtotal)}
+                      {receive === "ship" ? t.shippingExtra : ""}
+                    </dd>
                   </div>
                 </dl>
-                <p className="reserve-note">
-                  振込名義の先頭に予約番号の下4桁を入れていただけると照合が早いです。入金を確認したら、本番号（n/{product.bottles}）をメールでお知らせします。
-                </p>
+                <p className="reserve-note">{t.bankNote}</p>
               </div>
             )}
 
             {method === "card" && (
               <div className="waitlist-form reserve-bank">
-                <p className="form-title">カード決済</p>
-                <p>
-                  {hasQty
-                    ? `決済を確認したら、本番号（n/${product.bottles}）をメールでお知らせします。`
-                    : `決済ありがとうございます。Stripeから領収メールが届きます。決済を確認したら、本番号（n/${product.bottles}）をメールでお知らせします。`}
-                </p>
+                <p className="form-title">{t.cardTitle}</p>
+                <p>{hasQty ? t.cardWithQty : t.cardReturn}</p>
                 {stripe && hasQty && (
                   <p>
-                    決済ページに進まなかった場合は{" "}
-                    <a href={`${stripe}${stripe.includes("?") ? "&" : "?"}client_reference_id=${encodeURIComponent(id)}`} className="link">
-                      こちら
+                    {t.cardFallbackA}
+                    <a
+                      href={`${stripe}${stripe.includes("?") ? "&" : "?"}client_reference_id=${encodeURIComponent(id)}${lang === "ja" ? "&locale=ja" : ""}`}
+                      className="link"
+                    >
+                      {t.cardFallbackLink}
                     </a>
-                    から。本数は決済ページで {qty}本 を選んでください。
+                    {t.cardFallbackB(qty)}
                   </p>
                 )}
               </div>
             )}
 
             <p style={{ marginTop: 28 }}>
-              <Link href="/" className="btn btn-ghost">
-                ホームへ戻る
+              <Link href={href(lang, "/")} className="btn btn-ghost">
+                {t.home}
               </Link>
             </p>
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter lang={lang} />
     </>
   );
 }

@@ -69,7 +69,7 @@ export const articles: Article[] = [
       ]},
       { type: "p", text: "この3つが揃っている一本は、それだけで作り手の姿勢が見えます。逆にどれも書かれていない場合、中身が悪いとは限りませんが、確かめる手がかりがない、ということになります。" },
 
-      { type: "p", text: "Olive1は、収穫年と搾油日を明記し、その年のうちに食べきる量で届けることを前提に設計しています。今年の搾りたてを、いちばんおいしい数か月で。それが私たちの考える一本です。" },
+      { type: "p", text: "Olive1は、収穫年と搾油日を明記し、その年のうちに食べきる量で届けることを前提に設計しています。今年の搾りたてを、いちばんおいしい数か月で。それがOlive1の考える一本です。" },
     ],
     related: ["freshness-decay", "label-reading"],
   },
@@ -206,7 +206,7 @@ export const articles: Article[] = [
       { type: "h", text: "「高い理由」を、見えるようにする" },
       { type: "p", text: "問題は、値段の理由が消費者から見えにくいことです。同じ価格帯でも、中身の鮮度はまちまち。だからこそ、なぜその値段なのかを数字と産地の情報で説明できることが大事だと考えています。" },
       { type: "quote", text: "大事なのは安いか高いかではなく、その値段の理由が見えるかどうか。Olive1は価格の根拠になる数字を隠さず出します。それが納得して買える一本の条件だと思っています。" },
-      { type: "p", text: "私たちはいま、産地を自分の足で確かめる旅の途中です。どの畑の、どんな検査値の一本を、いくらで届けるのか。決まっていく過程ごと、公開していきます。" },
+      { type: "p", text: "Olive1はいま、産地を自分の足で確かめる途中です。どの畑の、どんな検査値の一本を、いくらで届けるのか。決まっていく過程ごと、公開していきます。" },
     ],
     related: ["label-reading", "freshness-decay"],
   },
@@ -243,6 +243,54 @@ export const articles: Article[] = [
   },
 ];
 
-export function getArticle(slug: string): Article | undefined {
-  return articles.find((a) => a.slug === slug);
+import { articlesEn } from "@/content/journal-en";
+import type { Lang } from "@/lib/i18n";
+
+// 言語ごとの記事。slug は共通（/journal/x と /en/journal/x が対になる）
+export function getArticles(lang: Lang): Article[] {
+  return lang === "en" ? articlesEn : articles;
 }
+
+export function getArticle(lang: Lang, slug: string): Article | undefined {
+  return getArticles(lang).find((a) => a.slug === slug);
+}
+
+// 読み物ページの共通文言
+export const journalText = {
+  ja: {
+    metaTitle: "読み物｜Olive1 — 目利きのオリーブオイル読本",
+    metaDescription: "良いエクストラバージンオリーブオイルの見分け方、ラベルの読み方、国産の値段、鮮度と保存。数字で選ぶための読み物を、目利きの視点で。",
+    ogTitle: "読み物｜Olive1",
+    ogDescription: "オリーブオイルを数字で選ぶための、目利きの読み物。",
+    label: "Journal ／ 読み物",
+    title: "目利きの読みもの",
+    lead: "良いオリーブオイルの見分け方から、ラベルの読み方、国産の値段、鮮度の話まで。感想ではなく、数字で選ぶための手がかりを集めました。",
+    read: "読む →",
+    articleSuffix: "｜Olive1 読み物",
+    fallbackTitle: "読み物｜Olive1",
+    labelSuffix: " ／ 読み物",
+    readTime: (m: number) => `読み時間 約${m}分`,
+    watch: "Watch ／ 動画で見る",
+    keepReading: "Keep reading ／ 続けて読む",
+    related: "この話のつづき",
+    backToList: "読み物の一覧へ",
+  },
+  en: {
+    metaTitle: "Journal｜Olive1 — Notes on choosing olive oil",
+    metaDescription: "How to tell a good extra virgin olive oil, how to read the label, why Japanese oil costs what it does, freshness and storage. Notes for choosing by the numbers, from a buyer's side of the table.",
+    ogTitle: "Journal｜Olive1",
+    ogDescription: "Notes for choosing olive oil by the numbers.",
+    label: "Journal",
+    title: "Notes from a buyer",
+    lead: "How to tell a good oil, how to read a label, why Japanese oil costs what it does, and what freshness means. Not impressions. Things you can check.",
+    read: "Read →",
+    articleSuffix: "｜Olive1 Journal",
+    fallbackTitle: "Journal｜Olive1",
+    labelSuffix: " ／ Journal",
+    readTime: (m: number) => `About ${m} min read`,
+    watch: "Watch",
+    keepReading: "Keep reading",
+    related: "Where this leads",
+    backToList: "All articles",
+  },
+} satisfies Record<Lang, unknown>;

@@ -4,29 +4,30 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { getArticle, articles, type JournalBlock } from "@/lib/journal";
+import { getArticle, getArticles, journalText, type JournalBlock } from "@/lib/journal";
+import { alternates, href, isLang, langs, ogLocale } from "@/lib/i18n";
+import { ui } from "@/content/ui";
 
-type Params = { slug: string };
+type Params = { lang: string; slug: string };
 
 export function generateStaticParams(): Params[] {
-  return articles.map((a) => ({ slug: a.slug }));
+  return langs.flatMap((lang) => getArticles(lang).map((a) => ({ lang, slug: a.slug })));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<Params>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const article = getArticle(slug);
-  if (!article) return { title: "読み物｜Olive1" };
-  const title = `${article.title}｜Olive1 読み物`;
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { lang: raw, slug } = await params;
+  const lang = isLang(raw) ? raw : "ja";
+  const t = journalText[lang];
+  const article = getArticle(lang, slug);
+  if (!article) return { title: t.fallbackTitle };
+  const title = `${article.title}${t.articleSuffix}`;
   const description = article.dek;
   return {
     title,
     description,
     keywords: article.keywords,
-    openGraph: { title, description, locale: "ja_JP", type: "article" },
+    alternates: alternates(`/journal/${slug}`),
+    openGraph: { title, description, locale: ogLocale[lang], type: "article" },
   };
 }
 
@@ -51,29 +52,29 @@ function Block({ block }: { block: JournalBlock }) {
   }
 }
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: Promise<Params>;
-}) {
-  const { slug } = await params;
-  const article = getArticle(slug);
+export default async function ArticlePage({ params }: { params: Promise<Params> }) {
+  const { lang, slug } = await params;
+  if (!isLang(lang)) notFound();
+  const article = getArticle(lang, slug);
   if (!article) notFound();
+  const t = journalText[lang];
+  const c = ui[lang].crumb;
+  const cta = ui[lang].clubCta;
 
   const related = article.related
-    .map((s) => getArticle(s))
+    .map((s) => getArticle(lang, s))
     .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader lang={lang} />
 
       <main id="top">
         {/* breadcrumb */}
-        <nav className="crumb wrap" aria-label="パンくず">
-          <Link href="/#top">ホーム</Link>
+        <nav className="crumb wrap" aria-label={c.aria}>
+          <Link href={href(lang, "/#top")}>{c.home}</Link>
           <span>/</span>
-          <Link href="/journal">読み物</Link>
+          <Link href={href(lang, "/journal")}>{c.journal}</Link>
           <span>/</span>
           <span className="cur">{article.cat}</span>
         </nav>
@@ -82,21 +83,16 @@ export default async function ArticlePage({
         <article className="article">
           <header className="wrap article-head">
             <p className="label" style={{ justifyContent: "center" }}>
-              {article.cat} ／ 読み物
+              {article.cat}
+              {t.labelSuffix}
             </p>
             <h1>{article.title}</h1>
             <p className="article-dek">{article.dek}</p>
-            <p className="article-meta">読み時間 約{article.readMin}分</p>
+            <p className="article-meta">{t.readTime(article.readMin)}</p>
           </header>
 
           <div className="wrap article-hero-media">
-            <Image
-              src={article.hero}
-              alt={article.title}
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 900px"
-            />
+            <Image src={article.hero} alt={article.title} fill priority sizes="(max-width: 900px) 100vw, 900px" />
           </div>
 
           <div className="wrap prose">
@@ -108,17 +104,10 @@ export default async function ArticlePage({
           {article.video && (
             <div className="wrap article-video">
               <p className="label" style={{ justifyContent: "center" }}>
-                Watch ／ 動画で見る
+                {t.watch}
               </p>
               <div className="reel">
-                <video
-                  src={article.video}
-                  poster={article.videoPoster}
-                  controls
-                  muted
-                  playsInline
-                  preload="none"
-                />
+                <video src={article.video} poster={article.videoPoster} controls muted playsInline preload="none" />
               </div>
             </div>
           )}
@@ -128,24 +117,24 @@ export default async function ArticlePage({
         {related.length > 0 && (
           <section className="section tinted">
             <div className="wrap">
-              <p className="label">Keep reading ／ 続けて読む</p>
-              <h2>この話のつづき</h2>
+              <p className="label">{t.keepReading}</p>
+              <h2>{t.related}</h2>
               <div className="jr-grid">
                 {related.map((a) => (
-                  <Link className="art" href={`/journal/${a.slug}`} key={a.slug}>
+                  <Link className="art" href={href(lang, `/journal/${a.slug}`)} key={a.slug}>
                     <div className="media">
                       <Image src={a.hero} alt={a.title} fill sizes="(max-width: 520px) 100vw, 25vw" />
                     </div>
                     <div className="body">
                       <div className="cat">{a.cat}</div>
                       <h3>{a.title}</h3>
-                      <span className="more">読む →</span>
+                      <span className="more">{t.read}</span>
                     </div>
                   </Link>
                 ))}
               </div>
-              <Link href="/journal" className="btn btn-ghost" style={{ marginTop: 28 }}>
-                読み物の一覧へ
+              <Link href={href(lang, "/journal")} className="btn btn-ghost" style={{ marginTop: 28 }}>
+                {t.backToList}
               </Link>
             </div>
           </section>
@@ -156,21 +145,19 @@ export default async function ArticlePage({
           <div className="wrap">
             <div className="club club-cta">
               <div>
-                <p className="label">Olive1 Club</p>
-                <h2>数字で選べる一本を、いちばん先に。</h2>
-                <p>
-                  産地を探す旅の続きと、初回ロットの入荷日・価格・検査値が決まったタイミングの先行案内をお届けします。
-                </p>
+                <p className="label">{cta.label}</p>
+                <h2>{cta.title}</h2>
+                <p>{cta.body}</p>
               </div>
-              <Link href="/#club" className="btn btn-citrus">
-                クラブに入る（無料）
+              <Link href={href(lang, "/#club")} className="btn btn-citrus">
+                {cta.button}
               </Link>
             </div>
           </div>
         </section>
       </main>
 
-      <SiteFooter />
+      <SiteFooter lang={lang} />
     </>
   );
 }
