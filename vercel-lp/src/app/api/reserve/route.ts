@@ -85,7 +85,7 @@ export async function POST(request: Request) {
 
   const cardUrl =
     payment === "card" && stripeUrl
-      ? `${stripeUrl}${stripeUrl.includes("?") ? "&" : "?"}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${encodeURIComponent(id)}`
+      ? `${stripeUrl}${stripeUrl.includes("?") ? "&" : "?"}prefilled_email=${encodeURIComponent(email)}&client_reference_id=${encodeURIComponent(id)}&locale=ja`
       : null;
 
   const resendApiKey = process.env.RESEND_API_KEY;
