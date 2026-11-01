@@ -17,7 +17,8 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   const id = typeof sp.id === "string" && /^R-\d{8}-\d{4}$/.test(sp.id) ? sp.id : "";
   const qtyRaw = Number(sp.qty);
-  const qty = Number.isInteger(qtyRaw) && qtyRaw >= 1 && qtyRaw <= maxQty ? qtyRaw : 1;
+  const hasQty = Number.isInteger(qtyRaw) && qtyRaw >= 1 && qtyRaw <= maxQty;
+  const qty = hasQty ? qtyRaw : 1;
   const receive = sp.receive === "ship" ? "ship" : "event";
   const method = sp.method === "card" ? "card" : "bank";
   const subtotal = product.price * qty;
@@ -45,14 +46,18 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
                   {product.name} {product.size}（瓶詰め {product.bottlingDate}）
                 </dd>
               </div>
-              <div>
-                <dt>本数</dt>
-                <dd>{qty}本</dd>
-              </div>
-              <div>
-                <dt>小計</dt>
-                <dd>{yen(subtotal)}（税込・送料別）</dd>
-              </div>
+              {hasQty && (
+                <div>
+                  <dt>本数</dt>
+                  <dd>{qty}本</dd>
+                </div>
+              )}
+              {hasQty && (
+                <div>
+                  <dt>小計</dt>
+                  <dd>{yen(subtotal)}（税込・送料別）</dd>
+                </div>
+              )}
               <div>
                 <dt>受け取り</dt>
                 <dd>{receive === "event" ? product.event : "発送（12月予定・送料は別途ご案内）"}</dd>
@@ -93,8 +98,12 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
             {method === "card" && (
               <div className="waitlist-form reserve-bank">
                 <p className="form-title">カード決済</p>
-                <p>決済を確認したら、本番号（n/{product.bottles}）をメールでお知らせします。</p>
-                {stripe && (
+                <p>
+                  {hasQty
+                    ? `決済を確認したら、本番号（n/${product.bottles}）をメールでお知らせします。`
+                    : `決済ありがとうございます。Stripeから領収メールが届きます。決済を確認したら、本番号（n/${product.bottles}）をメールでお知らせします。`}
+                </p>
+                {stripe && hasQty && (
                   <p>
                     決済ページに進まなかった場合は{" "}
                     <a href={`${stripe}${stripe.includes("?") ? "&" : "?"}client_reference_id=${encodeURIComponent(id)}`} className="link">
