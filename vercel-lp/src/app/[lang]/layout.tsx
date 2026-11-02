@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Zen_Kaku_Gothic_New, Shippori_Mincho, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { alternates, isLang, langs, ogLocale, siteUrl, type Lang } from "@/lib/i18n";
 import { home } from "@/content/home";
 import "./globals.css";
@@ -69,6 +70,8 @@ export default async function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@400,500,600&display=swap"
         />
         {children}
+        {/* Vercel Web Analytics（訪問数と出どころ。utm_source / utm_medium も記録される） */}
+        <Analytics />
       </body>
     </html>
   );

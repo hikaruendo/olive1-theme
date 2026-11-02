@@ -153,7 +153,7 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
 
       <div className="form-field">
         <label htmlFor="note">{t.note}</label>
-        <textarea id="note" name="note" rows={2} maxLength={600} />
+        <textarea id="note" name="note" rows={2} maxLength={600} placeholder={t.notePlaceholder} />
       </div>
 
       <div className="reserve-total">
