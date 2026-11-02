@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ReserveForm } from "@/components/reserve-form";
-import { getBankInfo, getReserveStatus, getStripePaymentLink, product, yen } from "@/lib/reserve";
+import { getBankInfo, getReserveStatus, getStripePaymentLink, maxQty, product, yen } from "@/lib/reserve";
+import { sheetRemaining } from "@/lib/sheet";
 import { alternates, href, isLang, ogLocale } from "@/lib/i18n";
 import { reserveText } from "@/content/reserve";
 import { ui } from "@/content/ui";
@@ -30,7 +31,11 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
   if (!isLang(lang)) notFound();
   const t = reserveText[lang];
   const c = ui[lang].crumb;
-  const status = getReserveStatus();
+  const envStatus = getReserveStatus();
+  // 受付中の時だけ台帳から残り本数を読む。0なら売り切れ表示に切り替える
+  const remaining = envStatus === "open" ? await sheetRemaining() : null;
+  const status = envStatus === "open" && remaining === 0 ? "soldout" : envStatus;
+  const selectable = Math.min(maxQty, remaining ?? maxQty);
   const cardAvailable = !!getStripePaymentLink();
   const bankAvailable = !!getBankInfo();
 
@@ -41,6 +46,7 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
     { k: t.page.facts.bottles, v: t.page.facts.bottlesValue },
     { k: t.page.facts.price, v: `${yen(product.price)}${t.page.facts.priceSuffix}` },
     { k: t.page.facts.receive, v: `${t.product.event}${t.page.facts.receiveSuffix}` },
+    ...(status === "open" && remaining !== null ? [{ k: t.page.facts.remaining, v: t.page.facts.remainingValue(remaining) }] : []),
   ];
 
   return (
@@ -77,7 +83,7 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
             </div>
 
             <div className="reserve-side">
-              {status === "open" && <ReserveForm lang={lang} cardAvailable={cardAvailable} bankAvailable={bankAvailable} />}
+              {status === "open" && <ReserveForm lang={lang} cardAvailable={cardAvailable} bankAvailable={bankAvailable} maxSelectable={selectable} />}
               {status === "closed" && (
                 <div className="waitlist-form reserve-closed">
                   <p className="form-title">{t.page.closedTitle}</p>

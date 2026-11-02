@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 予約台帳の Apps Script（SECRET 入り）
+apps-script/*.local.gs
