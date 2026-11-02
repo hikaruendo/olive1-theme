@@ -8,6 +8,7 @@ const ja = {
     oils: "今年の一本",
     journal: "読み物",
     club: "クラブ",
+    reserve: "予約",
     joinClub: "クラブに入る",
     menu: "メニュー",
     switchTo: "English",
@@ -16,6 +17,7 @@ const ja = {
   footer: {
     tagline: "東京発のスペシャルティEVOO。数値を公開し、産地を自分の足で確かめて、毎日のごはんに届けます。",
     explore: "探す",
+    reserve: "予約する",
     club: "クラブ",
     joinClub: "クラブに入る",
     faq: "よくある質問",
@@ -49,6 +51,7 @@ const en: typeof ja = {
     oils: "This Year's Bottle",
     journal: "Journal",
     club: "Club",
+    reserve: "Reserve",
     joinClub: "Join the club",
     menu: "Menu",
     switchTo: "日本語",
@@ -57,6 +60,7 @@ const en: typeof ja = {
   footer: {
     tagline: "Specialty extra virgin olive oil from Tokyo. Lab numbers published, origins checked in person, made for everyday meals.",
     explore: "Explore",
+    reserve: "Reserve a bottle",
     club: "Club",
     joinClub: "Join the club",
     faq: "FAQ",

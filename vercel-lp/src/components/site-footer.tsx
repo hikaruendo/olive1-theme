@@ -17,10 +17,11 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           <div>
             <h4>{t.footer.explore}</h4>
             <ul>
-              <li><Link href={href(lang, "/#oils")}>{t.nav.oils}</Link></li>
               <li><Link href={href(lang, "/#transparency")}>{t.nav.transparency}</Link></li>
+              <li><Link href={href(lang, "/#oils")}>{t.nav.oils}</Link></li>
               <li><Link href={href(lang, "/#journey")}>{t.nav.journey}</Link></li>
               <li><Link href={href(lang, "/journal")}>{t.nav.journal}</Link></li>
+              <li><Link href={href(lang, "/reserve")}>{t.footer.reserve}</Link></li>
             </ul>
           </div>
           <div>

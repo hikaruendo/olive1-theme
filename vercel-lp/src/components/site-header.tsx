@@ -21,12 +21,14 @@ export function SiteHeader({ lang }: { lang: Lang }) {
 
   // Absolute (home-anchored) hrefs so the nav works from every route — on
   // /journal a bare "#journey" would resolve against the current path.
+  // トップページの章の並び順（品質の見方→今年の一本→旅の記録→クラブ）に合わせ、別ページ（読み物・予約）はその後ろ
   const links = [
-    { href: href(lang, "/#journey"), label: t.journey },
     { href: href(lang, "/#transparency"), label: t.transparency },
     { href: href(lang, "/#oils"), label: t.oils },
-    { href: href(lang, "/journal"), label: t.journal },
+    { href: href(lang, "/#journey"), label: t.journey },
     { href: href(lang, "/#club"), label: t.club },
+    { href: href(lang, "/journal"), label: t.journal },
+    { href: href(lang, "/reserve"), label: t.reserve },
   ];
 
   // 同じページを別の言語で開くリンク（/reserve ⇄ /en/reserve）

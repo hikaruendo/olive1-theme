@@ -195,9 +195,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   ))}
                 </ul>
                 <p className="fb-note">{t.oils.body}</p>
-                <a href="#club" className="btn btn-citrus">
-                  {t.oils.cta}
-                </a>
+                <div className="hero-cta">
+                  <a href="#club" className="btn btn-citrus">
+                    {t.oils.cta}
+                  </a>
+                  <Link href={L("/reserve")} className="btn btn-ghost">
+                    {t.oils.reserveCta}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
