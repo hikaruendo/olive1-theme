@@ -14,6 +14,7 @@ import {
   type ReceiveMethod,
 } from "@/lib/reserve";
 import { isLang, type Lang } from "@/lib/i18n";
+import { sheetConfigured, sheetReserve } from "@/lib/sheet";
 
 // 入力エラー・状態のメッセージ。フォームの言語で返す
 const msg = {
@@ -30,6 +31,8 @@ const msg = {
     noBank: "振込先の設定がまだです。",
     notConfigured: "予約受付の設定がまだです。",
     sendFailed: "予約の送信に失敗しました。時間をおいてもう一度お試しください。",
+    soldout2: "今年の分は、すべて予約が入りました。",
+    notEnough: (n: number) => `残りは${n}本です。本数を減らしてもう一度お試しください。`,
   },
   en: {
     closed: "Reservations have not opened yet.",
@@ -44,6 +47,8 @@ const msg = {
     noBank: "Bank transfer details are not set up yet.",
     notConfigured: "Reservations are not set up yet.",
     sendFailed: "The reservation could not be sent. Please try again in a moment.",
+    soldout2: "This year's bottles are all reserved.",
+    notEnough: (n: number) => `Only ${n} ${n === 1 ? "bottle is" : "bottles are"} left. Please choose fewer and try again.`,
   },
 } satisfies Record<Lang, unknown>;
 
@@ -208,14 +213,33 @@ export async function POST(request: Request) {
     "https://olive.kando1.com/en",
   ].join("\n");
 
+  // 0) 台帳に書く。ここで残り本数を確かめるので、50本を超える予約はここで止まる
+  const useSheet = sheetConfigured();
+  if (useSheet) {
+    // 台帳は人が読むので、受け取りと支払いは日本語の表示名で入れる
+    const sheet = await sheetReserve({
+      id, name, email, qty, receive: receiveLabel(receive), address, payment: paymentLabel(payment), referrer, note, lang,
+    }).catch((error) => {
+      console.error("[reserve]", { step: "sheet", error });
+      return { ok: false, error: "network" } as const;
+    });
+    if (!sheet.ok) {
+      if (sheet.error === "soldout") return bad(m.soldout2, 409);
+      if (sheet.error === "not_enough" && "remaining" in sheet && typeof sheet.remaining === "number")
+        return bad(m.notEnough(sheet.remaining), 409);
+      console.error("[reserve]", { step: "sheet", error: sheet.error });
+      return bad(m.sendFailed, 502);
+    }
+  }
+
   if (dryRun) {
-    console.info("[reserve:dry-run]", { id, summary, cardUrl });
+    console.info("[reserve:dry-run]", { id, summary, cardUrl, sheet: useSheet });
     return NextResponse.json({ ok: true, id, qty, payment, cardUrl });
   }
 
   const resend = new Resend(resendApiKey);
 
-  // 1) 自分への通知（これが落ちたら予約を受け付けない）
+  // 1) 自分への通知。台帳がある時は記録は残っているので、落ちてもログだけ。台帳が無い時は受け付けない
   const notify = await resend.emails.send({
     from: from!,
     to: notifyTo!,
@@ -225,7 +249,7 @@ export async function POST(request: Request) {
   });
   if (notify.error) {
     console.error("[reserve]", { step: "notify", error: notify.error });
-    return bad(m.sendFailed, 502);
+    if (!useSheet) return bad(m.sendFailed, 502);
   }
 
   // 2) お客さんへの確認メール（落ちてもログだけ。予約は成立）

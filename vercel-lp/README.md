@@ -65,3 +65,11 @@ Each reservation gets an id `R-YYYYMMDD-NNNN`. Bottle numbers (n/50) are assigne
 - ヘッダー右の「English／日本語」で同じページの別言語へ。`<html lang>` と `hreflang` も言語ごとに出る。
 - 予約フォームと会員登録は `lang` をAPIに送る。英語から予約すると、お客さんへの確認メールは英語、自分への通知メールは日本語のまま（末尾に「言語: 英語ページから」）。
 - 瓶詰め日を確定したら `NEXT_PUBLIC_BOTTLING_DATE_EN` / `NEXT_PUBLIC_BOTTLING_LABEL_EN` も入れる。
+
+## 予約台帳（Google スプレッドシート）
+
+- 予約は Apps Script の Web アプリ経由でスプレッドシート「Olive1 予約台帳 2026」に1行ずつ入る。追加の前にロックをかけて残り本数を数えるので、同時に予約が来ても 50 本を超えない（超える分は「残りは◯本です」で断る）
+- 予約ページは受付中だけ台帳から残り本数を読み「残り◯本」を出す。0 になると売り切れ表示に自動で切り替わる
+- カード決済は Stripe の webhook（`/api/stripe/webhook`、`checkout.session.completed`）で台帳の行を「入金済み」にし、入金通知メールを送る。署名は `STRIPE_WEBHOOK_SECRET` で確認
+- env：`SHEET_WEBHOOK_URL`（Web アプリの URL）、`SHEET_SECRET`（Apps Script の SECRET と同じ値）、`STRIPE_WEBHOOK_SECRET`。`SHEET_*` が無ければ台帳なし（メールだけ）で動く
+- 設定と毎日の使い方は `apps-script/README.md`

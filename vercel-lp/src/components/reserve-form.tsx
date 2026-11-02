@@ -12,9 +12,10 @@ type Props = {
   lang: Lang;
   cardAvailable: boolean;
   bankAvailable: boolean;
+  maxSelectable?: number; // 残り本数が上限より少ない時はそこまで
 };
 
-export function ReserveForm({ lang, cardAvailable, bankAvailable }: Props) {
+export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable = maxQty }: Props) {
   const t = reserveText[lang].form;
   const router = useRouter();
   const [status, setStatus] = useState<Status>("idle");
@@ -90,7 +91,7 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable }: Props) {
       <div className="form-field">
         <label htmlFor="qty">{t.qty}</label>
         <select id="qty" name="qty" value={qty} onChange={(e) => setQty(Number(e.target.value))}>
-          {Array.from({ length: maxQty }, (_, i) => i + 1).map((n) => (
+          {Array.from({ length: Math.max(1, maxSelectable) }, (_, i) => i + 1).map((n) => (
             <option key={n} value={n}>
               {t.qtyOption(n, yen(product.price * n))}
             </option>
