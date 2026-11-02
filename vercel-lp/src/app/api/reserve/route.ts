@@ -216,8 +216,9 @@ export async function POST(request: Request) {
   // 0) 台帳に書く。ここで残り本数を確かめるので、50本を超える予約はここで止まる
   const useSheet = sheetConfigured();
   if (useSheet) {
+    // 台帳は人が読むので、受け取りと支払いは日本語の表示名で入れる
     const sheet = await sheetReserve({
-      id, name, email, qty, receive, address, payment, referrer, note, lang,
+      id, name, email, qty, receive: receiveLabel(receive), address, payment: paymentLabel(payment), referrer, note, lang,
     }).catch((error) => {
       console.error("[reserve]", { step: "sheet", error });
       return { ok: false, error: "network" } as const;

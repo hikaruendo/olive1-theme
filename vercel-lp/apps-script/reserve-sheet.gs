@@ -25,6 +25,8 @@ const STATUS = { reserved: "予約", paid: "入金済み", cancelled: "キャン
 
 // ---------- 初回だけ実行 ----------
 function setup() {
+  // 受付日時を日本時間で表示する（既定は米国時間のことがある）
+  SpreadsheetApp.getActiveSpreadsheet().setSpreadsheetTimeZone("Asia/Tokyo");
   const sh = sheet_();
   sh.setName("予約");
   sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight("bold").setBackground("#eef1e2");
@@ -154,7 +156,7 @@ function paid_(d) {
     // 予約フォームを通らずに決済リンクから直接払われた分。本数に数える
     sh.appendRow([
       "STRIPE-" + sessionId.slice(-8), now, STATUS.paid, safe_(d.name), safe_(d.email), Number(d.qty) || "",
-      "", safe_(d.address), "card", "", "", "", now, Number(d.qty) || "", Number(d.amount) || "", "",
+      "", safe_(d.address), "カード（Stripe）", "", "", "", now, Number(d.qty) || "", Number(d.amount) || "", "",
       "予約フォームを通らないカード決済。受け取り方法を確認する", sessionId,
     ]);
     return json_({ ok: true, matched: false });
