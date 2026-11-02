@@ -84,6 +84,7 @@ const ja = {
     ],
     body: "今年穫れた実を、島で搾って、そのままお届けします。寝かせません。いいオイルほど、使い切れずに残すのがいちばんもったいない。だから、使い切れる量にしました。1回にティースプーン1杯、食べる直前にたらして、開けてから2ヶ月くらいです。",
     cta: "入荷の知らせを受け取る",
+    reserveCta: "予約ページを見る",
   },
   sip: {
     label: "First Sip ／ 確かめ方",
@@ -275,6 +276,7 @@ const en: typeof ja = {
     ],
     body: "This year's olives, pressed on the island and sent to you as they are. No aging. With good oil, the worst outcome is a half-finished bottle going stale. So the bottle is sized to be finished. One teaspoon, added just before eating, lasts about two months.",
     cta: "Get the release notice",
+    reserveCta: "See the reservation page",
   },
   sip: {
     label: "First Sip ／ How to check",

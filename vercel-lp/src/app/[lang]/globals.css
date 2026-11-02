@@ -2074,3 +2074,38 @@ footer a:hover {
   font-size: 13px;
   letter-spacing: 0.04em;
 }
+
+/* ナビ6項目＋言語切り替えが入るので、折り返さず、狭い幅では早めにメニューへ */
+.nav-links a,
+.nav > .btn {
+  white-space: nowrap;
+}
+@media (max-width: 980px) {
+  .nav-links,
+  .nav > .btn {
+    display: none;
+  }
+  .menu-btn {
+    display: block;
+  }
+  .mobile-menu {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px clamp(18px, 5vw, 40px) 18px;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu.open {
+    display: flex;
+  }
+  .mobile-menu a {
+    padding: 12px 4px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu .btn {
+    margin-top: 12px;
+    justify-content: center;
+  }
+}
