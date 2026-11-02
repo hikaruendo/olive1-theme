@@ -42,8 +42,9 @@ function setup() {
   sh.setColumnWidth(COL.note, 200);
   sh.setColumnWidth(COL.remark, 220);
   if (INIT_SECRET) PropertiesService.getScriptProperties().setProperty("SECRET", INIT_SECRET);
-  SpreadsheetApp.getUi().alert(
-    "設定しました。\nSECRET: " + (PropertiesService.getScriptProperties().getProperty("SECRET") ? "登録済み" : "未登録（INIT_SECRET を入れて再実行）"),
+  // エディタから実行するとダイアログは出せないので、実行ログに出す
+  Logger.log(
+    "設定しました。SECRET: " + (PropertiesService.getScriptProperties().getProperty("SECRET") ? "登録済み" : "未登録（INIT_SECRET を入れて再実行）"),
   );
 }
 
