@@ -2,7 +2,7 @@
 // 数字はラベル・Pressing Report と同じものだけを書く。未確定のものは env に逃がす。
 
 export const product = {
-  name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hatsu",
+  name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hikaru's Olive",
   size: "100g", // 2026-11-01 Hikaru：瓶は首のある濃緑の角瓶100gに変更（112gではない）。105g表記の可能性あり＝要確認
   price: 5000, // 税込・送料別（2026-11-13 に 4,800 から変更）
   bottles: 48, // 詰める本数（24本×2ケース）・本番号 n/48。売るのは45本（台帳の TOTAL）
