@@ -155,13 +155,13 @@ export async function POST(request: Request) {
           `名義: ${bank.holder}`,
           `金額: ${yen(subtotal)}${receive === "ship" ? "（送料は別途ご案内します）" : ""}`,
           "振込名義の先頭に予約番号の下4桁を入れていただけると照合が早いです。",
-          "入金を確認したら、メールでお知らせします。",
+          "入金を確認したら、本番号（n/48）をお知らせします。",
         ]
       : [
           "【カード決済】",
           "下のリンクから決済に進んでください。決済ページでは同じ本数を選んでください。",
           cardUrl ?? "",
-          "決済を確認したら、メールでお知らせします。",
+          "決済を確認したら、本番号（n/48）をお知らせします。",
         ]),
     "",
     receive === "event"
@@ -196,13 +196,13 @@ export async function POST(request: Request) {
           `Account name: ${bank.holder}`,
           `Amount: ${yen(subtotal)}${receive === "ship" ? " (shipping cost will be sent separately)" : ""}`,
           "Please put the last four digits of your reservation number at the start of the transfer name.",
-          "Once the payment is confirmed, you will get an email.",
+          "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
         ]
       : [
           "[Card payment]",
           "Please continue to the payment page below and choose the same number of bottles.",
           cardUrl ?? "",
-          "Once the payment is confirmed, you will get an email.",
+          "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
         ]),
     "",
     receive === "event"

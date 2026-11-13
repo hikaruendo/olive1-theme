@@ -56,7 +56,7 @@ Without `RESEND_API_KEY`, submissions return a setup error so leads are not sile
 - `STRIPE_PAYMENT_LINK_URL`: a Stripe Payment Link. The customer is redirected with `prefilled_email` and `client_reference_id=<reservation id>`. Enable adjustable quantity on the link; the form cannot pass quantity to a Payment Link.
 - `RESERVE_DRY_RUN=1`: log instead of sending email (local only).
 
-Each reservation gets an id `R-YYYYMMDD-NNNN`. Bottles are not numbered.
+Each reservation gets an id `R-YYYYMMDD-NNNN`. Bottle numbers (n/48) are assigned by hand in the reply.
 
 ## 日英切り替え（/en）
 
