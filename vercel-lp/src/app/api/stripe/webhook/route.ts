@@ -102,7 +102,7 @@ export async function POST(request: Request) {
         ...(address ? [`発送先: ${address}`] : []),
         `Stripe: ${s.id}`,
         "",
-        "台帳で本番号を振って、お客さんに返信してください。",
+        "台帳を確認して、お客さんに返信してください。",
       ].join("\n"),
     });
     if (r.error) console.error("[stripe-webhook] notify", r.error);
