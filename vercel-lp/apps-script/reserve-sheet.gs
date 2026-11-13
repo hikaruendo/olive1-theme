@@ -9,7 +9,7 @@
  * 設定手順は apps-script/README.md。SECRET は Vercel の SHEET_SECRET と同じ値。
  */
 
-const TOTAL = 50; // 今年の本数（本番号 n/50）
+const TOTAL = 45; // 売る本数（詰めるのは48本・会の試飲に3本・本番号は n/48）
 const INIT_SECRET = ""; // 初回の setup() で Script Properties に移す。空のままコミットする
 
 const HEADERS = [

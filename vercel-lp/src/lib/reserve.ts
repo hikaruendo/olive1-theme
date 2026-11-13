@@ -2,10 +2,10 @@
 // 数字はラベル・Pressing Report と同じものだけを書く。未確定のものは env に逃がす。
 
 export const product = {
-  name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hatsu",
+  name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hikaru's Olive",
   size: "105g", // 2026-11-03 Hikaru：首のある濃緑の角瓶。内容量は105g（岬工房の既存ラベルで確認）
-  price: 4800, // 税込・送料別
-  bottles: 50, // 本番号 n/50
+  price: 5000, // 税込・送料別（2026-11-13 に 4,800 から変更）
+  bottles: 48, // 詰める本数（24本×2ケース）・本番号 n/48。売るのは45本（台帳の TOTAL）
   harvest: "2026年10〜11月、小豆島で収穫・搾油",
   // 瓶詰め（充填）は11月末（10/31ではない・2026-11-01 Hikaru訂正）。日が決まったら env で上書き
   bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月末（予定）",
