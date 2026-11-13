@@ -3,7 +3,7 @@
 
 export const product = {
   name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hatsu",
-  size: "100g", // 2026-11-01 Hikaru：瓶は首のある濃緑の角瓶100gに変更（112gではない）。105g表記の可能性あり＝要確認
+  size: "105g", // 2026-11-03 Hikaru：首のある濃緑の角瓶。内容量は105g（岬工房の既存ラベルで確認）
   price: 4800, // 税込・送料別
   bottles: 50, // 本番号 n/50
   harvest: "2026年10〜11月、小豆島で収穫・搾油",
