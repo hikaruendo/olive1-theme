@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { maxQty, product, yen } from "@/lib/reserve";
 import { href, type Lang } from "@/lib/i18n";
@@ -163,11 +164,46 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
         <small>{shipping ? t.totalSubShip : t.subtotalSub}</small>
       </div>
 
+      {/* 申込みボタンの手前で、分量・金額・支払い・お渡し・キャンセルを確かめてもらう */}
+      <div className="reserve-confirm" aria-live="polite">
+        <p className="reserve-confirm-title">{t.confirm.title}</p>
+        <dl>
+          <div>
+            <dt>{t.confirm.item}</dt>
+            <dd>{t.confirm.itemValue(qty)}</dd>
+          </div>
+          <div>
+            <dt>{t.confirm.amount}</dt>
+            <dd>{t.confirm.amountValue(yen(subtotal + shipping), shipping)}</dd>
+          </div>
+          <div>
+            <dt>{t.confirm.pay}</dt>
+            <dd>{payment === "card" ? t.confirm.payCard : t.confirm.payBank}</dd>
+          </div>
+          <div>
+            <dt>{t.confirm.deliver}</dt>
+            <dd>{receive === "ship" ? t.confirm.deliverShip : t.confirm.deliverEvent}</dd>
+          </div>
+          <div>
+            <dt>{t.confirm.cancel}</dt>
+            <dd>{t.confirm.cancelValue}</dd>
+          </div>
+        </dl>
+        <p className="reserve-confirm-legal">
+          {t.confirm.legalA}
+          <Link href={href(lang, "/legal")} className="link" target="_blank">
+            {t.confirm.legalLink}
+          </Link>
+          {t.confirm.legalB}
+        </p>
+      </div>
+
       <div className="form-row">
         <button type="submit" disabled={status === "loading"}>
           {status === "loading" ? t.sending : payment === "card" ? t.submitCard : t.submit}
         </button>
       </div>
+      <p className="reserve-confirm-notice">{t.confirm.notice}</p>
       {message && <p className={`form-message ${status === "error" ? "is-error" : ""}`}>{message}</p>}
     </form>
   );

@@ -7,6 +7,7 @@ import {
   shippingFee,
   makeReservationId,
   maxQty,
+  payDeadline,
   paymentLabel,
   product,
   receiveLabel,
@@ -110,7 +111,8 @@ export async function POST(request: Request) {
   const subtotal = product.price * qty;
   const shipping = shippingFee(receive);
   const total = subtotal + shipping;
-  const submittedAt = new Date().toISOString();
+  const now = new Date();
+  const submittedAt = now.toISOString();
 
   const summary = [
     `予約番号: ${id}`,
@@ -159,6 +161,8 @@ export async function POST(request: Request) {
           `${bank.type} ${bank.number}`,
           `名義: ${bank.holder}`,
           `金額: ${yen(total)}${shipping ? `（送料 ${yen(shipping)} を含む）` : ""}`,
+          `お振込みは ${payDeadline(now)} まで（予約から${product.payDays}日以内）にお願いします。振込手数料はご負担ください。`,
+          "期限までに入金を確認できない場合、予約は取り消しになります。",
           "振込名義の先頭に予約番号の下4桁を入れていただけると照合が早いです。",
           "入金を確認したら、本番号（n/48）をお知らせします。",
         ]
@@ -170,8 +174,11 @@ export async function POST(request: Request) {
         ]),
     "",
     receive === "event"
-      ? `受け取りは ${product.event} です。日時と場所は改めてご案内します。`
-      : "発送は12月を予定しています。日程が決まり次第ご案内します。",
+      ? `受け取りは「今年の油を開ける会」です。${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${yen(product.shipping)}）。`
+      : `${product.shipWindow}。`,
+    "",
+    `ご入金の前は、このメールへの返信で取り消せます。ご入金のあとは、お客様のご都合によるキャンセル・返品はお受けできません。破損や品質の不良があった場合は、到着から${product.claimDays}日以内にご連絡ください。交換または返金をします。`,
+    "特定商取引法に基づく表記: https://olive.kando1.com/legal",
     "",
     "Olive1",
     "https://olive.kando1.com",
@@ -202,6 +209,8 @@ export async function POST(request: Request) {
           `${bank.type} ${bank.number}`,
           `Account name: ${bank.holder}`,
           `Amount: ${yen(total)}${shipping ? ` (includes ${yen(shipping)} shipping)` : ""}`,
+          `Please pay by ${payDeadline(now, "en")} (within ${product.payDays} days of reserving). Transfer fees are yours to cover.`,
+          "If the payment is not confirmed by then, the reservation is cancelled.",
           "Please put the last four digits of your reservation number at the start of the transfer name.",
           "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
         ]
@@ -213,8 +222,11 @@ export async function POST(request: Request) {
         ]),
     "",
     receive === "event"
-      ? `Collection: ${product.eventEn}. Date and venue will follow.`
-      : "Shipping is planned for December. The date will follow.",
+      ? `Collection is at the gathering to open this year's oil. ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${yen(product.shipping)}).`
+      : `${product.shipWindowEn}.`,
+    "",
+    `Before you pay, you can cancel by replying to this email. After payment, cancellations and returns for your own reasons are not accepted. If a bottle arrives broken or faulty, email within ${product.claimDays} days of arrival and it is replaced or refunded.`,
+    "Legal notice: https://olive.kando1.com/en/legal",
     "",
     "Olive1",
     "https://olive.kando1.com/en",

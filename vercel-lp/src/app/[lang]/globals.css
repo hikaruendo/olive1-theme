@@ -2024,6 +2024,76 @@ footer a:hover {
   color: var(--ink-mute);
   font-size: 12px;
 }
+.reserve-confirm {
+  margin-top: 18px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  background: #fff;
+}
+.reserve-confirm-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.reserve-confirm dl {
+  margin: 0;
+}
+.reserve-confirm dl > div {
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.reserve-confirm dt {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-mute);
+}
+.reserve-confirm dd {
+  margin: 3px 0 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.reserve-confirm-legal {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.reserve-confirm-notice {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.legal-page {
+  max-width: 760px;
+}
+.legal-page h1 {
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.3;
+  margin: 14px 0 10px;
+}
+.legal-page .reserve-facts > div {
+  grid-template-columns: 11em 1fr;
+}
+.legal-page .reserve-facts dd {
+  line-height: 1.8;
+  white-space: pre-line;
+}
+.foot-btm a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 560px) {
+  .legal-page .reserve-facts > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
 .reserve-closed p {
   margin: 0 0 16px;
   color: var(--ink-soft);
