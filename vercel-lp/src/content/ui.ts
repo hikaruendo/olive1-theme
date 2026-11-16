@@ -23,7 +23,7 @@ const ja = {
     faq: "よくある質問",
     about: "考え方",
     follow: "Follow",
-    legal: "特定商取引法 · プライバシーポリシー · クラブ規約",
+    legal: "特定商取引法に基づく表記",
   },
   crumb: { home: "ホーム", journal: "読み物", reserve: "予約", aria: "パンくず" },
   waitlist: {
@@ -66,7 +66,7 @@ const en: typeof ja = {
     faq: "FAQ",
     about: "Our thinking",
     follow: "Follow",
-    legal: "Legal notice · Privacy policy · Club terms",
+    legal: "Legal notice",
   },
   crumb: { home: "Home", journal: "Journal", reserve: "Reserve", aria: "Breadcrumb" },
   waitlist: {

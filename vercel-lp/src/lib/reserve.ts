@@ -7,16 +7,23 @@ export const product = {
   price: 5000, // 税込・送料別（2026-11-13 に 4,800 から変更）
   shipping: 600, // 発送の送料・全国一律・本数によらず（2026-11-16 Hikaru。レターパックプラス）。会での手渡しは0円
   bottles: 48, // 詰める本数（24本×2ケース）・本番号 n/48。売るのは45本（台帳の TOTAL）
+  // 特定商取引法の表示に使う条件（2026-11-16 Hikaru）。変える時は /legal と予約フォームの確認欄も同じ値を読む
+  payDays: 7, // 銀行振込の期限＝予約から7日以内。過ぎたら予約は取り消し
+  shipWindow: "2026年12月中旬から順次、12月20日までに発送します",
+  shipWindowEn: "Ships from mid-December 2026, all sent by December 20",
+  eventWindow: "12月上旬〜中旬の日曜、東京都内。日時と場所は12月1日までにメールでお知らせします",
+  eventWindowEn: "A Sunday in early to mid December, in Tokyo. Date and venue are emailed by December 1",
+  claimDays: 7, // 破損・不良の連絡期限＝到着から7日以内
   harvest: "2026年10〜11月、小豆島で収穫・搾油",
   // 瓶詰め（充填）は11月末（10/31ではない・2026-11-01 Hikaru訂正）。日が決まったら env で上書き
   bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月末（予定）",
   bottlingLabel: process.env.NEXT_PUBLIC_BOTTLING_LABEL ?? "11月末",
-  event: process.env.NEXT_PUBLIC_EVENT_NOTE ?? "12月上旬、東京で「今年の油を開ける会」",
+  event: process.env.NEXT_PUBLIC_EVENT_NOTE ?? "12月上旬〜中旬、東京で「今年の油を開ける会」",
   // 英語版（/en）。日が決まったら NEXT_PUBLIC_BOTTLING_DATE_EN / LABEL_EN も入れる
   harvestEn: "Picked and pressed on Shodoshima, October to November 2026",
   bottlingDateEn: process.env.NEXT_PUBLIC_BOTTLING_DATE_EN ?? "end of November 2026 (planned)",
   bottlingLabelEn: process.env.NEXT_PUBLIC_BOTTLING_LABEL_EN ?? "end of November",
-  eventEn: process.env.NEXT_PUBLIC_EVENT_NOTE_EN ?? "Early December, Tokyo: the gathering to open this year's oil",
+  eventEn: process.env.NEXT_PUBLIC_EVENT_NOTE_EN ?? "Early to mid December, Tokyo: the gathering to open this year's oil",
 };
 
 export const maxQty = 6;
@@ -84,4 +91,21 @@ export function makeReservationId(now = new Date()) {
     .toString()
     .padStart(4, "0");
   return `R-${d}-${rand}`;
+}
+
+// 特定商取引法に基づく表記（/legal）に出す販売者の情報。住所は裏ラベルの販売者と同じ
+export const seller = {
+  company: "kando1合同会社",
+  companyEn: "kando1 LLC (kando1合同会社)",
+  person: "遠藤 光",
+  personEn: "Hikaru Endo",
+  address: "〒150-0044 東京都渋谷区円山町5番3号 MIEUX渋谷ビル8階",
+  addressEn: "MIEUX Shibuya Bldg. 8F, 5-3 Maruyamacho, Shibuya-ku, Tokyo 150-0044, Japan",
+  email: "contact@kando1.com",
+};
+
+// 振込の期限の日付（日本時間）。確認メールに書く
+export function payDeadline(from: Date, lang: "ja" | "en" = "ja") {
+  const d = new Date(from.getTime() + product.payDays * 24 * 60 * 60 * 1000);
+  return d.toLocaleDateString(lang === "en" ? "en-US" : "ja-JP", { timeZone: "Asia/Tokyo", month: "long", day: "numeric" });
 }

@@ -45,7 +45,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
         </div>
         <div className="foot-btm">
           <span>© 2026 Olive1</span>
-          <span>{t.footer.legal}</span>
+          <Link href={href(lang, "/legal")}>{t.footer.legal}</Link>
         </div>
       </div>
     </footer>
