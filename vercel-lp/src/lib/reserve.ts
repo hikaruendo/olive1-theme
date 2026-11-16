@@ -5,6 +5,7 @@ export const product = {
   name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hikaru's Olive",
   size: "105g", // 2026-11-03 Hikaru：首のある濃緑の角瓶。内容量は105g（岬工房の既存ラベルで確認）
   price: 5000, // 税込・送料別（2026-11-13 に 4,800 から変更）
+  shipping: 600, // 発送の送料・全国一律・本数によらず（2026-11-16 Hikaru。レターパックプラス）。会での手渡しは0円
   bottles: 48, // 詰める本数（24本×2ケース）・本番号 n/48。売るのは45本（台帳の TOTAL）
   harvest: "2026年10〜11月、小豆島で収穫・搾油",
   // 瓶詰め（充填）は11月末（10/31ではない・2026-11-01 Hikaru訂正）。日が決まったら env で上書き
@@ -47,9 +48,16 @@ export function getBankInfo(): BankInfo | null {
   return { bank, branch, type, number, holder };
 }
 
-export function getStripePaymentLink(): string | null {
-  const url = process.env.STRIPE_PAYMENT_LINK_URL;
+// 発送のときは送料（一律）を足した決済リンクを使う。無ければ手渡し用のリンクに落とす
+export function getStripePaymentLink(receive: "event" | "ship" = "event"): string | null {
+  const base = process.env.STRIPE_PAYMENT_LINK_URL;
+  const ship = process.env.STRIPE_PAYMENT_LINK_URL_SHIP;
+  const url = receive === "ship" && ship && ship.startsWith("https://") ? ship : base;
   return url && url.startsWith("https://") ? url : null;
+}
+
+export function shippingFee(receive: "event" | "ship") {
+  return receive === "ship" ? product.shipping : 0;
 }
 
 export function yen(n: number) {

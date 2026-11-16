@@ -4,6 +4,7 @@ import {
   getBankInfo,
   getReserveStatus,
   getStripePaymentLink,
+  shippingFee,
   makeReservationId,
   maxQty,
   paymentLabel,
@@ -99,7 +100,7 @@ export async function POST(request: Request) {
   if (receive === "ship" && !address) return bad(m.address);
   if (payment !== "bank" && payment !== "card") return bad(m.payment);
 
-  const stripeUrl = getStripePaymentLink();
+  const stripeUrl = getStripePaymentLink(receive);
   if (payment === "card" && !stripeUrl) return bad(m.noCard, 503);
 
   const bank = getBankInfo();
@@ -107,6 +108,8 @@ export async function POST(request: Request) {
 
   const id = makeReservationId();
   const subtotal = product.price * qty;
+  const shipping = shippingFee(receive);
+  const total = subtotal + shipping;
   const submittedAt = new Date().toISOString();
 
   const summary = [
@@ -115,7 +118,9 @@ export async function POST(request: Request) {
     `メール: ${email}`,
     `商品: ${product.name} ${product.size}（瓶詰め ${product.bottlingDate}）`,
     `本数: ${qty}本`,
-    `小計: ${yen(subtotal)}（税込・送料別）`,
+    `小計: ${yen(subtotal)}（税込）`,
+    ...(shipping ? [`送料: ${yen(shipping)}（全国一律）`] : []),
+    `合計: ${yen(total)}`,
     `受け取り: ${receiveLabel(receive)}`,
     ...(receive === "ship" ? [`発送先: ${address}`] : []),
     `お支払い: ${paymentLabel(payment)}`,
@@ -153,7 +158,7 @@ export async function POST(request: Request) {
           `${bank.bank} ${bank.branch}`,
           `${bank.type} ${bank.number}`,
           `名義: ${bank.holder}`,
-          `金額: ${yen(subtotal)}${receive === "ship" ? "（送料は別途ご案内します）" : ""}`,
+          `金額: ${yen(total)}${shipping ? `（送料 ${yen(shipping)} を含む）` : ""}`,
           "振込名義の先頭に予約番号の下4桁を入れていただけると照合が早いです。",
           "入金を確認したら、本番号（n/48）をお知らせします。",
         ]
@@ -181,7 +186,9 @@ export async function POST(request: Request) {
     `Email: ${email}`,
     `Product: ${product.name} ${product.size} (bottled ${product.bottlingDateEn})`,
     `Bottles: ${qty}`,
-    `Subtotal: ${yen(subtotal)} (tax included, shipping extra)`,
+    `Subtotal: ${yen(subtotal)} (tax included)`,
+    ...(shipping ? [`Shipping: ${yen(shipping)} (flat rate within Japan)`] : []),
+    `Total: ${yen(total)}`,
     `Collection: ${receiveLabel(receive, "en")}`,
     ...(receive === "ship" ? [`Shipping address: ${address}`] : []),
     `Payment: ${paymentLabel(payment, "en")}`,
@@ -194,7 +201,7 @@ export async function POST(request: Request) {
           `${bank.bank} ${bank.branch}`,
           `${bank.type} ${bank.number}`,
           `Account name: ${bank.holder}`,
-          `Amount: ${yen(subtotal)}${receive === "ship" ? " (shipping cost will be sent separately)" : ""}`,
+          `Amount: ${yen(total)}${shipping ? ` (includes ${yen(shipping)} shipping)` : ""}`,
           "Please put the last four digits of your reservation number at the start of the transfer name.",
           "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
         ]
