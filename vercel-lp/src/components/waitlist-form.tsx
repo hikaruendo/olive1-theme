@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import type { Lang } from "@/lib/i18n";
+import Link from "next/link";
+import { href, type Lang } from "@/lib/i18n";
 import { ui } from "@/content/ui";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -72,6 +73,13 @@ export function WaitlistForm({ lang }: { lang: Lang }) {
           {status === "loading" ? t.sending : t.submit}
         </button>
       </div>
+      <p className="form-privacy">
+        {t.privacyA}
+        <Link href={href(lang, "/privacy")} className="link" target="_blank">
+          {t.privacyLink}
+        </Link>
+        {t.privacyB}
+      </p>
       {message && (
         <p
           className={`form-message ${status === "error" ? "is-error" : ""}`}

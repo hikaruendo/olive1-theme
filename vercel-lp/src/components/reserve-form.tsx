@@ -195,6 +195,10 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
             {t.confirm.legalLink}
           </Link>
           {t.confirm.legalB}
+          <Link href={href(lang, "/privacy")} className="link" target="_blank">
+            {t.confirm.privacyLink}
+          </Link>
+          {t.confirm.privacyB}
         </p>
       </div>
 

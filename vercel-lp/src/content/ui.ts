@@ -24,6 +24,7 @@ const ja = {
     about: "考え方",
     follow: "Follow",
     legal: "特定商取引法に基づく表記",
+    privacy: "プライバシーポリシー",
   },
   crumb: { home: "ホーム", journal: "読み物", reserve: "予約", aria: "パンくず" },
   waitlist: {
@@ -35,6 +36,9 @@ const ja = {
     sending: "送信中",
     failed: "参加できませんでした。",
     joined: "クラブに参加しました。",
+    privacyA: "メールアドレスの扱いは ",
+    privacyLink: "プライバシーポリシー",
+    privacyB: " にあります。",
   },
   clubCta: {
     label: "Olive1 Club",
@@ -67,6 +71,7 @@ const en: typeof ja = {
     about: "Our thinking",
     follow: "Follow",
     legal: "Legal notice",
+    privacy: "Privacy policy",
   },
   crumb: { home: "Home", journal: "Journal", reserve: "Reserve", aria: "Breadcrumb" },
   waitlist: {
@@ -78,6 +83,9 @@ const en: typeof ja = {
     sending: "Sending",
     failed: "Could not join. Please try again.",
     joined: "You are in the club.",
+    privacyA: "How your email address is handled is in the ",
+    privacyLink: "privacy policy",
+    privacyB: ".",
   },
   clubCta: {
     label: "Olive1 Club",
