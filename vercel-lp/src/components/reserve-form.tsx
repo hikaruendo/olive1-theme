@@ -73,6 +73,7 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
   }
 
   const subtotal = product.price * qty;
+  const shipping = receive === "ship" ? product.shipping : 0;
 
   return (
     <form className="waitlist-form reserve-form" onSubmit={handleSubmit}>
@@ -157,9 +158,9 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
       </div>
 
       <div className="reserve-total">
-        <span>{t.subtotal}</span>
-        <b>{yen(subtotal)}</b>
-        <small>{t.subtotalSub}</small>
+        <span>{shipping ? t.total : t.subtotal}</span>
+        <b>{yen(subtotal + shipping)}</b>
+        <small>{shipping ? t.totalSubShip : t.subtotalSub}</small>
       </div>
 
       <div className="form-row">

@@ -36,8 +36,10 @@ export default async function ThanksPage({
   const receive = sp.receive === "ship" ? "ship" : "event";
   const method = sp.method === "card" ? "card" : "bank";
   const subtotal = product.price * qty;
+  const shipping = receive === "ship" ? product.shipping : 0;
+  const total = subtotal + shipping;
   const bank = method === "bank" ? getBankInfo() : null;
-  const stripe = method === "card" ? getStripePaymentLink() : null;
+  const stripe = method === "card" ? getStripePaymentLink(receive) : null;
   const bottlingDate = reserveText[lang].product.bottlingDate;
   const event = reserveText[lang].product.event;
 
@@ -80,6 +82,21 @@ export default async function ThanksPage({
                   </dd>
                 </div>
               )}
+              {hasQty && shipping > 0 && (
+                <div>
+                  <dt>{t.shipping}</dt>
+                  <dd>
+                    {yen(shipping)}
+                    {t.shippingSuffix}
+                  </dd>
+                </div>
+              )}
+              {hasQty && shipping > 0 && (
+                <div>
+                  <dt>{t.total}</dt>
+                  <dd>{yen(total)}</dd>
+                </div>
+              )}
               <div>
                 <dt>{t.receive}</dt>
                 <dd>{receive === "event" ? event : t.receiveShip}</dd>
@@ -109,7 +126,7 @@ export default async function ThanksPage({
                   <div>
                     <dt>{t.amount}</dt>
                     <dd>
-                      {yen(subtotal)}
+                      {yen(total)}
                       {receive === "ship" ? t.shippingExtra : ""}
                     </dd>
                   </div>
