@@ -36,6 +36,11 @@ const ja = {
       remainingValue: (n: number) => `${n}本`,
     },
     note: "酸度と過酸化物価は瓶詰め時に1回測り、測定方法と一緒に公開します。測り終えるまでは数字を書きません。",
+    design: {
+      title: "デザイン作成中…",
+      sub: "ラベルを作っているところです。できたら、ここに瓶の写真を載せます。",
+      alt: "ラベルを貼る前の瓶の絵。首のある濃い緑の角瓶に、黒いキャップ。ラベルの場所は点線の枠だけ",
+    },
     closedTitle: "予約は11月26日（木）から",
     closedBody: "受付が始まったら、クラブのメールでいちばん先にお知らせします。",
     soldoutTitle: "今年の分は、すべて予約が入りました",
@@ -162,6 +167,11 @@ const en: typeof ja = {
       remainingValue: (n: number) => `${n} ${n === 1 ? "bottle" : "bottles"}`,
     },
     note: "Free acidity and peroxide value are measured once at bottling and published with the method. No numbers are written until they are measured.",
+    design: {
+      title: "Design in progress…",
+      sub: "The label is being made. A photo of the bottle goes here when it is ready.",
+      alt: "A drawing of the bottle before its label: a dark green square bottle with a neck and a black cap. The label area is a dashed outline",
+    },
     closedTitle: "Reservations open Thursday, November 26",
     closedBody: "Club members hear first by email when reservations open.",
     soldoutTitle: "This year's bottles are all reserved",
