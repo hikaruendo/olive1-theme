@@ -4,12 +4,13 @@
  * - 予約サイト（olive.kando1.com）からの予約を1行ずつ追加する
  * - 追加の前にロックをかけて残り本数を数える＝同時に予約が来ても TOTAL 本を超えない
  * - Stripe の入金（Vercel の webhook 経由）を「入金済み」にする
- * - メニュー「Olive1」から本番号を振る・残り本数を見る
+ * - メニュー「Olive1」から本番号を振る・残り本数を見る・手渡しの現金の分を足す
  *
  * 設定手順は apps-script/README.md。SECRET は Vercel の SHEET_SECRET と同じ値。
  */
 
 const TOTAL = 33; // 売る本数（詰めるのは36本・会の試飲に3本・本番号は n/36。2026-11-19 に 48本/45本 から変更）
+const PRICE = 5000; // 1本の値段（税込）。現金の行の決済額に使う
 const INIT_SECRET = ""; // 初回の setup() で Script Properties に移す。空のままコミットする
 
 const HEADERS = [
@@ -56,12 +57,46 @@ function onOpen() {
     .createMenu("Olive1")
     .addItem("残り本数を見る", "showRemaining")
     .addItem("入金済みに本番号を振る", "assignBottleNumbers")
+    .addItem("現金の予約を足す（手渡し）", "addCashSale")
     .addToUi();
 }
 
 function showRemaining() {
   const used = reservedCount_(sheet_());
   SpreadsheetApp.getUi().alert(`予約済み ${used} 本 / ${TOTAL} 本\n残り ${Math.max(0, TOTAL - used)} 本`);
+}
+
+// 手渡しで現金を受け取った分を1行足す。サイトを通らない売上も残り本数に数えるため。
+// 名前と本数を聞き、状態は「入金済み」・支払いは「現金」・受け取りは「手渡し」で入れる
+function addCashSale() {
+  const ui = SpreadsheetApp.getUi();
+  const who = ui.prompt("現金の予約を足す", "買った人の名前", ui.ButtonSet.OK_CANCEL);
+  if (who.getSelectedButton() !== ui.Button.OK) return;
+  const name = who.getResponseText().trim();
+  if (!name) return ui.alert("名前が空です。足していません。");
+  const how = ui.prompt("現金の予約を足す", `本数（1本 ${PRICE.toLocaleString("ja-JP")}円）`, ui.ButtonSet.OK_CANCEL);
+  if (how.getSelectedButton() !== ui.Button.OK) return;
+  // 全角の数字で入れても通す
+  const qty = Number(how.getResponseText().trim().replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)));
+  if (!Number.isInteger(qty) || qty < 1) return ui.alert("本数は1以上の整数で入れてください。足していません。");
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const sh = sheet_();
+    const remaining = TOTAL - reservedCount_(sh);
+    if (qty > remaining) return ui.alert(`残りは ${Math.max(0, remaining)} 本です。足していません。`);
+    const now = new Date();
+    const ymd = Utilities.formatDate(now, "Asia/Tokyo", "yyyyMMdd");
+    const id = `C-${ymd}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`;
+    sh.appendRow([
+      id, now, STATUS.paid, safe_(name), "", qty, "手渡し", "", "現金", "", "", "ja",
+      now, qty, qty * PRICE, "", "手渡しで現金", "",
+    ]);
+    ui.alert(`足しました。\n${name}：${qty}本・${(qty * PRICE).toLocaleString("ja-JP")}円（現金）\n残り ${remaining - qty} 本`);
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 // 「入金済み」で本番号が空の行に、入金の早い順で続きの番号を振る。2本以上なら「12-13」
