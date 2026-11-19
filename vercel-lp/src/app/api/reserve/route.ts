@@ -164,13 +164,13 @@ export async function POST(request: Request) {
           `お振込みは ${payDeadline(now)} まで（予約から${product.payDays}日以内）にお願いします。振込手数料はご負担ください。`,
           "期限までに入金を確認できない場合、予約は取り消しになります。",
           "振込名義の先頭に予約番号の下4桁を入れていただけると照合が早いです。",
-          "入金を確認したら、本番号（n/48）をお知らせします。",
+          `入金を確認したら、本番号（n/${product.bottles}）をお知らせします。`,
         ]
       : [
           "【カード決済】",
           "下のリンクから決済に進んでください。決済ページでは同じ本数を選んでください。",
           cardUrl ?? "",
-          "決済を確認したら、本番号（n/48）をお知らせします。",
+          `決済を確認したら、本番号（n/${product.bottles}）をお知らせします。`,
         ]),
     "",
     receive === "event"
@@ -212,13 +212,13 @@ export async function POST(request: Request) {
           `Please pay by ${payDeadline(now, "en")} (within ${product.payDays} days of reserving). Transfer fees are yours to cover.`,
           "If the payment is not confirmed by then, the reservation is cancelled.",
           "Please put the last four digits of your reservation number at the start of the transfer name.",
-          "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
+          `Once the payment is confirmed, your bottle number (n/${product.bottles}) will be sent by email.`,
         ]
       : [
           "[Card payment]",
           "Please continue to the payment page below and choose the same number of bottles.",
           cardUrl ?? "",
-          "Once the payment is confirmed, your bottle number (n/48) will be sent by email.",
+          `Once the payment is confirmed, your bottle number (n/${product.bottles}) will be sent by email.`,
         ]),
     "",
     receive === "event"
@@ -232,7 +232,7 @@ export async function POST(request: Request) {
     "https://olive.kando1.com/en",
   ].join("\n");
 
-  // 0) 台帳に書く。ここで残り本数を確かめるので、売る本数（45本）を超える予約はここで止まる
+  // 0) 台帳に書く。ここで残り本数を確かめるので、売る本数（台帳の TOTAL）を超える予約はここで止まる
   const useSheet = sheetConfigured();
   if (useSheet) {
     // 台帳は人が読むので、受け取りと支払いは日本語の表示名で入れる

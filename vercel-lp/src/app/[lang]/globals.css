@@ -1942,6 +1942,55 @@ footer a:hover {
   margin: 0;
   color: var(--ink);
 }
+/* ラベルができるまでの仮の絵（components/label-in-progress.tsx） */
+.label-wip {
+  margin: 26px 0 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 3vw, 34px);
+  padding: clamp(20px, 3vw, 30px) clamp(22px, 4vw, 40px);
+  background: var(--green-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+.label-wip-bottle {
+  flex: 0 0 auto;
+  width: clamp(84px, 14vw, 116px);
+  height: auto;
+}
+.label-wip-frame {
+  animation: label-wip-pulse 2.4s ease-in-out infinite;
+}
+@keyframes label-wip-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .label-wip-frame {
+    animation: none;
+  }
+}
+.label-wip figcaption {
+  display: grid;
+  gap: 8px;
+}
+.label-wip figcaption b {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.3;
+  color: var(--green-deep);
+}
+.label-wip figcaption span {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
 .reserve-note {
   font-size: 13.5px;
   color: var(--ink-soft);

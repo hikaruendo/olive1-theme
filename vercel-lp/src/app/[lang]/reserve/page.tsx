@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ReserveForm } from "@/components/reserve-form";
+import { LabelInProgress } from "@/components/label-in-progress";
 import { getBankInfo, getReserveStatus, getStripePaymentLink, maxQty, product, yen } from "@/lib/reserve";
 import { sheetRemaining } from "@/lib/sheet";
 import { alternates, href, isLang, ogLocale } from "@/lib/i18n";
@@ -71,6 +72,7 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
                 {t.page.h1b}
               </h1>
               <p className="lead">{t.page.lead}</p>
+              <LabelInProgress title={t.page.design.title} sub={t.page.design.sub} alt={t.page.design.alt} />
               <dl className="reserve-facts">
                 {facts.map((f) => (
                   <div key={f.k}>
