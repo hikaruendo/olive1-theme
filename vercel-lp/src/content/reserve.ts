@@ -1,5 +1,7 @@
 import type { Lang } from "@/lib/i18n";
-import { product, yen } from "@/lib/reserve";
+import { freeShippingQty, product, yen } from "@/lib/reserve";
+
+const free = yen(product.freeShippingFrom);
 
 // 予約ページ・完了ページ・予約フォームの文言。数字は lib/reserve の product から。
 const ja = {
@@ -29,7 +31,7 @@ const ja = {
       bottles: "本数",
       bottlesValue: `${product.bottles}本（本番号 n/${product.bottles}）`,
       price: "価格",
-      priceSuffix: `（税込。発送は送料 ${yen(product.shipping)}・全国一律）`,
+      priceSuffix: `（税込。発送は送料 ${yen(product.shipping)}・全国一律。${free}以上は送料なし）`,
       receive: "受け取り",
       receiveSuffix: "、または発送",
       remaining: "残り",
@@ -57,7 +59,7 @@ const ja = {
     receiveEvent: "12月の会で受け取る",
     receiveEventSub: `${product.event}。本番号を付けて手渡しします。`,
     receiveShip: "発送",
-    receiveShipSub: `${product.shipWindow}。送料は全国一律 ${yen(product.shipping)}（本数によらず）。`,
+    receiveShipSub: `${product.shipWindow}。送料は全国一律 ${yen(product.shipping)}。${free}以上（${freeShippingQty}本から）は送料がかかりません。`,
     address: "発送先（郵便番号・住所・宛名）",
     paymentLegend: "お支払い",
     bank: "銀行振込",
@@ -72,6 +74,7 @@ const ja = {
     subtotalSub: "税込",
     total: "合計",
     totalSubShip: `税込・送料 ${yen(product.shipping)} を含む`,
+    totalSubShipFree: `税込・送料なし（${free}以上）`,
     submit: "この内容で予約を確定する",
     submitCard: "予約を確定して決済に進む",
     sending: "送信中",
@@ -89,7 +92,7 @@ const ja = {
       payCard: "クレジットカード。次の決済ページで、その場で決済されます。",
       deliver: "お渡し",
       deliverShip: `${product.shipWindow}。`,
-      deliverEvent: `「今年の油を開ける会」で手渡しします。${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${yen(product.shipping)}）。`,
+      deliverEvent: `「今年の油を開ける会」で手渡しします。${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${yen(product.shipping)}。${free}以上は送料なし）。`,
       cancel: "キャンセル・返品",
       cancelValue: `ご入金の前は、メールで取り消せます。ご入金のあとは、お客様のご都合によるキャンセル・返品はお受けできません。破損や品質の不良があった場合は、到着から${product.claimDays}日以内にメールでご連絡ください。交換または返金をします。`,
       legalA: "販売者の情報と条件の全文は ",
@@ -160,7 +163,7 @@ const en: typeof ja = {
       bottles: "Quantity",
       bottlesValue: `${product.bottles} bottles (numbered n/${product.bottles})`,
       price: "Price",
-      priceSuffix: ` (tax included. Shipping is a flat ${yen(product.shipping)} within Japan)`,
+      priceSuffix: ` (tax included. Shipping is a flat ${yen(product.shipping)} within Japan, free from ${free})`,
       receive: "Collection",
       receiveSuffix: ", or shipping within Japan",
       remaining: "Left",
@@ -188,7 +191,7 @@ const en: typeof ja = {
     receiveEvent: "Collect at the December gathering",
     receiveEventSub: `${product.eventEn}. Handed over with its bottle number.`,
     receiveShip: "Shipping (within Japan)",
-    receiveShipSub: `${product.shipWindowEn}. Shipping is a flat ${yen(product.shipping)} within Japan, for any number of bottles.`,
+    receiveShipSub: `${product.shipWindowEn}. Shipping is a flat ${yen(product.shipping)} within Japan. Orders of ${free} or more (${freeShippingQty} bottles and up) ship free.`,
     address: "Shipping address (postcode, address, recipient)",
     paymentLegend: "Payment",
     bank: "Bank transfer (Japanese bank)",
@@ -203,6 +206,7 @@ const en: typeof ja = {
     subtotalSub: "tax included",
     total: "Total",
     totalSubShip: `tax included, with ${yen(product.shipping)} shipping`,
+    totalSubShipFree: `tax included, free shipping (${free} or more)`,
     submit: "Confirm this reservation",
     submitCard: "Confirm and go to payment",
     sending: "Sending",
@@ -219,7 +223,7 @@ const en: typeof ja = {
       payCard: "Card. You are charged on the payment page that follows.",
       deliver: "Delivery",
       deliverShip: `${product.shipWindowEn}.`,
-      deliverEvent: `Handed over at the gathering to open this year's oil. ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${yen(product.shipping)}).`,
+      deliverEvent: `Handed over at the gathering to open this year's oil. ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${yen(product.shipping)}, free from ${free}).`,
       cancel: "Cancellation and returns",
       cancelValue: `Before you pay, you can cancel by email. After payment, cancellations and returns for your own reasons are not accepted. If a bottle arrives broken or faulty, email within ${product.claimDays} days of arrival and it is replaced or refunded.`,
       legalA: "Seller details and full terms are in the ",

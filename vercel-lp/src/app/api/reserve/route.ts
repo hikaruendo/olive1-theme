@@ -101,7 +101,7 @@ export async function POST(request: Request) {
   if (receive === "ship" && !address) return bad(m.address);
   if (payment !== "bank" && payment !== "card") return bad(m.payment);
 
-  const stripeUrl = getStripePaymentLink(receive);
+  const stripeUrl = getStripePaymentLink(receive, qty);
   if (payment === "card" && !stripeUrl) return bad(m.noCard, 503);
 
   const bank = getBankInfo();
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
 
   const id = makeReservationId();
   const subtotal = product.price * qty;
-  const shipping = shippingFee(receive);
+  const shipping = shippingFee(receive, qty);
   const total = subtotal + shipping;
   const now = new Date();
   const submittedAt = now.toISOString();
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
         ]),
     "",
     receive === "event"
-      ? `受け取りは「今年の油を開ける会」です。${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${yen(product.shipping)}）。`
+      ? `受け取りは「今年の油を開ける会」です。${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${yen(product.shipping)}。${yen(product.freeShippingFrom)}以上は送料なし）。`
       : `${product.shipWindow}。`,
     "",
     `ご入金の前は、このメールへの返信で取り消せます。ご入金のあとは、お客様のご都合によるキャンセル・返品はお受けできません。破損や品質の不良があった場合は、到着から${product.claimDays}日以内にご連絡ください。交換または返金をします。`,
@@ -222,7 +222,7 @@ export async function POST(request: Request) {
         ]),
     "",
     receive === "event"
-      ? `Collection is at the gathering to open this year's oil. ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${yen(product.shipping)}).`
+      ? `Collection is at the gathering to open this year's oil. ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${yen(product.shipping)}, free from ${yen(product.freeShippingFrom)}).`
       : `${product.shipWindowEn}.`,
     "",
     `Before you pay, you can cancel by replying to this email. After payment, cancellations and returns for your own reasons are not accepted. If a bottle arrives broken or faulty, email within ${product.claimDays} days of arrival and it is replaced or refunded.`,

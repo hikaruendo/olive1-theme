@@ -5,7 +5,8 @@ export const product = {
   name: process.env.NEXT_PUBLIC_PRODUCT_NAME ?? "Hikaru's Olive",
   size: "105g", // 2026-11-03 Hikaru：首のある濃緑の角瓶。内容量は105g（岬工房の既存ラベルで確認）
   price: 5000, // 税込・送料別（2026-11-13 に 4,800 から変更）
-  shipping: 600, // 発送の送料・全国一律・本数によらず（2026-11-16 Hikaru。レターパックプラス）。会での手渡しは0円
+  shipping: 600, // 発送の送料・全国一律（2026-11-16 Hikaru。レターパックプラス）。会での手渡しは0円
+  freeShippingFrom: 10000, // 商品代金の合計がこの額以上なら送料なし（2026-11-19 Hikaru）。5,000円なら2本から
   bottles: 36, // 詰める本数・本番号 n/36（2026-11-19 Hikaru：48本から36本に変更）。売るのは33本（台帳の TOTAL・会の試飲に3本）
   // 特定商取引法の表示に使う条件（2026-11-16 Hikaru）。変える時は /legal と予約フォームの確認欄も同じ値を読む
   payDays: 7, // 銀行振込の期限＝予約から7日以内。過ぎたら予約は取り消し
@@ -55,17 +56,23 @@ export function getBankInfo(): BankInfo | null {
   return { bank, branch, type, number, holder };
 }
 
-// 発送のときは送料（一律）を足した決済リンクを使う。無ければ手渡し用のリンクに落とす
-export function getStripePaymentLink(receive: "event" | "ship" = "event"): string | null {
+// 決済リンクは3本。手渡し用／発送・送料あり（1本だけ）／発送・送料なし（2本から）。
+// 発送用が無ければ手渡し用のリンクに落とす
+export function getStripePaymentLink(receive: "event" | "ship" = "event", qty = 1): string | null {
   const base = process.env.STRIPE_PAYMENT_LINK_URL;
-  const ship = process.env.STRIPE_PAYMENT_LINK_URL_SHIP;
+  const ship = shippingFee(receive, qty) > 0 ? process.env.STRIPE_PAYMENT_LINK_URL_SHIP : process.env.STRIPE_PAYMENT_LINK_URL_SHIP_FREE;
   const url = receive === "ship" && ship && ship.startsWith("https://") ? ship : base;
   return url && url.startsWith("https://") ? url : null;
 }
 
-export function shippingFee(receive: "event" | "ship") {
-  return receive === "ship" ? product.shipping : 0;
+// 発送の送料。商品代金の合計が freeShippingFrom 以上なら0円
+export function shippingFee(receive: "event" | "ship", qty = 1) {
+  if (receive !== "ship") return 0;
+  return product.price * qty >= product.freeShippingFrom ? 0 : product.shipping;
 }
+
+// 送料なしになる本数（5,000円・10,000円以上なら2）
+export const freeShippingQty = Math.ceil(product.freeShippingFrom / product.price);
 
 export function yen(n: number) {
   return `¥${n.toLocaleString("ja-JP")}`;

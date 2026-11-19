@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { maxQty, product, yen } from "@/lib/reserve";
+import { maxQty, product, shippingFee, yen } from "@/lib/reserve";
 import { href, type Lang } from "@/lib/i18n";
 import { reserveText } from "@/content/reserve";
 
@@ -74,7 +74,8 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
   }
 
   const subtotal = product.price * qty;
-  const shipping = receive === "ship" ? product.shipping : 0;
+  const shipping = shippingFee(receive, qty);
+  const shipFree = receive === "ship" && shipping === 0;
 
   return (
     <form className="waitlist-form reserve-form" onSubmit={handleSubmit}>
@@ -159,9 +160,9 @@ export function ReserveForm({ lang, cardAvailable, bankAvailable, maxSelectable 
       </div>
 
       <div className="reserve-total">
-        <span>{shipping ? t.total : t.subtotal}</span>
+        <span>{shipping || shipFree ? t.total : t.subtotal}</span>
         <b>{yen(subtotal + shipping)}</b>
-        <small>{shipping ? t.totalSubShip : t.subtotalSub}</small>
+        <small>{shipping ? t.totalSubShip : shipFree ? t.totalSubShipFree : t.subtotalSub}</small>
       </div>
 
       {/* 申込みボタンの手前で、分量・金額・支払い・お渡し・キャンセルを確かめてもらう */}

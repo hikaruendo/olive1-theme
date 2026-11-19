@@ -5,6 +5,7 @@ import { product, seller, yen } from "@/lib/reserve";
 // 予約フォームの確認欄（content/reserve.ts の form.confirm）と同じ条件を書く。
 const price = yen(product.price);
 const shipping = yen(product.shipping);
+const free = yen(product.freeShippingFrom);
 
 const ja = {
   meta: {
@@ -25,7 +26,7 @@ const ja = {
     { k: "販売価格", v: `${product.name} ${product.size}　1本 ${price}（税込）` },
     {
       k: "商品代金以外に必要な料金",
-      v: `送料：発送の場合、全国一律 ${shipping}（本数によらず、1回の発送につき）。会での手渡しは送料がかかりません。\n振込手数料：銀行振込の場合、お客様のご負担です。`,
+      v: `送料：発送の場合、全国一律 ${shipping}（1回の発送につき）。商品代金の合計が ${free} 以上の場合は、送料がかかりません。会での手渡しも送料がかかりません。\n振込手数料：銀行振込の場合、お客様のご負担です。`,
     },
     { k: "お支払い方法", v: "銀行振込、クレジットカード（Stripe）" },
     {
@@ -34,7 +35,7 @@ const ja = {
     },
     {
       k: "お渡しの時期",
-      v: `発送：${product.shipWindow}。発送は日本国内のみです。\n会での手渡し：${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${shipping}）。`,
+      v: `発送：${product.shipWindow}。発送は日本国内のみです。\n会での手渡し：${product.eventWindow}。来られなくなった場合は発送に切り替えられます（送料 ${shipping}。${free}以上は送料なし）。`,
     },
     { k: "販売数量", v: "数に限りがあります。なくなり次第、受付を終えます。" },
     {
@@ -69,7 +70,7 @@ const en: typeof ja = {
     { k: "Price", v: `${product.name} ${product.size}: ${price} per bottle (tax included)` },
     {
       k: "Other charges",
-      v: `Shipping: a flat ${shipping} within Japan per shipment, for any number of bottles. No shipping charge if you collect at the gathering.\nBank transfer fees: paid by the customer.`,
+      v: `Shipping: a flat ${shipping} within Japan per shipment. Orders of ${free} or more ship free. No shipping charge if you collect at the gathering.\nBank transfer fees: paid by the customer.`,
     },
     { k: "Payment methods", v: "Bank transfer (Japanese bank), card (Stripe)" },
     {
@@ -78,7 +79,7 @@ const en: typeof ja = {
     },
     {
       k: "Delivery",
-      v: `Shipping: ${product.shipWindowEn}. Shipping is within Japan only.\nCollection at the gathering: ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${shipping}).`,
+      v: `Shipping: ${product.shipWindowEn}. Shipping is within Japan only.\nCollection at the gathering: ${product.eventWindowEn}. If you cannot come, you can switch to shipping (${shipping}, free from ${free}).`,
     },
     { k: "Quantity", v: "Limited. Reservations close when the bottles are gone." },
     {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { getBankInfo, getStripePaymentLink, maxQty, product, yen } from "@/lib/reserve";
+import { getBankInfo, getStripePaymentLink, maxQty, product, shippingFee, yen } from "@/lib/reserve";
 import { href, isLang } from "@/lib/i18n";
 import { reserveText } from "@/content/reserve";
 
@@ -36,10 +36,10 @@ export default async function ThanksPage({
   const receive = sp.receive === "ship" ? "ship" : "event";
   const method = sp.method === "card" ? "card" : "bank";
   const subtotal = product.price * qty;
-  const shipping = receive === "ship" ? product.shipping : 0;
+  const shipping = shippingFee(receive, qty);
   const total = subtotal + shipping;
   const bank = method === "bank" ? getBankInfo() : null;
-  const stripe = method === "card" ? getStripePaymentLink(receive) : null;
+  const stripe = method === "card" ? getStripePaymentLink(receive, qty) : null;
   const bottlingDate = reserveText[lang].product.bottlingDate;
   const event = reserveText[lang].product.event;
 
@@ -127,7 +127,7 @@ export default async function ThanksPage({
                     <dt>{t.amount}</dt>
                     <dd>
                       {yen(total)}
-                      {receive === "ship" ? t.shippingExtra : ""}
+                      {shipping > 0 ? t.shippingExtra : ""}
                     </dd>
                   </div>
                 </dl>
