@@ -39,7 +39,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
     <header className={`site${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav">
         <Link className="brand" href={href(lang, "/")} onClick={() => setOpen(false)}>
-          <Image className="brand-mark" src="/images/brand/star_black.png" alt="" width={1178} height={1504} sizes="26px" priority />
+          <Image className="brand-mark" src="/images/brand/star_yellow.png" alt="" width={1178} height={1504} sizes="32px" priority />
           <span>
             Olive<small>1</small>
           </span>
