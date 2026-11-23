@@ -150,11 +150,11 @@ h1,
   transition: transform 0.18s ease, background 0.18s ease,
     color 0.18s ease, border-color 0.18s ease;
 }
-/* 既定のボタン＝墨に白文字 */
+/* 既定のボタン＝ラベルの水色に墨の文字（白文字は水色の上では読めないので使わない） */
 .btn-primary {
-  background: var(--ink);
+  background: var(--blue);
   border-color: var(--ink);
-  color: #fff;
+  color: var(--ink);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
