@@ -11,7 +11,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
         <div className="foot-grid">
           <div>
             <Link className="brand" href={href(lang, "/#top")}>
-              Olive<span style={{ color: "var(--orange)" }}>1</span>
+              Olive<span style={{ color: "var(--blue)" }}>1</span>
             </Link>
             <p className="foot-tagline">{t.footer.tagline}</p>
             <Image className="foot-island" src="/images/brand/island_black.png" alt="" width={1331} height={436} sizes="150px" />

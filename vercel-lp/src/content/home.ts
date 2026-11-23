@@ -9,7 +9,7 @@ const ja = {
     ogTitle: "Olive1 | 見えるEVOO、毎日のごはんに",
     ogDescription: "数値を公開し、産地を自分の足で確かめて届ける、東京発のスペシャルティEVOO。事前登録受付中。",
   },
-  topbar: { lead: "プレローンチ ─ ", strong: "事前登録受付中", rest: "。最高級の国産オリーブオイルをお届け。" },
+  topbar: { lead: "プレローンチ ─ ", strong: "事前登録受付中", rest: "。小豆島で手摘みした、今年の国産オリーブオイル。" },
   hero: {
     eng: "Tokyo Specialty EVOO",
     h1a: "オリーブオイルは、",
@@ -201,7 +201,7 @@ const en: typeof ja = {
     ogTitle: "Olive1 | Olive oil you can read",
     ogDescription: "Lab numbers on the label, origins checked in person. Specialty extra virgin olive oil from Tokyo. Pre-registration open.",
   },
-  topbar: { lead: "Pre-launch ─ ", strong: "pre-registration open", rest: ". Delivering the finest Japanese olive oil." },
+  topbar: { lead: "Pre-launch ─ ", strong: "pre-registration open", rest: ". This year's Japanese olive oil, hand-picked on Shodoshima." },
   hero: {
     eng: "Tokyo Specialty EVOO",
     h1a: "Olive oil has a ",

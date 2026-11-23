@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Zen_Kaku_Gothic_New, IBM_Plex_Mono } from "next/font/google";
+import { Zen_Kaku_Gothic_New, IBM_Plex_Mono, Shantell_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { alternates, isLang, langs, ogLocale, siteUrl, type Lang } from "@/lib/i18n";
 import { home } from "@/content/home";
@@ -10,6 +10,13 @@ const zenKaku = Zen_Kaku_Gothic_New({
   variable: "--font-jp",
   subsets: ["latin"],
   weight: ["300", "400", "500", "700", "900"],
+});
+
+// 屋号「Olive1」だけに使う、手で書いたようなゴシック
+const shantell = Shantell_Sans({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["700"],
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -53,7 +60,7 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${zenKaku.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${zenKaku.variable} ${plexMono.variable} ${shantell.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* Fontshare: Latin accent (General Sans) (Next hoists <link> into <head>) */}

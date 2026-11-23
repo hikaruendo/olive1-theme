@@ -241,10 +241,10 @@ h1,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--latin);
-  font-weight: 600;
-  font-size: 24px;
-  letter-spacing: -0.01em;
+  font-family: var(--font-brand), var(--latin);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0;
   color: var(--ink);
 }
 .brand-mark {
@@ -252,7 +252,8 @@ h1,
   height: auto;
 }
 .brand small {
-  color: var(--orange);
+  color: var(--blue);
+  font-size: 1em;
 }
 .nav-links {
   display: flex;
