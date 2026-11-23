@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ReserveForm } from "@/components/reserve-form";
-import { LabelInProgress } from "@/components/label-in-progress";
+import Image from "next/image";
+import { Bottle } from "@/components/bottle";
 import { getBankInfo, getReserveStatus, getStripePaymentLink, maxQty, product, yen } from "@/lib/reserve";
 import { sheetRemaining } from "@/lib/sheet";
-import { alternates, href, isLang, ogLocale } from "@/lib/i18n";
+import { alternates, href, isLang, ogImages, ogLocale } from "@/lib/i18n";
 import { reserveText } from "@/content/reserve";
 import { ui } from "@/content/ui";
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: m.title,
     description: m.description,
     alternates: alternates("/reserve"),
-    openGraph: { title: m.ogTitle, description: m.ogDescription, locale: ogLocale[lang], type: "website" },
+    openGraph: { title: m.ogTitle, description: m.ogDescription, locale: ogLocale[lang], type: "website", images: ogImages },
   };
 }
 
@@ -72,7 +73,18 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
                 {t.page.h1b}
               </h1>
               <p className="lead">{t.page.lead}</p>
-              <LabelInProgress title={t.page.design.title} sub={t.page.design.sub} alt={t.page.design.alt} />
+              {/* ラベル付きの瓶。content/reserve.ts の page.design（「デザイン作成中…」）はもう出していない */}
+              <div className="reserve-visual">
+                <Bottle alt={`${product.name} ${product.size}`} sizes="110px" priority />
+                <Image
+                  className="hero-title"
+                  src="/images/brand/title_hikarus_olive.png"
+                  alt={product.name}
+                  width={781}
+                  height={473}
+                  sizes="220px"
+                />
+              </div>
               <dl className="reserve-facts">
                 {facts.map((f) => (
                   <div key={f.k}>
@@ -90,7 +102,7 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
                 <div className="waitlist-form reserve-closed">
                   <p className="form-title">{t.page.closedTitle}</p>
                   <p>{t.page.closedBody}</p>
-                  <Link href={href(lang, "/#club")} className="btn btn-primary">
+                  <Link href={href(lang, "/#club")} className="btn btn-accent">
                     {t.page.joinClub}
                   </Link>
                 </div>
@@ -99,7 +111,7 @@ export default async function ReservePage({ params }: { params: Promise<Params> 
                 <div className="waitlist-form reserve-closed">
                   <p className="form-title">{t.page.soldoutTitle}</p>
                   <p>{t.page.soldoutBody}</p>
-                  <Link href={href(lang, "/#club")} className="btn btn-primary">
+                  <Link href={href(lang, "/#club")} className="btn btn-accent">
                     {t.page.joinClub}
                   </Link>
                 </div>

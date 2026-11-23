@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { alternates, href, isLang, ogLocale } from "@/lib/i18n";
+import { alternates, href, isLang, ogImages, ogLocale } from "@/lib/i18n";
 import { legalText } from "@/content/legal";
 import { ui } from "@/content/ui";
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: m.title,
     description: m.description,
     alternates: alternates("/legal"),
-    openGraph: { title: m.title, description: m.description, locale: ogLocale[lang], type: "website" },
+    openGraph: { title: m.title, description: m.description, locale: ogLocale[lang], type: "website", images: ogImages },
   };
 }
 
