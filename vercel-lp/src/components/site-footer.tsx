@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { href, type Lang } from "@/lib/i18n";
 import { ui } from "@/content/ui";
@@ -10,9 +11,10 @@ export function SiteFooter({ lang }: { lang: Lang }) {
         <div className="foot-grid">
           <div>
             <Link className="brand" href={href(lang, "/#top")}>
-              Olive<span style={{ color: "var(--citrus)" }}>1</span>
+              Olive<span style={{ color: "var(--blue)" }}>1</span>
             </Link>
-            <p style={{ marginTop: 12, maxWidth: "34ch", color: "#a7b28c" }}>{t.footer.tagline}</p>
+            <p className="foot-tagline">{t.footer.tagline}</p>
+            <Image className="foot-island" src="/images/brand/island_black.png" alt="" width={1331} height={436} sizes="150px" />
           </div>
           <div>
             <h4>{t.footer.explore}</h4>

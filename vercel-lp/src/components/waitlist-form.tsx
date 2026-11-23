@@ -83,7 +83,7 @@ export function WaitlistForm({ lang }: { lang: Lang }) {
       {message && (
         <p
           className={`form-message ${status === "error" ? "is-error" : ""}`}
-          style={status === "success" ? { color: "var(--green)", fontWeight: 600 } : undefined}
+          style={status === "success" ? { color: "var(--ink)", fontWeight: 600 } : undefined}
         >
           {message}
         </p>

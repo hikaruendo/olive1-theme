@@ -7,6 +7,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { getArticles } from "@/lib/journal";
 import { href, isLang } from "@/lib/i18n";
 import { home } from "@/content/home";
+import { Bottle } from "@/components/bottle";
+import { product } from "@/lib/reserve";
 
 // 文言は content/home.ts（ja/en）。ここは構造だけ。
 // ブランドの3本柱（Consistency / Social Impact / Genuine）は内部の判断基準。
@@ -60,20 +62,28 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 ))}
               </div>
             </div>
-            <div className="hero-media">
-              <div className="media">
-                <Image
-                  src="/images/hero-grove-shodoshima.jpg"
-                  alt={t.hero.imgAlt}
-                  fill
-                  priority
-                  sizes="(max-width: 860px) 100vw, 46vw"
-                />
-              </div>
-              <div className="hero-badge">
-                {t.hero.badgePrefix}
-                <b>{t.hero.badgePlace}</b>
-              </div>
+            {/* 最初の画面＝白地にラベル付きの瓶。題字は鉄崎さんの手書きの画像 */}
+            <div className="hero-bottle">
+              <Bottle alt={`${product.name} ${product.size}`} sizes="(max-width: 860px) 110px, 150px" priority />
+              <Image
+                className="hero-title"
+                src="/images/brand/title_hikarus_olive.png"
+                alt={product.name}
+                width={781}
+                height={473}
+                sizes="(max-width: 860px) 150px, 280px"
+                priority
+              />
+            </div>
+          </div>
+          {/* 畑の写真は瓶のすぐ下へ */}
+          <div className="wrap hero-media">
+            <div className="media">
+              <Image src="/images/hero-grove-shodoshima.jpg" alt={t.hero.imgAlt} fill sizes="(max-width: 1180px) 100vw, 1100px" />
+            </div>
+            <div className="hero-badge">
+              {t.hero.badgePrefix}
+              <b>{t.hero.badgePlace}</b>
             </div>
           </div>
         </section>
@@ -196,10 +206,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </ul>
                 <p className="fb-note">{t.oils.body}</p>
                 <div className="hero-cta">
-                  <a href="#club" className="btn btn-citrus">
+                  {/* このページでオレンジのボタンは「予約」の1つだけ */}
+                  <a href="#club" className="btn btn-ghost">
                     {t.oils.cta}
                   </a>
-                  <Link href={L("/reserve")} className="btn btn-ghost">
+                  <Link href={L("/reserve")} className="btn btn-accent">
                     {t.oils.reserveCta}
                   </Link>
                 </div>
@@ -217,7 +228,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <h2>{t.sip.title}</h2>
                 <p>{t.sip.body}</p>
                 <p className="fine">{t.sip.fine}</p>
-                <Link href={L("/journal/throat-test")} className="btn btn-citrus" style={{ marginTop: 20 }}>
+                <Link href={L("/journal/throat-test")} className="btn btn-primary" style={{ marginTop: 20 }}>
                   {t.sip.cta}
                 </Link>
               </div>
@@ -401,6 +412,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* SECTION: final cta */}
         <section className="section final">
           <div className="wrap">
+            <Image className="olive-mark" src="/images/brand/olive_black.png" alt="" width={720} height={840} sizes="64px" />
             <p className="label">{t.final.label}</p>
             <h2>{t.final.title}</h2>
             <a href="#club" className="btn btn-primary">

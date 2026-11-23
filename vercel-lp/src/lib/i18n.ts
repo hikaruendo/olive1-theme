@@ -47,3 +47,7 @@ export function alternates(path: string) {
 }
 
 export const ogLocale: Record<Lang, string> = { ja: "ja_JP", en: "en_US" };
+
+// 共有されたときの画像（src/app/opengraph-image.png＝白地にラベル付きの瓶）。
+// ページ側で openGraph を書くと親の画像が引き継がれないので、各ページの openGraph にこれを足す。
+export const ogImages = [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "Hikaru's Olive | Olive1" }];

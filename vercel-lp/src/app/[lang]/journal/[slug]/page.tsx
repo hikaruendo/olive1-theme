@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { getArticle, getArticles, journalText, type JournalBlock } from "@/lib/journal";
-import { alternates, href, isLang, langs, ogLocale } from "@/lib/i18n";
+import { alternates, href, isLang, langs, ogImages, ogLocale } from "@/lib/i18n";
 import { ui } from "@/content/ui";
 
 type Params = { lang: string; slug: string };
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     description,
     keywords: article.keywords,
     alternates: alternates(`/journal/${slug}`),
-    openGraph: { title, description, locale: ogLocale[lang], type: "article" },
+    openGraph: { title, description, locale: ogLocale[lang], type: "article", images: ogImages },
   };
 }
 
@@ -149,7 +149,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                 <h2>{cta.title}</h2>
                 <p>{cta.body}</p>
               </div>
-              <Link href={href(lang, "/#club")} className="btn btn-citrus">
+              <Link href={href(lang, "/#club")} className="btn btn-accent">
                 {cta.button}
               </Link>
             </div>

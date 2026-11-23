@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -38,7 +39,10 @@ export function SiteHeader({ lang }: { lang: Lang }) {
     <header className={`site${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav">
         <Link className="brand" href={href(lang, "/")} onClick={() => setOpen(false)}>
-          Olive<small>1</small>
+          <Image className="brand-mark" src="/images/brand/star_yellow.png" alt="" width={1178} height={1504} sizes="32px" priority />
+          <span>
+            Olive<small>1</small>
+          </span>
         </Link>
         <nav className="nav-links">
           {links.map((l) => (

@@ -1,35 +1,29 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Olive1 — Direction: "Everyday Grove"
-   Warm, rounded, product-forward (Nif-adjacent) with the
-   transparency numbers kept in a mono "lab" voice.
+   Olive1 — Direction: "The label, bigger"
+   White paper, ink hairlines, blue lettering, a little orange
+   (Hikaru's Olive の紙ラベルと同じ)。数値は mono の "lab" の声のまま。
    ============================================================ */
 
 :root {
-  --paper: #f7f1e4;
-  --paper-2: #fcf8f0;
+  /* ラベルの3色（青・オレンジ・墨）と白。それ以外は無彩色のグレーだけ */
+  --paper: #ffffff;
   --card: #ffffff;
-  --ink: #243019;
-  --ink-soft: #5b6647;
-  --ink-mute: #8b9173;
-  --green: #3e5a2a;
-  --green-deep: #2c4020;
-  --green-soft: #e7ecda;
-  --citrus: #e8a02c;
-  --citrus-deep: #c97f13;
-  --brick: #c9552f;
-  --line: rgba(36, 48, 25, 0.14);
-  --line-2: rgba(36, 48, 25, 0.28);
-  --r: 18px;
-  --r-lg: 26px;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #767676;
+  --blue: #00b9f2;
+  --orange: #f26721;
+  --fill: #f4f4f4;
+  --line: #d9d9d9;
+  --line-2: #1a1a1a;
+  --r: 6px;
+  --r-lg: 8px;
   --r-pill: 999px;
   --jp: var(--font-jp), ui-sans-serif, system-ui, sans-serif;
-  --serif: var(--font-serif), "Hiragino Mincho ProN", serif;
   --mono: var(--font-mono), ui-monospace, monospace;
   --latin: "General Sans", var(--font-jp), sans-serif;
-  --display: var(--font-serif), "Clash Display", var(--font-jp), serif;
-  --shadow: 0 18px 40px -24px rgba(36, 48, 25, 0.4);
   --maxw: 1180px;
 }
 
@@ -66,11 +60,16 @@ img {
 h1,
 h2,
 h3 {
-  font-family: var(--serif);
+  font-family: var(--jp);
   line-height: 1.28;
   letter-spacing: 0.01em;
   font-weight: 700;
   margin: 0;
+}
+/* 青は大きい見出しだけ。小さい文字は墨かグレー */
+h1,
+.section h2 {
+  color: var(--blue);
 }
 
 .wrap {
@@ -84,7 +83,7 @@ h3 {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 12px;
-  color: var(--green);
+  color: var(--ink);
   margin: 0;
 }
 .label {
@@ -96,20 +95,24 @@ h3 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: 12px;
-  color: var(--green);
+  color: var(--ink);
   margin: 0;
 }
 .label::before {
   content: "";
   width: 22px;
   height: 2px;
-  background: var(--citrus);
+  background: var(--blue);
 }
 .section {
   padding: clamp(56px, 8vw, 104px) 0;
 }
 .section h2 {
   font-size: clamp(26px, 4.4vw, 42px);
+}
+.section h1 {
+  font-size: clamp(28px, 4.6vw, 44px);
+  margin: 12px 0 14px;
 }
 .lead {
   font-size: clamp(15px, 1.7vw, 17px);
@@ -123,7 +126,7 @@ h3 {
   position: relative;
   overflow: hidden;
   border-radius: var(--r);
-  background: var(--green-soft);
+  background: var(--fill);
 }
 .media img {
   object-fit: cover;
@@ -141,20 +144,22 @@ h3 {
   font-weight: 700;
   font-size: 15px;
   padding: 14px 26px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-lg);
   cursor: pointer;
-  border: 0;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease,
+  border: 1.5px solid transparent;
+  transition: transform 0.18s ease, background 0.18s ease,
     color 0.18s ease, border-color 0.18s ease;
 }
+/* 既定のボタン＝ラベルの水色に墨の文字（白文字は水色の上では読めないので使わない） */
 .btn-primary {
-  background: var(--green);
-  color: #fcf8f0;
-  box-shadow: 0 10px 24px -12px rgba(62, 90, 42, 0.8);
+  background: var(--blue);
+  border-color: var(--ink);
+  color: var(--ink);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  background: var(--green-deep);
+  background: #fff;
+  color: var(--ink);
 }
 .btn-primary::after {
   content: "→";
@@ -163,23 +168,26 @@ h3 {
 .btn-primary:hover::after {
   transform: translateX(4px);
 }
-.btn-citrus {
-  background: var(--citrus);
-  color: #3a2a06;
+/* いちばん大事な1つだけ＝オレンジに白文字（1ページに1つ） */
+.btn-accent {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
 }
-.btn-citrus:hover {
+.btn-accent:hover {
   transform: translateY(-2px);
-  background: var(--citrus-deep);
+  background: var(--ink);
+  border-color: var(--ink);
   color: #fff;
 }
 .btn-ghost {
-  background: transparent;
+  background: #fff;
   color: var(--ink);
-  border: 1.5px solid var(--line-2);
+  border-color: var(--ink);
 }
 .btn-ghost:hover {
-  border-color: var(--green);
-  color: var(--green);
+  background: var(--ink);
+  color: #fff;
 }
 .chip {
   display: inline-flex;
@@ -193,14 +201,15 @@ h3 {
   content: "✓";
   font-family: var(--latin);
   font-weight: 700;
-  color: var(--green);
+  color: var(--ink);
   font-size: 13px;
 }
 
 /* ---------- top bar + header ---------- */
 .topbar {
-  background: var(--green-deep);
-  color: #eef1e2;
+  background: #fff;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.03em;
@@ -208,20 +217,19 @@ h3 {
   padding: 8px 16px;
 }
 .topbar b {
-  color: var(--citrus);
+  color: var(--orange);
 }
 .site {
   position: sticky;
   top: 0;
   z-index: 50;
   backdrop-filter: saturate(1.2) blur(10px);
-  background: rgba(247, 241, 228, 0.82);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s;
 }
 .site.scrolled {
   border-color: var(--line);
-  box-shadow: 0 8px 24px -20px rgba(36, 48, 25, 0.5);
 }
 .nav {
   display: flex;
@@ -230,14 +238,22 @@ h3 {
   height: 66px;
 }
 .brand {
-  font-family: var(--display);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-brand), var(--latin);
   font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.01em;
+  font-size: 26px;
+  letter-spacing: 0;
   color: var(--ink);
 }
+.brand-mark {
+  width: 30px;
+  height: auto;
+}
 .brand small {
-  color: var(--citrus);
+  color: var(--blue);
+  font-size: 1em;
 }
 .nav-links {
   display: flex;
@@ -250,7 +266,7 @@ h3 {
   color: var(--ink-soft);
 }
 .nav-links a:hover {
-  color: var(--green);
+  color: var(--ink);
 }
 .nav .btn {
   padding: 10px 20px;
@@ -281,7 +297,7 @@ h3 {
     flex-direction: column;
     gap: 4px;
     padding: 10px clamp(18px, 5vw, 40px) 18px;
-    background: var(--paper-2);
+    background: var(--paper);
     border-bottom: 1px solid var(--line);
   }
   .mobile-menu.open {
@@ -315,21 +331,18 @@ h3 {
   margin: 16px 0 0;
 }
 .hero h1 .hl {
-  color: var(--green);
   position: relative;
   white-space: nowrap;
 }
 .hero h1 .hl::after {
   content: "";
   position: absolute;
-  left: -2px;
-  right: -2px;
-  bottom: 0.06em;
-  height: 0.34em;
-  background: var(--citrus);
-  opacity: 0.35;
-  z-index: -1;
-  border-radius: 4px;
+  left: 0;
+  right: 0;
+  bottom: -0.04em;
+  height: 3px;
+  background: var(--orange);
+  border-radius: 2px;
 }
 .hero .lead {
   margin: 20px 0 26px;
@@ -346,36 +359,51 @@ h3 {
   flex-wrap: wrap;
   margin-top: 22px;
 }
+/* 畑の写真は、瓶の絵のすぐ下に横長で置く */
 .hero-media {
   position: relative;
+  margin-top: clamp(32px, 5vw, 56px);
 }
 .hero-media .media {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 7;
   border-radius: var(--r-lg);
+}
+.hero-bottle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 36px);
+}
+.hero-bottle .bottle {
+  height: clamp(300px, 46vw, 540px);
+}
+.hero-title {
+  width: clamp(150px, 22vw, 280px);
+  height: auto;
 }
 .hero-badge {
   position: absolute;
-  left: 16px;
-  top: 16px;
+  left: calc(clamp(18px, 5vw, 40px) + 14px);
+  top: 14px;
   background: #fff;
+  border: 1.5px solid var(--ink);
   border-radius: var(--r-pill);
-  box-shadow: var(--shadow);
-  padding: 9px 16px;
+  padding: 8px 15px;
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 600;
-  color: var(--green);
+  color: var(--ink);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 .hero-badge b {
-  color: var(--brick);
+  color: var(--ink);
 }
 
 /* ---------- promise 01/02/03 ---------- */
 .tinted {
-  background: var(--paper-2);
+  background: var(--paper);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -389,13 +417,12 @@ h3 {
   background: var(--card);
   border-radius: var(--r-lg);
   padding: 28px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
 }
 .p-num {
   font-family: var(--mono);
   font-size: 13px;
-  color: var(--citrus-deep);
+  color: var(--orange);
   font-weight: 600;
 }
 .p-eng {
@@ -404,7 +431,7 @@ h3 {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--citrus-deep);
+  color: var(--orange);
   margin: 14px 0 0;
 }
 .p-eng::after {
@@ -412,7 +439,7 @@ h3 {
   display: block;
   width: 34px;
   height: 2px;
-  background: var(--citrus);
+  background: var(--orange);
   margin-top: 10px;
 }
 .p-card h3 {
@@ -449,7 +476,7 @@ h3 {
 }
 .stat {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r);
   padding: 18px 16px;
 }
@@ -492,7 +519,7 @@ h3 {
 }
 .stat .n {
   font-size: 12px;
-  color: var(--green);
+  color: var(--ink-soft);
   margin-top: 4px;
   font-weight: 500;
 }
@@ -510,16 +537,16 @@ h3 {
 }
 .pheno .track {
   height: 12px;
-  border-radius: 99px;
-  background: var(--green-soft);
+  border-radius: var(--r-pill);
+  background: var(--fill);
   position: relative;
   overflow: hidden;
 }
 .pheno .fill {
   position: absolute;
   inset: 0;
-  border-radius: 99px;
-  background: linear-gradient(90deg, var(--citrus), var(--green));
+  border-radius: var(--r-pill);
+  background: var(--blue);
 }
 .pheno .rng {
   font-family: var(--mono);
@@ -542,10 +569,11 @@ h3 {
 .disc span {
   font-family: var(--mono);
   font-size: 12px;
-  padding: 7px 12px;
-  border-radius: 99px;
-  background: var(--green-soft);
-  color: var(--green-deep);
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: #fff;
+  border: 1px solid var(--ink);
+  color: var(--ink);
 }
 .note {
   font-family: var(--mono);
@@ -559,7 +587,7 @@ h3 {
 }
 .coa .media {
   aspect-ratio: 7 / 5;
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
 }
 .coa figcaption {
   font-size: 12.5px;
@@ -572,12 +600,12 @@ h3 {
   right: 14px;
   top: 14px;
   background: #fff;
-  border-radius: 99px;
+  border-radius: var(--r-pill);
   padding: 7px 13px;
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--brick);
-  box-shadow: var(--shadow);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
   font-weight: 600;
 }
 
@@ -592,10 +620,11 @@ h3 {
 .oils-note {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--ink-mute);
-  background: var(--green-soft);
-  padding: 8px 14px;
-  border-radius: 99px;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 1px solid var(--ink);
+  padding: 7px 14px;
+  border-radius: var(--r);
 }
 .oils-grid {
   display: grid;
@@ -605,10 +634,9 @@ h3 {
 }
 .oil {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r-lg);
   overflow: hidden;
-  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   transition: transform 0.2s;
@@ -619,7 +647,7 @@ h3 {
 .oil .cap {
   display: block;
   aspect-ratio: 5 / 4;
-  background: linear-gradient(160deg, var(--green-soft), #eef1e2);
+  background: var(--fill);
   position: relative;
   overflow: hidden;
 }
@@ -638,8 +666,8 @@ h3 {
   font-size: 11px;
   background: #fff;
   padding: 5px 11px;
-  border-radius: 99px;
-  color: var(--green);
+  border-radius: var(--r-pill);
+  color: var(--ink);
   font-weight: 600;
 }
 .oil .body {
@@ -657,7 +685,7 @@ h3 {
   font-weight: 600;
   letter-spacing: 0.1em;
   font-size: 12px;
-  color: var(--citrus-deep);
+  color: var(--orange);
   text-transform: uppercase;
 }
 .oil .use {
@@ -684,7 +712,7 @@ h3 {
   background: var(--line-2);
 }
 .dots i.on {
-  background: var(--green);
+  background: var(--ink);
 }
 .oil .variety {
   font-size: 12px;
@@ -700,35 +728,24 @@ h3 {
 
 /* ---------- first sip ---------- */
 .sip {
-  background: var(--green-deep);
-  color: #eef1e2;
-  border-radius: var(--r-lg);
-  padding: clamp(28px, 5vw, 52px);
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 32px;
   align-items: center;
 }
-.sip .label {
-  color: var(--citrus);
-}
-.sip .label::before {
-  background: var(--citrus);
-}
 .sip h2 {
-  color: #fff;
   font-size: clamp(24px, 3.6vw, 34px);
   margin: 14px 0;
 }
 .sip p {
-  color: #d3dcc3;
+  color: var(--ink-soft);
   font-size: 15px;
   margin: 0;
 }
 .sip .fine {
   font-family: var(--mono);
   font-size: 12px;
-  color: #9fae86;
+  color: var(--ink-mute);
   margin-top: 14px;
 }
 .sip-visual {
@@ -739,17 +756,6 @@ h3 {
 }
 .sip-visual img {
   object-fit: cover;
-}
-.sip-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* subtle warm glow only — keep the real photo readable */
-  background: radial-gradient(
-    circle at 50% 38%,
-    rgba(232, 160, 44, 0.12),
-    transparent 68%
-  );
 }
 
 /* ---------- journey ---------- */
@@ -773,7 +779,7 @@ h3 {
   aspect-ratio: 16 / 9;
   border-radius: var(--r);
   overflow: hidden;
-  background: var(--green-soft);
+  background: var(--fill);
 }
 .clip video {
   width: 100%;
@@ -791,7 +797,7 @@ h3 {
 }
 .clip figcaption b {
   font-family: var(--mono);
-  color: var(--citrus-deep);
+  color: var(--orange);
   font-size: 11px;
 }
 
@@ -817,7 +823,7 @@ h3 {
   aspect-ratio: 3 / 4;
   border-radius: var(--r);
   overflow: hidden;
-  background: var(--green-soft);
+  background: var(--fill);
 }
 .clip .photo img {
   object-fit: cover;
@@ -838,7 +844,7 @@ h3 {
   aspect-ratio: 4 / 5;
   border-radius: var(--r-lg);
   overflow: hidden;
-  background: var(--green-soft);
+  background: var(--fill);
 }
 .fb-media img {
   object-fit: cover;
@@ -900,40 +906,27 @@ h3 {
 }
 
 /* ---------- club (waitlist) ---------- */
-.club {
-  background: linear-gradient(160deg, var(--green), #33481f);
-  color: #eef1e2;
-  border-radius: var(--r-lg);
-  padding: clamp(30px, 5vw, 56px);
-  box-shadow: var(--shadow);
-}
 .club-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 4vw, 52px);
   align-items: center;
 }
-.club .label {
-  color: #fff;
-}
-.club .label::before {
-  background: var(--citrus);
-}
 .club h2 {
-  color: #fff;
   font-size: clamp(24px, 3.6vw, 36px);
   margin: 14px 0;
 }
 .club p {
-  color: #d8e0ca;
+  color: var(--ink-soft);
   margin: 0;
 }
 
 /* waitlist form (embedded in club) */
 .waitlist-form {
-  background: var(--paper-2);
+  background: #fff;
   color: var(--ink);
-  border-radius: var(--r);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-lg);
   padding: 24px;
 }
 .form-title {
@@ -951,7 +944,7 @@ h3 {
 .form-field input {
   width: 100%;
   border: 1.5px solid var(--line-2);
-  border-radius: 12px;
+  border-radius: var(--r);
   padding: 13px 15px;
   font-family: var(--jp);
   font-size: 15px;
@@ -959,8 +952,8 @@ h3 {
   color: var(--ink);
 }
 .form-field input:focus {
-  outline: 2px solid var(--green);
-  border-color: var(--green);
+  outline: 2px solid var(--blue);
+  border-color: var(--ink);
 }
 .reason-fieldset {
   border: 0;
@@ -982,15 +975,16 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: var(--green-soft);
-  border-radius: 99px;
-  padding: 8px 13px;
+  background: #fff;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 7px 13px;
   font-size: 13px;
-  color: var(--green-deep);
+  color: var(--ink);
   cursor: pointer;
 }
 .reason-option input {
-  accent-color: var(--green);
+  accent-color: var(--ink);
 }
 .form-row {
   margin-top: 18px;
@@ -1005,17 +999,27 @@ h3 {
   font-weight: 700;
   font-size: 15px;
   padding: 14px 26px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-lg);
   cursor: pointer;
-  border: 0;
-  background: var(--citrus);
-  color: #3a2a06;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
   transition: background 0.18s, transform 0.18s;
 }
+/* 予約フォームの送信だけオレンジ */
+.reserve-form .form-row button {
+  background: var(--orange);
+  border-color: var(--orange);
+}
 .form-row button:hover:not(:disabled) {
-  background: var(--citrus-deep);
-  color: #fff;
+  background: #fff;
+  color: var(--ink);
   transform: translateY(-2px);
+}
+.reserve-form .form-row button:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
 }
 .form-row button:disabled {
   opacity: 0.6;
@@ -1029,7 +1033,11 @@ h3 {
   text-align: center;
 }
 .form-message.is-error {
-  color: var(--brick);
+  color: var(--ink);
+  font-weight: 600;
+  border: 1.5px solid var(--orange);
+  border-radius: var(--r);
+  padding: 8px 10px;
 }
 
 /* ---------- journal ---------- */
@@ -1041,7 +1049,7 @@ h3 {
 }
 .art {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r);
   overflow: hidden;
   transition: transform 0.2s;
@@ -1060,7 +1068,7 @@ h3 {
 .art .cat {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--citrus-deep);
+  color: var(--ink-soft);
   letter-spacing: 0.05em;
 }
 .art h3 {
@@ -1070,7 +1078,7 @@ h3 {
 }
 .art .more {
   font-size: 13px;
-  color: var(--green);
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -1102,7 +1110,7 @@ h3 {
 }
 .use ul li::before {
   content: "·";
-  color: var(--citrus);
+  color: var(--blue);
   font-weight: 900;
   font-size: 20px;
 }
@@ -1117,7 +1125,7 @@ h3 {
 .voices .gate {
   max-width: 640px;
   margin: 20px auto 0;
-  background: var(--paper-2);
+  background: var(--paper);
   border: 1px dashed var(--line-2);
   border-radius: var(--r-lg);
   padding: 34px;
@@ -1126,7 +1134,7 @@ h3 {
   font-family: var(--mono);
   font-size: clamp(30px, 6vw, 46px);
   font-weight: 600;
-  color: var(--green);
+  color: var(--ink);
 }
 .voices .gate p {
   color: var(--ink-soft);
@@ -1160,7 +1168,7 @@ h3 {
 .faq summary::after {
   content: "+";
   font-family: var(--mono);
-  color: var(--green);
+  color: var(--ink);
   font-size: 20px;
   transition: transform 0.2s;
 }
@@ -1177,7 +1185,7 @@ h3 {
 /* ---------- final cta + footer ---------- */
 .final {
   text-align: center;
-  background: var(--paper-2);
+  background: var(--paper);
   border-top: 1px solid var(--line);
 }
 .final .label {
@@ -1192,8 +1200,9 @@ h3 {
   padding: 16px 32px;
 }
 footer {
-  background: var(--green-deep);
-  color: #c9d3b8;
+  background: #fff;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
   padding: 56px 0 30px;
   font-size: 14px;
 }
@@ -1203,11 +1212,20 @@ footer {
   gap: 28px;
 }
 footer .brand {
-  color: #fff;
   font-size: 22px;
+  gap: 0;
+}
+.foot-tagline {
+  margin: 12px 0 0;
+  max-width: 34ch;
+}
+.foot-island {
+  width: 150px;
+  height: auto;
+  margin-top: 22px;
 }
 footer h4 {
-  color: #fff;
+  color: var(--ink);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1223,10 +1241,13 @@ footer ul {
   padding: 0;
 }
 footer a:hover {
-  color: var(--citrus);
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-underline-offset: 3px;
 }
 .foot-btm {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--line);
   margin-top: 40px;
   padding-top: 20px;
   display: flex;
@@ -1235,7 +1256,7 @@ footer a:hover {
   gap: 10px;
   font-family: var(--mono);
   font-size: 12px;
-  color: #95a17e;
+  color: var(--ink-mute);
 }
 
 /* ---------- responsive ---------- */
@@ -1264,8 +1285,11 @@ footer a:hover {
   .foot-grid {
     grid-template-columns: 1fr 1fr;
   }
-  .hero-media {
-    max-width: 460px;
+  .hero-bottle {
+    order: -1;
+  }
+  .hero-media .media {
+    aspect-ratio: 4 / 3;
   }
 }
 @media (max-width: 520px) {
@@ -1296,7 +1320,7 @@ footer a:hover {
   color: var(--ink-mute);
 }
 .crumb a:hover {
-  color: var(--green);
+  color: var(--ink);
 }
 .crumb .cur {
   color: var(--ink);
@@ -1323,9 +1347,9 @@ footer a:hover {
   font-size: 12px;
   font-weight: 600;
   background: #fff;
-  color: var(--green);
+  color: var(--ink);
   padding: 6px 13px;
-  border-radius: 99px;
+  border-radius: var(--r-pill);
   z-index: 2;
 }
 .pdp-info h1 {
@@ -1403,7 +1427,7 @@ footer a:hover {
 }
 .pdp-price .pn {
   font-size: 12px;
-  color: var(--citrus-deep);
+  color: var(--orange);
 }
 .pdp-buy .btn-primary,
 .pdp-buy .btn-ghost {
@@ -1423,7 +1447,7 @@ footer a:hover {
   width: 100%;
   border-collapse: collapse;
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r);
   overflow: hidden;
 }
@@ -1434,7 +1458,7 @@ footer a:hover {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-mute);
-  background: var(--green-soft);
+  background: var(--fill);
   padding: 12px 16px;
   font-weight: 600;
 }
@@ -1492,7 +1516,7 @@ footer a:hover {
 .pressing-facts > div {
   flex: 1 1 140px;
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r);
   padding: 14px 16px;
 }
@@ -1528,7 +1552,7 @@ footer a:hover {
 }
 .pairing-card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r-lg);
   padding: 26px;
   align-self: start;
@@ -1540,10 +1564,11 @@ footer a:hover {
   margin-top: 16px;
 }
 .pairings span {
-  background: var(--green-soft);
-  color: var(--green-deep);
-  border-radius: 99px;
-  padding: 9px 14px;
+  background: #fff;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  border-radius: var(--r-pill);
+  padding: 8px 14px;
   font-size: 13.5px;
   font-weight: 500;
 }
@@ -1559,7 +1584,7 @@ footer a:hover {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: var(--r-lg);
   overflow: hidden;
   transition: transform 0.2s;
@@ -1571,7 +1596,7 @@ footer a:hover {
   border-radius: 0;
   min-height: 190px;
   height: 100%;
-  background: linear-gradient(160deg, var(--green-soft), #eef1e2);
+  background: var(--fill);
 }
 .cross .media .tag {
   position: absolute;
@@ -1580,9 +1605,9 @@ footer a:hover {
   font-family: var(--mono);
   font-size: 10.5px;
   background: #fff;
-  color: var(--green);
+  color: var(--ink);
   padding: 4px 10px;
-  border-radius: 99px;
+  border-radius: var(--r-pill);
   font-weight: 600;
   z-index: 2;
 }
@@ -1598,7 +1623,7 @@ footer a:hover {
 .cross-body .more {
   margin-top: auto;
   font-size: 13px;
-  color: var(--green);
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -1667,7 +1692,7 @@ footer a:hover {
   overflow: hidden;
   margin-top: clamp(24px, 4vw, 40px);
   margin-bottom: clamp(28px, 4vw, 48px);
-  background: var(--green-soft);
+  background: var(--fill);
 }
 .article-hero-media img {
   object-fit: cover;
@@ -1714,22 +1739,22 @@ footer a:hover {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--citrus);
+  background: var(--blue);
 }
 .prose .callout {
-  background: var(--green-soft);
-  border-left: 3px solid var(--green);
-  border-radius: 12px;
+  background: var(--fill);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--r) var(--r) 0;
   padding: 16px 18px;
   font-size: 15px;
   line-height: 1.8;
-  color: var(--green-deep);
+  color: var(--ink);
   margin: 6px 0 24px;
 }
 .prose blockquote {
   margin: 26px 0;
   padding: 4px 0 4px 22px;
-  border-left: 3px solid var(--citrus);
+  border-left: 3px solid var(--orange);
   font-weight: 700;
   font-size: clamp(17px, 2.4vw, 21px);
   line-height: 1.65;
@@ -1748,8 +1773,7 @@ footer a:hover {
   aspect-ratio: 9 / 16;
   border-radius: var(--r-lg);
   overflow: hidden;
-  background: var(--green-deep);
-  box-shadow: var(--shadow);
+  background: var(--ink);
 }
 .article-video .reel video {
   width: 100%;
@@ -1777,8 +1801,7 @@ footer a:hover {
   display: block;
   border-radius: var(--r-lg);
   overflow: hidden;
-  background: var(--green-deep);
-  box-shadow: var(--shadow);
+  background: var(--ink);
 }
 .journey-reel figcaption {
   margin-top: 10px;
@@ -1827,7 +1850,7 @@ footer a:hover {
 }
 .strength-tile .st-tag {
   display: block;
-  font-family: var(--display);
+  font-family: var(--latin);
   font-weight: 700;
   font-size: clamp(34px, 5.6vw, 58px);
   line-height: 0.9;
@@ -1853,7 +1876,7 @@ footer a:hover {
 .strength-tile .st-meter i {
   width: 22px;
   height: 6px;
-  border-radius: 99px;
+  border-radius: var(--r-pill);
   background: currentColor;
   opacity: 0.22;
 }
@@ -1863,28 +1886,25 @@ footer a:hover {
   opacity: 0.7;
 }
 .st-1 {
-  background: linear-gradient(160deg, #edf1e1, #d6e0bf);
-  color: #2c4020;
-}
-.st-1 .st-meter i.on {
-  opacity: 1;
-  background: #3e5a2a;
+  background: #fff;
+  color: var(--ink);
 }
 .st-2 {
-  background: linear-gradient(160deg, #4e6a31, #33471e);
-  color: #f7f1e4;
-}
-.st-2 .st-meter i.on {
-  opacity: 1;
-  background: var(--citrus);
+  background: var(--fill);
+  color: var(--ink);
 }
 .st-3 {
-  background: linear-gradient(160deg, #273a1a, #16230e);
-  color: #f7f1e4;
+  background: var(--ink);
+  color: #fff;
+}
+.st-1 .st-meter i.on,
+.st-2 .st-meter i.on {
+  opacity: 1;
+  background: var(--ink);
 }
 .st-3 .st-meter i.on {
   opacity: 1;
-  background: var(--citrus);
+  background: var(--orange);
 }
 .oil:hover .strength-tile .st-tag {
   transform: translateX(3px);
@@ -1942,55 +1962,53 @@ footer a:hover {
   margin: 0;
   color: var(--ink);
 }
-/* ラベルができるまでの仮の絵（components/label-in-progress.tsx） */
-.label-wip {
-  margin: 26px 0 0;
+/* ラベル付きの瓶（components/bottle.tsx）。ラベルは35mm×85mm、瓶の胴は幅およそ40mm */
+.bottle {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 112 / 410;
+  flex: 0 0 auto;
+}
+.bottle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.bottle-label {
+  position: absolute;
+  left: 9.375%;
+  top: 40.5%;
+  width: 81.25%;
+  height: 53.9%;
+  overflow: hidden;
+  border-radius: 8.6% / 3.5%;
+  background: #fff;
+}
+.bottle-label img {
+  object-fit: fill;
+}
+.reserve-visual {
+  margin: 28px 0 0;
   display: flex;
   align-items: center;
-  gap: clamp(18px, 3vw, 34px);
-  padding: clamp(20px, 3vw, 30px) clamp(22px, 4vw, 40px);
-  background: var(--green-soft);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
+  justify-content: center;
+  gap: clamp(18px, 4vw, 40px);
+  padding: clamp(20px, 3vw, 30px) 0;
+  border-top: 1px solid var(--line);
 }
-.label-wip-bottle {
-  flex: 0 0 auto;
-  width: clamp(84px, 14vw, 116px);
+.reserve-visual .bottle {
+  height: clamp(280px, 40vw, 380px);
+}
+.reserve-visual .hero-title {
+  width: clamp(140px, 30vw, 220px);
+}
+/* オリーブの枝（余白のあしらい） */
+.olive-mark {
+  width: 64px;
   height: auto;
+  margin: 0 auto 18px;
 }
-.label-wip-frame {
-  animation: label-wip-pulse 2.4s ease-in-out infinite;
-}
-@keyframes label-wip-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .label-wip-frame {
-    animation: none;
-  }
-}
-.label-wip figcaption {
-  display: grid;
-  gap: 8px;
-}
-.label-wip figcaption b {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: clamp(22px, 3vw, 30px);
-  line-height: 1.3;
-  color: var(--green-deep);
-}
-.label-wip figcaption span {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--ink-soft);
-}
+
 .reserve-note {
   font-size: 13.5px;
   color: var(--ink-soft);
@@ -2001,8 +2019,7 @@ footer a:hover {
   top: 88px;
 }
 .reserve-form {
-  box-shadow: var(--shadow);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
 }
 .reserve-form .form-field {
   margin-top: 14px;
@@ -2011,7 +2028,7 @@ footer a:hover {
 .form-field textarea {
   width: 100%;
   border: 1.5px solid var(--line-2);
-  border-radius: 12px;
+  border-radius: var(--r);
   padding: 13px 15px;
   font-family: var(--jp);
   font-size: 15px;
@@ -2020,8 +2037,8 @@ footer a:hover {
 }
 .form-field select:focus,
 .form-field textarea:focus {
-  outline: 2px solid var(--green);
-  border-color: var(--green);
+  outline: 2px solid var(--blue);
+  border-color: var(--ink);
 }
 .radio-list {
   display: grid;
@@ -2032,14 +2049,15 @@ footer a:hover {
   grid-template-columns: 18px 1fr;
   gap: 10px;
   align-items: start;
-  background: var(--green-soft);
-  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--ink);
+  border-radius: var(--r);
   padding: 11px 13px;
   cursor: pointer;
-  color: var(--green-deep);
+  color: var(--ink);
 }
 .radio-option input {
-  accent-color: var(--green);
+  accent-color: var(--ink);
   margin-top: 3px;
 }
 .radio-option b {
@@ -2077,7 +2095,7 @@ footer a:hover {
   margin-top: 18px;
   padding: 14px 16px 12px;
   border: 1px solid var(--line-2);
-  border-radius: 14px;
+  border-radius: var(--r);
   background: #fff;
 }
 .reserve-confirm-title {
@@ -2149,6 +2167,7 @@ footer a:hover {
 }
 .legal-section h2 {
   font-size: 17px;
+  color: var(--ink);
   margin: 0 0 10px;
 }
 .legal-section p,
@@ -2197,8 +2216,11 @@ footer a:hover {
   margin-top: 6px;
 }
 .link {
-  color: var(--green);
+  color: var(--ink);
   text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 @media (max-width: 860px) {
   .reserve-grid {
@@ -2215,13 +2237,13 @@ footer a:hover {
   font-size: 12px;
   letter-spacing: 0.04em;
   padding: 5px 10px;
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--ink);
   border-radius: 999px;
   color: var(--ink-soft);
 }
 .nav-links .lang-switch:hover {
-  border-color: var(--green);
-  color: var(--green);
+  border-color: var(--ink);
+  color: var(--ink);
 }
 .mobile-menu .lang-switch {
   font-family: var(--mono);
@@ -2246,7 +2268,7 @@ footer a:hover {
     flex-direction: column;
     gap: 4px;
     padding: 10px clamp(18px, 5vw, 40px) 18px;
-    background: var(--paper-2);
+    background: var(--paper);
     border-bottom: 1px solid var(--line);
   }
   .mobile-menu.open {
