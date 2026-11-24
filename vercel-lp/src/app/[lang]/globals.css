@@ -1002,14 +1002,15 @@ h1,
   border-radius: var(--r-lg);
   cursor: pointer;
   border: 1.5px solid var(--ink);
-  background: var(--ink);
-  color: #fff;
+  background: var(--blue);
+  color: var(--ink);
   transition: background 0.18s, transform 0.18s;
 }
 /* 予約フォームの送信だけオレンジ */
 .reserve-form .form-row button {
   background: var(--orange);
   border-color: var(--orange);
+  color: #fff;
 }
 .form-row button:hover:not(:disabled) {
   background: #fff;
