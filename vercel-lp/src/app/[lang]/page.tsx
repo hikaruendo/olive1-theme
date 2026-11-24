@@ -122,26 +122,26 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <p className="lead">{t.transparency.lead}</p>
 
                 <div className="stat-row">
-                  <div className="stat pending">
-                    <div className="k">Polyphenol</div>
-                    <div className="v">
-                      {t.transparency.pending}
-                      <small> mg/kg</small>
-                    </div>
-                    <div className="n">{t.transparency.polyphenolNote}</div>
-                  </div>
-                  <div className="stat pending">
+                  <div className="stat">
                     <div className="k">Acidity</div>
                     <div className="v">
-                      {t.transparency.pending}
+                      0.10
                       <small> %</small>
                     </div>
                     <div className="n">{t.transparency.acidityNote}</div>
                   </div>
+                  <div className="stat">
+                    <div className="k">Peroxide</div>
+                    <div className="v">
+                      7.9
+                      <small> meq/kg</small>
+                    </div>
+                    <div className="n">{t.transparency.peroxideNote}</div>
+                  </div>
                   <div className="stat pending">
-                    <div className="k">Harvest</div>
-                    <div className="v">2026</div>
-                    <div className="n">{t.transparency.harvestNote}</div>
+                    <div className="k">Polyphenol</div>
+                    <div className="v">{t.transparency.notMeasured}</div>
+                    <div className="n">{t.transparency.polyphenolNote}</div>
                   </div>
                 </div>
 
