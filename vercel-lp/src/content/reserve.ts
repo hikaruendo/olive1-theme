@@ -37,7 +37,7 @@ const ja = {
       remaining: "残り",
       remainingValue: (n: number) => `${n}本`,
     },
-    note: "酸度と過酸化物価は瓶詰め時に1回測り、測定方法と一緒に公開します。測り終えるまでは数字を書きません。",
+    note: "酸度 0.10%、過酸化物価 7.9 meq/kg。2026年11月24日に、瓶を開けて1日たった油を、小豆島の工房の測定器（CDR MiniFood）で測りました。エクストラバージンの基準は、酸度0.8%以下、過酸化物価20以下です。ポリフェノールは測れていないので、数字を書きません。",
     design: {
       title: "デザイン作成中…",
       sub: "ラベルを作っているところです。できたら、ここに瓶の写真を載せます。",
@@ -169,7 +169,7 @@ const en: typeof ja = {
       remaining: "Left",
       remainingValue: (n: number) => `${n} ${n === 1 ? "bottle" : "bottles"}`,
     },
-    note: "Free acidity and peroxide value are measured once at bottling and published with the method. No numbers are written until they are measured.",
+    note: "Free acidity 0.10%, peroxide value 7.9 meq/kg. Measured on November 24, 2026, one day after opening a bottle, with the reader at the mill on Shodoshima (CDR MiniFood). The limits for extra virgin are 0.8% acidity and a peroxide value of 20. Polyphenols have not been measured, so no number is written for them.",
     design: {
       title: "Design in progress…",
       sub: "The label is being made. A photo of the bottle goes here when it is ready.",
