@@ -16,14 +16,14 @@ export const product = {
   eventWindowEn: "A Sunday in early to mid December, in Tokyo. Date and venue are emailed by December 1",
   claimDays: 7, // 破損・不良の連絡期限＝到着から7日以内
   harvest: "2026年10〜11月、小豆島で収穫・搾油",
-  // 瓶詰め（充填）は11月末（10/31ではない・2026-11-01 Hikaru訂正）。日が決まったら env で上書き
-  bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月末（予定）",
-  bottlingLabel: process.env.NEXT_PUBLIC_BOTTLING_LABEL ?? "11月末",
+  // 瓶詰め（充填）は 2026-11-18（Hikaru 確認 11/24）。env で上書きできる
+  bottlingDate: process.env.NEXT_PUBLIC_BOTTLING_DATE ?? "2026年11月18日",
+  bottlingLabel: process.env.NEXT_PUBLIC_BOTTLING_LABEL ?? "11月18日",
   event: process.env.NEXT_PUBLIC_EVENT_NOTE ?? "12月上旬〜中旬、東京で「今年の油を開ける会」",
   // 英語版（/en）。日が決まったら NEXT_PUBLIC_BOTTLING_DATE_EN / LABEL_EN も入れる
   harvestEn: "Picked and pressed on Shodoshima, October to November 2026",
-  bottlingDateEn: process.env.NEXT_PUBLIC_BOTTLING_DATE_EN ?? "end of November 2026 (planned)",
-  bottlingLabelEn: process.env.NEXT_PUBLIC_BOTTLING_LABEL_EN ?? "end of November",
+  bottlingDateEn: process.env.NEXT_PUBLIC_BOTTLING_DATE_EN ?? "November 18, 2026",
+  bottlingLabelEn: process.env.NEXT_PUBLIC_BOTTLING_LABEL_EN ?? "November 18",
   eventEn: process.env.NEXT_PUBLIC_EVENT_NOTE_EN ?? "Early to mid December, Tokyo: the gathering to open this year's oil",
 };
 

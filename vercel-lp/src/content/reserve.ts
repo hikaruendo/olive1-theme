@@ -21,9 +21,9 @@ const ja = {
   page: {
     label: "Reserve ／ 予約",
     h1Prefix: "",
-    h1a: "に詰める。",
+    h1a: "に詰めた。",
     h1b: "使い切る。",
-    lead: `2026年10月から11月、小豆島で、僕も収穫と搾油に加わった実の油です。収穫のあいだ毎日搾ってタンクに貯め、11月末に一度だけ瓶に詰めます。${product.bottles}本。1本ずつ本番号を付けます。`,
+    lead: `2026年10月から11月、小豆島で、僕も収穫と搾油に加わった実の油です。収穫のあいだ毎日搾ってタンクに貯め、11月18日に一度だけ瓶に詰めました。${product.bottles}本。1本ずつ本番号を付けます。`,
     facts: {
       harvest: "収穫・搾油",
       bottling: "瓶詰め",
@@ -152,10 +152,10 @@ const en: typeof ja = {
   },
   page: {
     label: "Reserve",
-    h1Prefix: "Bottled at the ",
+    h1Prefix: "Bottled on ",
     h1a: ".",
     h1b: "Made to be finished.",
-    lead: `Oil from olives picked and pressed on Shodoshima in October and November 2026, with me in the grove and at the mill. During the harvest the oil is pressed daily and kept in a tank, then bottled once, at the end of November. ${product.bottles} bottles, each numbered.`,
+    lead: `Oil from olives picked and pressed on Shodoshima in October and November 2026, with me in the grove and at the mill. During the harvest the oil was pressed daily and kept in a tank, then bottled once, on November 18. ${product.bottles} bottles, each numbered.`,
     facts: {
       harvest: "Harvest and pressing",
       bottling: "Bottling",

@@ -15,7 +15,7 @@ const ja = {
     h1a: "オリーブオイルは、",
     h1hl: "旬",
     h1b: "があります。",
-    lead: "エクストラバージンオリーブオイル（EVOO）は、オリーブの果汁です。搾った瞬間から変わっていく、生鮮に近い食べもの。開けた日からは空気にふれて、香りが少しずつ重くなっていきます。目安は、開けてから2ヶ月。だから、2ヶ月で使い切れる量にしました。今年の搾りたてを、小豆島から。11月の終わりに詰めます。",
+    lead: "エクストラバージンオリーブオイル（EVOO）は、オリーブの果汁です。搾った瞬間から変わっていく、生鮮に近い食べもの。開けた日からは空気にふれて、香りが少しずつ重くなっていきます。目安は、開けてから2ヶ月。だから、2ヶ月で使い切れる量にしました。今年の搾りたてを、小豆島から。11月18日に詰めました。",
     ctaPrimary: "最前列の席を取る（無料）",
     ctaGhost: "旅を見る",
     chips: ["収穫年と搾油日を明記", "産地を自分の足で", "2ヶ月で使い切れる量"],
@@ -77,7 +77,7 @@ const ja = {
       { k: "産地", v: "香川県・小豆島" },
       { k: "収穫", v: "2026年 秋" },
       { k: "搾油", v: "収穫後すぐ、島の工房で" },
-      { k: "詰める", v: "11月の終わり" },
+      { k: "瓶詰め", v: "2026年11月18日" },
       { k: "容量", v: "開けてから2ヶ月で使い切れる量（搾ってから確定）" },
       { k: "数量", v: "初回はごく少量" },
       { k: "検査値", v: "酸度 0.10%・過酸化物価 7.9 meq/kg（11月24日・開封1日後に測定）" },
@@ -118,7 +118,7 @@ const ja = {
     label: "About ／ 考え方",
     title: "途中から見せている理由",
     p1: "2026年の春、Olive1に売る油はありませんでした。あったのは、産地に行って自分の目で選ぶ、という決めごとだけ。それを隠さず、選んでいく途中から見せてきました。",
-    p2: "10月からは小豆島のオリーブ農家に住み込み、朝から夕方まで実を摘んで、搾ってきました。11月の終わりに、その油を瓶に詰めます。酸度と過酸化物価は測って、このページに書きました。測れていないものは、測れていないと書きます。",
+    p2: "10月からは小豆島のオリーブ農家に住み込み、朝から夕方まで実を摘んで、搾ってきました。11月18日に、その油を瓶に詰めました。酸度と過酸化物価は測って、このページに書きました。測れていないものは、測れていないと書きます。",
     cta: "考え方を読む",
     imgAlt: "小豆島で枝についた若い実を確かめる手元",
   },
@@ -153,7 +153,7 @@ const ja = {
     items: [
       {
         q: "なぜ、まだ買えないのですか？",
-        a: "まだ瓶に詰めていないからです。10月から小豆島で摘んで搾ってきた油を、11月の終わりに詰めます。予約の受付は11月26日から。クラブのメールでいちばん先にお知らせします。",
+        a: "予約の受付が11月26日からだからです。10月から小豆島で摘んで搾ってきた油は、11月18日に瓶に詰めました。クラブのメールでいちばん先にお知らせします。",
         open: true,
       },
       {
@@ -166,7 +166,7 @@ const ja = {
       },
       {
         q: "いつ届きますか？",
-        a: "初回ロットは今年の秋に搾り、11月の終わりに詰めます。届く日が決まり次第、事前登録の方へいちばん先にお知らせします。",
+        a: "今年の秋に搾った油を、11月18日に瓶に詰めました。12月に東京で開く会で手渡しするか、12月20日までに発送します。",
       },
       {
         q: "どのくらいの量ですか？",
@@ -207,7 +207,7 @@ const en: typeof ja = {
     h1a: "Olive oil has a ",
     h1hl: "season",
     h1b: ".",
-    lead: "Extra virgin olive oil is olive juice. It starts changing the moment it is pressed, closer to fresh produce than to a pantry staple. Once opened, air gets in and the aroma slowly goes flat. Two months is the mark. So the bottle holds what you can finish in two months. This year's fresh oil, from Shodoshima, bottled at the end of November.",
+    lead: "Extra virgin olive oil is olive juice. It starts changing the moment it is pressed, closer to fresh produce than to a pantry staple. Once opened, air gets in and the aroma slowly goes flat. Two months is the mark. So the bottle holds what you can finish in two months. This year's fresh oil, from Shodoshima, bottled on November 18.",
     ctaPrimary: "Take a front-row seat (free)",
     ctaGhost: "See the journey",
     chips: ["Harvest year and pressing date on the label", "Origins checked in person", "A bottle you finish in two months"],
@@ -269,7 +269,7 @@ const en: typeof ja = {
       { k: "Origin", v: "Shodoshima, Kagawa, Japan" },
       { k: "Harvest", v: "Autumn 2026" },
       { k: "Pressing", v: "Right after picking, at the mill on the island" },
-      { k: "Bottling", v: "End of November" },
+      { k: "Bottling", v: "November 18, 2026" },
       { k: "Volume", v: "What you finish in two months (fixed after pressing)" },
       { k: "Quantity", v: "A very small first run" },
       { k: "Lab results", v: "Acidity 0.10%, peroxide value 7.9 meq/kg (Nov 24, one day after opening)" },
@@ -310,7 +310,7 @@ const en: typeof ja = {
     label: "About ／ Our thinking",
     title: "Why this is shown mid-way",
     p1: "In spring 2026, Olive1 had no oil to sell. All it had was one rule: go to the origin and choose with your own eyes. Instead of hiding that, the choosing has been shown as it happened.",
-    p2: "Since October I have been living and working at an olive farm on Shodoshima, picking from morning to evening and pressing. At the end of November that oil goes into bottles. Acidity and peroxide value have been measured and are on this page. What has not been measured is stated as not measured.",
+    p2: "Since October I have been living and working at an olive farm on Shodoshima, picking from morning to evening and pressing. On November 18 that oil went into bottles. Acidity and peroxide value have been measured and are on this page. What has not been measured is stated as not measured.",
     cta: "Read our thinking",
     imgAlt: "Hands checking young olives on a branch on Shodoshima",
   },
@@ -345,7 +345,7 @@ const en: typeof ja = {
     items: [
       {
         q: "Why can't I buy it yet?",
-        a: "Because it is not bottled yet. The oil picked and pressed on Shodoshima since October goes into bottles at the end of November. Reservations open on November 26. Club members hear first by email.",
+        a: "Because reservations open on November 26. The oil picked and pressed on Shodoshima since October was bottled on November 18. Club members hear first by email.",
         open: true,
       },
       {
@@ -358,7 +358,7 @@ const en: typeof ja = {
       },
       {
         q: "When will it arrive?",
-        a: "The first lot is pressed this autumn and bottled at the end of November. As soon as the delivery date is set, members hear first.",
+        a: "This autumn's oil was bottled on November 18. It is handed over at a gathering in Tokyo in December, or shipped by December 20.",
       },
       {
         q: "How much oil is in a bottle?",
