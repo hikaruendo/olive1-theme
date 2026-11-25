@@ -49,7 +49,7 @@ Without `RESEND_API_KEY`, submissions return a setup error so leads are not sile
 
 `/reserve` is the pre-order page for the first lot. The form posts to `/api/reserve`.
 
-- `RESERVE_STATUS`: `closed` (default) shows "11/26から", `open` shows the form, `soldout` shows the sold-out card.
+- `RESERVE_STATUS`: `closed` (default) shows "12月上旬から", `open` shows the form, `soldout` shows the sold-out card.
 - `RESERVE_NOTIFY_EMAIL`: where each reservation is emailed (required in `open`).
 - `RESEND_FROM`: sender for the notification and the customer confirmation. Must be a verified domain in Resend.
 - `BANK_*`: all five must be set for "銀行振込" to be selectable. The account appears on `/reserve/thanks` and in the confirmation email only.
