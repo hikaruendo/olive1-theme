@@ -176,7 +176,7 @@ const en: typeof ja = {
       alt: "A drawing of the bottle before its label: a dark green square bottle with a neck and a black cap. The label area is a dashed outline",
     },
     closedTitle: "On sale from early December",
-    closedBody: "Club members hear first by email when reservations open.",
+    closedBody: "Club members hear first by email when it goes on sale.",
     soldoutTitle: "This year's bottles are all reserved",
     soldoutBody: "Club members will hear about next year's reservations by email.",
     joinClub: "Join the club",
