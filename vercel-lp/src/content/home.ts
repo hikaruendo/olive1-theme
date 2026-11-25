@@ -153,7 +153,7 @@ const ja = {
     items: [
       {
         q: "なぜ、まだ買えないのですか？",
-        a: "予約の受付が12月上旬からだからです。10月から小豆島で摘んで搾ってきた油は、11月18日に瓶に詰めました。クラブのメールでいちばん先にお知らせします。",
+        a: "販売が12月上旬からだからです。10月から小豆島で摘んで搾ってきた油は、11月18日に瓶に詰めました。クラブのメールでいちばん先にお知らせします。",
         open: true,
       },
       {
@@ -345,7 +345,7 @@ const en: typeof ja = {
     items: [
       {
         q: "Why can't I buy it yet?",
-        a: "Because reservations open in early December. The oil picked and pressed on Shodoshima since October was bottled on November 18. Club members hear first by email.",
+        a: "Because it goes on sale in early December. The oil picked and pressed on Shodoshima since October was bottled on November 18. Club members hear first by email.",
         open: true,
       },
       {
